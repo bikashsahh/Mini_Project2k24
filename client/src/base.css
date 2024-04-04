@@ -1,0 +1,188 @@
+.imgSize {
+  height: "300px";
+  width: "100%";
+}
+.heading {
+  position: fixed;
+  z-index: 2;
+  max-width: 100%;
+  background-color: #aaa5f5;
+  height: 79px;
+  /* paddi: 2px; */
+}
+.scroll {
+  padding-top: 78px;
+}
+
+/* base.css */
+.carousel-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+}
+
+.carousel-image {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item:hover {
+  transform: scale(1.05); /* Increase scale on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add box shadow on hover */
+}
+
+/* ------------------------------------------- */
+/* Add this CSS to your existing styles or create a new CSS file */
+/* Add this CSS to your existing styles or create a new CSS file */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  direction: "left" behavior= "scroll" scrollamount= "4";
+  font-size: 18px;
+}
+
+.message-card {
+  display: inline-block;
+  padding: 10px 20px;
+  /* margin-right: 20px; */
+  /* background-color: #f0f0f0; */
+  /* border-radius: 20px; */
+  animation: marquee 10s linear infinite;
+}
+
+.message-card.active {
+  /* font-weight: bold; */
+  /* color: #333; */
+}
+
+/* -------------------------------------------------------- */
+.line {
+  margin-left: 210px;
+  width: 70%;
+}
+
+.logotext {
+  font-family: "Courier New", Courier, monospace;
+  font-style: unset;
+  font-variant: small-caps;
+  font-weight: 400;
+}
+
+/* ----------------------------------------------------------------------- */
+/* header texts highlight */
+
+.hover-link {
+  color: #000; /* Default text color */
+  text-decoration: none; /* Remove underline */
+}
+
+.hover-link:hover {
+  color: black !important; /* Change text color on hover */
+}
+
+.hover-link:hover {
+  transform: perspective(100px) rotateY(15deg); /* 3D effect on hover */
+  transition: transform 0.3s, color 0.3s; /* Smooth transition */
+}
+/* ------------------------------------------------------------ */
+/* login signup button */
+.hover-button {
+  transition: background-color 0.3s;
+  color: black;
+}
+
+.hover-button:hover {
+  background-color: #727d71 !important;
+  transform: perspective(100px) rotateY(10deg);
+  color: black;
+}
+
+/* ----------------ApplyNowBanner---------------------- */
+/* header.css */
+
+/* Style for the box */
+.box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Style for the Apply Now button */
+.box a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  text-align: center;
+}
+
+/* Style for the icon */
+.box i {
+  font-size: 40px;
+  color: #007bff; /* Blue color */
+}
+
+/* Style for the title */
+.box .title {
+  margin-top: 15px;
+  font-size: 24px;
+}
+
+/* Style for the description */
+.box .description {
+  margin-top: 10px;
+}
+
+/* Style for the modal content */
+.modal-content {
+  border-radius: 8px;
+}
+
+/* Style for the modal title */
+.modal-title {
+  color: #564ec2; /* Blue color */
+}
+
+/* Style for the modal body */
+.modal-body {
+  padding: 20px;
+}
+
+/* Style for the Apply Now buttons in modal */
+.modal-body .btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Style for the buttons inside modal */
+.modal-body .nationalStudents .btn,
+.modal-body .internationalStudents .btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 767px) {
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+
+.text:hover {
+  color: rgb(225, 234, 236);
+  background-color: rgb(21, 78, 163);
+}
+/* ----------------------------------------------------------- */
+.service {
+  position: relative;
+  margin-top: -30px;
+  /* z-index: 1; */
+}
+
+.important-messages {
+  margin: 0 4.6vw;
+}
