@@ -3,8 +3,13 @@ import "../base.css";
 
 const ApplyNowBanner = () => {
   return (
-    <div className="col-md-4 box box-bg2">
-      <a className="" data-bs-target="#myModal" data-bs-toggle="modal">
+    <div className="col-md-4 box box-bg2 bannerstyle">
+      <a
+        className=""
+        data-bs-target="#myModal"
+        data-bs-toggle="modal"
+        style={{ color: "" }}
+      >
         <i className="fa fa-mouse-pointer"></i>
         <h4 className="title">Apply Now</h4>
         <p className="description">
@@ -17,7 +22,10 @@ const ApplyNowBanner = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             {/* Modal Header */}
-            <div className="modal-header">
+            <div
+              className="modal-header"
+              style={{ backgroundColor: "#B39DDB", color: "#fff" }}
+            >
               <h4 className="modal-title">Registration for Online Programme</h4>
             </div>
             {/* Modal body */}
@@ -28,6 +36,10 @@ const ApplyNowBanner = () => {
                     className="btn btn-primary btnBlue float-left text"
                     target="_blank"
                     href="https://ignouiop.samarth.edu.in/index.php/registration/user/register"
+                    style={{
+                      backgroundColor: "#00ffff",
+                      borderColor: "#00ffff",
+                    }}
                   >
                     National Students
                   </a>
@@ -37,6 +49,10 @@ const ApplyNowBanner = () => {
                     className="btn btn-info btnInfo float-right text"
                     target="_blank"
                     href="https://ignouforeigniop.samarth.edu.in/index.php/registration/user/register"
+                    style={{
+                      backgroundColor: "#ff02ff",
+                      borderColor: "#ff02ff",
+                    }}
                   >
                     International Students
                   </a>

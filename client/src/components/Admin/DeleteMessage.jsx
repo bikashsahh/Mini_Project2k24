@@ -21,7 +21,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { deleteMessage } from "../redux/Slice/message";
+import { deleteMessage } from "../../redux/Slice/message";
 
 const DeleteMessage = ({ id }) => {
   const dispatch = useDispatch();

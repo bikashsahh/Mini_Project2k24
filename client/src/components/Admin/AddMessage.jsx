@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../redux/Slice/message";
+import { addMessage } from "../../redux/Slice/message";
 import axios from "axios";
 
 const AdminMessageForm = () => {

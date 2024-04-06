@@ -13,9 +13,9 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/login", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { email, password } = req.body;
-  console.log(email + " " + password);
+  // console.log(email + " " + password);
 
   try {
     // Query the database to find a user with the provided email and password
@@ -23,7 +23,7 @@ app.post("/login", async (req, res) => {
       "SELECT * FROM users WHERE email = $1 AND password = $2",
       [email, password]
     );
-    console.log("KK", result.rows[0].isadmin);
+    // console.log("KK", result.rows[0].isadmin);
     // console.log(result.rows);
     // If a user is found, send a success response
     if (result.rows.length > 0) {

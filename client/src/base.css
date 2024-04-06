@@ -1,3 +1,64 @@
+/* .navigation {
+  width: 420px;
+  height: 70px;
+  background: #209cff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  border-radius: 10px;
+}
+.navigation ul {
+  display: flex;
+  width: 350px;
+}
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+} */
+
+.bannerstyle {
+  background-color: #62aaf6;
+}
+/* ----------------------------------------------------- */
+.app-container {
+  background-color: #fafafa;
+}
+
+.nav-icon {
+  font-size: 20px; /* Set desired font size for the icons */
+  padding: auto;
+  margin-left: 20px;
+  display: inline-flex;
+}
+
+.nav-text {
+  display: none;
+}
+
+.nav li:hover .nav-text {
+  display: inline-block;
+}
+
+.search-text {
+  display: none;
+}
+
+/* .search-icon:hover + .search-text {
+  display: inline-block;
+} */
+
+.logo img {
+  /* width: 35%; */
+  aspect-ratio: 3/2;
+  object-fit: contain;
+  margin-down: 20px;
+  /* mix-blend-mode: color-burn; */
+}
+
 .imgSize {
   height: "300px";
   width: "100%";
@@ -6,10 +67,14 @@
   position: fixed;
   z-index: 2;
   max-width: 100%;
-  background-color: #aaa5f5;
+  background: linear-gradient(
+    25deg,
+    #a3dcdc,
+    #695cf3
+  ); /* Corrected background declaration */
   height: 79px;
-  /* paddi: 2px; */
 }
+
 .scroll {
   padding-top: 78px;
 }
@@ -32,7 +97,8 @@
 
 .carousel-item:hover {
   transform: scale(1.05); /* Increase scale on hover */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add box shadow on hover */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); Add box shadow on hover */
+  filter: drop-shadow(10px 5px 10px orange);
 }
 
 /* ------------------------------------------- */

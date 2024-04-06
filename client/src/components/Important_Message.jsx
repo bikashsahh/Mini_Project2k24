@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import AdminMessageForm from "./AddMessage";
+// import AdminMessageForm from "./Admin/AddMessage";
 // import MessagesList from "./MessagesList";
 // import DeleteMessage from "./DeleteMessage";
 
@@ -17,7 +17,7 @@ const Important_Message = () => {
           ))}
         </marquee>
       </div>
-      <AdminMessageForm></AdminMessageForm>
+      {/* <AdminMessageForm></AdminMessageForm> */}
       {/* <MessagesList></MessagesList> */}
     </div>
   );

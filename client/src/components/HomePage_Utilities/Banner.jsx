@@ -1,6 +1,7 @@
 import React from "react";
 import Carousel from "./Carousel";
-import ApplyNowBanner from "./ApplyNowBanner";
+import ApplyNowBanner from "../ApplyNowBanner";
+import IgnouRegistrationBanner from "../Registration";
 
 const Banner = () => {
   const carouselData = [
@@ -50,7 +51,7 @@ const Banner = () => {
       <div className="container service">
         <div className="row">
           <ApplyNowBanner></ApplyNowBanner>
-          <ApplyNowBanner></ApplyNowBanner>
+          <IgnouRegistrationBanner></IgnouRegistrationBanner>
           <ApplyNowBanner></ApplyNowBanner>
         </div>
       </div>

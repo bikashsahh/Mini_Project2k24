@@ -1,9 +1,9 @@
 import "../base.css";
-import Banner from "./Banner";
+import Banner from "./HomePage_Utilities/Banner";
 import Important_Message from "./Important_Message";
-import TaskList from "./TaskList";
-import ListingView from "./ListingView";
-import Footer from "./Footer";
+import TaskList from "./HomePage_Utilities/TaskList";
+import ListingView from "./HomePage_Utilities/ListingView";
+import Footer from "./HomePage_Utilities/Footer";
 
 const NotificationCenter = () => {
   return (

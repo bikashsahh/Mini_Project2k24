@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Header from "./Header";
-import NotificationCenter from "./NotificationCenter";
+import NotificationCenter from "./HomeCenter";
 import axios from "axios";
 import { addMessage } from "../redux/Slice/message"; // Import the addMessage action
+import "../base.css";
 
 function Home() {
   const [messages, setMessages] = useState([]);
