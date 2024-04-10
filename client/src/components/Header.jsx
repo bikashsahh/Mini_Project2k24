@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   FaSearch,
   FaHome,
@@ -13,6 +13,7 @@ import "../base.css"; // Import your base styles
 const Header = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
+  const isAuthenticated = window.localStorage.getItem("isLogedIn");
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -24,16 +25,24 @@ const Header = () => {
     navigate(`/search?term=${searchTerm}`);
   };
 
-  const NavItem = ({ icon, text, path }) => (
+  const handleLogout = () => {
+    // Perform logout action here, such as clearing authentication token, etc.
+    // After logout, redirect the user to the homepage or any other appropriate page
+    window.localStorage.removeItem("isLogedIn");
+    navigate("/LoginPage");
+  };
+
+  const NavItem = ({ icon, text, path, exact }) => (
     <li>
-      <a
-        href={path}
+      <Link
+        to={path}
         className="btn btn-outline-secondary nav-link px-2 hover-link"
+        exact={exact}
       >
         <span className="nav-icon">{icon}</span>{" "}
         {/* Wrap icon with a span for styling */}
         <span className="nav-text">{text}</span>
-      </a>
+      </Link>
     </li>
   );
 
@@ -41,8 +50,8 @@ const Header = () => {
     <div className="container heading">
       <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div className="col-md-3 mb-2 mb-md-0 d-flex align-items-center">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="d-inline-flex link-body-emphasis text-decoration-none"
           >
             <div className="logo">
@@ -53,41 +62,16 @@ const Header = () => {
               <br />
               <span className="">MNNIT Study Centre</span>
             </span>
-          </a>
+          </Link>
         </div>
 
         <div className="ml-5">
           <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 text-decoration-none">
-            <NavItem
-              className="active"
-              icon={<FaHome />}
-              text="Home"
-              path="/"
-            />
-            <NavItem
-              className="active"
-              icon={<FaCog />}
-              text="Features"
-              path="#"
-            />
-            <NavItem
-              className="active"
-              icon={<FaMoneyBill />}
-              text="Pricing"
-              path="#"
-            />
-            <NavItem
-              className="active"
-              icon={<FaQuestionCircle />}
-              text="FAQs"
-              path="#"
-            />
-            <NavItem
-              className="active"
-              icon={<FaInfoCircle />}
-              text="About"
-              path="#"
-            />
+            <NavItem icon={<FaHome />} text="Home" path="/" exact />
+            <NavItem icon={<FaCog />} text="Features" path="#" />
+            <NavItem icon={<FaMoneyBill />} text="Pricing" path="#" />
+            <NavItem icon={<FaQuestionCircle />} text="FAQs" path="#" />
+            <NavItem icon={<FaInfoCircle />} text="About" path="#" />
           </ul>
         </div>
 
@@ -109,18 +93,33 @@ const Header = () => {
             </button>
           </form>
           <div className="col-md-3 text-end">
-            <button
-              type="button"
-              className="btn btn-outline-secondary me-2 hover-button"
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary me-2 hover-button"
-            >
-              Sign-up
-            </button>
+            {isAuthenticated ? (
+              <button
+                type="button"
+                className="btn btn-outline-secondary me-2 hover-button"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary me-2 hover-button"
+                  onClick={() => handleNavigation("/LoginPage")}
+                >
+                  Login
+                </button>
+                <a
+                  href="https://ignouadmission.samarth.edu.in/index.php/registration/user/register"
+                  className="btn btn-outline-secondary me-2 hover-button text-decoration-none"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sign-up
+                </a>
+              </>
+            )}
           </div>
         </div>
       </header>

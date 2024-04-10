@@ -91,12 +91,12 @@ app.get("/messages", async (req, res) => {
 // DELETE route to delete a message by ID
 app.delete("/messages/:id", async (req, res) => {
   const messageId = req.params.id;
-  console.log("Bikk", messageId);
+  // console.log("Bikk", messageId);
   try {
     // Delete message from the database
     const deleteQuery = "DELETE FROM messages WHERE id = $1";
     const result = await db.query(deleteQuery, [messageId]);
-    console.log("chutiya", result);
+    // console.log("chutiya", result);
     if (result.rowCount === 1) {
       res.status(200).json({ message: "Message deleted successfully" });
     } else {
@@ -106,6 +106,10 @@ app.delete("/messages/:id", async (req, res) => {
     console.error("Error deleting message:", error);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 //-------------------------------------------------------//
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -191,10 +195,6 @@ app.delete("/messages/:id", async (req, res) => {
 // passport.deserializeUser((user, cb) => {
 //   cb(null, user);
 // });
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
 
 // --------------------------------------------------------------------------
 // // import passport from "passport";

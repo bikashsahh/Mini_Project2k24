@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-// import { signInWithGoogle } from "./firebase"; // Import the function for signing in with Google
 import axios from "axios";
 
 const LoginPage = () => {
@@ -10,16 +8,9 @@ const LoginPage = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [loginError, setLoginError] = useState("");
 
-  // const navigate = useNavigate();
   const navigate = useNavigate();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-    setBackgroundPosition({ x: xAxis, y: yAxis });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,29 +18,20 @@ const LoginPage = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    // console.log("email => " + email);
-    // console.log("password => " + password);
-
-    // You can implement your login logic here
     try {
-      // Send login request to server
       const response = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
 
-      // Check if login was successful
       if (response.data.success) {
-        // Redirect user to dashboard or another page
-        // You can use React Router for navigation
-        console.log("Login successful");
+        window.localStorage.setItem("isLogedIn", true);
         if (response.data.isAdmin) {
           navigate("/Home");
         } else {
           navigate("/Header");
         }
       } else {
-        // Display error message if login failed
         setLoginError("Email or password is incorrect. Please try again.");
       }
     } catch (error) {
@@ -63,43 +45,28 @@ const LoginPage = () => {
     }, 100);
   };
 
-  // Function to handle sign in with Google
-  // const handleSignInWithGoogle = async () => {
-  //   try {
-  //     // Send GET request to the server's /auth/google endpoint
-  //     window.open("http://localhost:3000/auth/google"), "_self";
-  //     // navigate("/Home");
-  //   } catch (error) {
-  //     console.error("There was a problem with the request:", error);
-  //     setIsButtonClicked(true);
-  //     setTimeout(() => {
-  //       setIsButtonClicked(false);
-  //       setLoginError("Authentication failed. Please try again.");
-  //     }, 100);
-  //     navigate("/LoginPage");
-  //   }
-  // };
   return (
     <div
-      className="d-flex align-items-center justify-content-center"
-      style={{ height: "100vh", overflow: "hidden" }}
+      className="d-flex align-items-center justify-content-end"
+      style={{
+        height: "100vh",
+        padding: "170px",
+        overflow: "hidden",
+      }}
     >
       <div
-        className="position-fixed top-0 start-0 w-100 h-100 background"
+        className="position-fixed top-0 start-0 w-100 h-100"
         style={{
-          backgroundImage: "url('tu-imagen.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "blur(8px)",
+          // filter: "blur(0px)", // Adjust blur intensity as needed
           zIndex: "-1",
-          transform: `translate(${backgroundPosition.x}px, ${backgroundPosition.y}px)`,
+          // transform: `translate(${backgroundPosition.x}px, ${backgroundPosition.y}px)`,
+          backgroundImage: "url('loginbg4.jpeg')", // Add background image here
         }}
       ></div>
-      <div
-        className="login-container bg-secondary bg-opacity-10 rounded p-3 shadow"
-        style={{ width: "400px" }}
-      >
-        <div className="login-header text-center mb-4">
+      <div className="" style={{ width: "400px", zIndex: "2" }}>
+        <div className="text-center mb-4">
           <h2 className="text-primary mb-2">
             Welcome to <span className="text-info">MNNIT-IGNOU</span>
           </h2>
@@ -138,18 +105,6 @@ const LoginPage = () => {
                 {loginError}
               </div>
             )}
-            <div className="options d-flex justify-content-between mb-3">
-              <label htmlFor="remember" className="d-flex align-items-center">
-                <input type="checkbox" id="remember" className="me-2" />{" "}
-                Remember me
-              </label>
-              <a
-                href="#"
-                className="forgot-password text-primary text-decoration-none"
-              >
-                Forgot Password?
-              </a>
-            </div>
             <Button
               type="submit"
               variant="outline-primary"
@@ -157,13 +112,6 @@ const LoginPage = () => {
             >
               Login
             </Button>
-            {/* <Button
-              variant="outline-primary"
-              className="m-2"
-              onClick={handleSignInWithGoogle}
-            >
-              Sign in with Google
-            </Button> */}
           </Form>
         </div>
         <div className="signup-link text-center mt-3 opacity-70">
@@ -179,4 +127,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;
