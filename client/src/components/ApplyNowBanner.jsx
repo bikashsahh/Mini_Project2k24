@@ -1,68 +1,109 @@
 import React from "react";
-import "../base.css";
+import { Box, Modal, Typography, Button, Divider, Stack } from "@mui/material";
 
 const ApplyNowBanner = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <div className="col-md-4 box box-bg2 bannerstyle">
-      <a
-        className=""
-        data-bs-target="#myModal"
-        data-bs-toggle="modal"
-        style={{ color: "" }}
+    <Stack
+      justifyContent={"space-evenly"}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        bgcolor: "#B39DDB",
+        color: "",
+        p: 0,
+        borderRadius: "8px",
+      }}
+    >
+      <Stack
+        divider={<Divider orientation="vertical" flexItem />}
+        spacing={1}
+        onClick={handleOpen}
+        sx={{
+          alignContent: "center",
+          p: 2,
+        }}
       >
-        <i className="fa fa-mouse-pointer"></i>
-        <h4 className="title">Apply Now</h4>
-        <p className="description">
+        <Typography
+          variant="contained"
+          className="design"
+          component="h2"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            padding: "0.5rem 1rem",
+            borderRadius: "4px",
+          }}
+        >
+          Apply Now
+        </Typography>
+        <Typography variant="subtitle1">
           Click here for online registration and admission module of online
           programmes on offer.
-        </p>
-      </a>
-      {/* The Modal */}
-      <div className="modal" id="myModal">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            {/* Modal Header */}
-            <div
-              className="modal-header"
-              style={{ backgroundColor: "#B39DDB", color: "#fff" }}
+        </Typography>
+      </Stack>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 600,
+            height: 200,
+            bgcolor: "#EDE7F6",
+            color: "",
+            borderRadius: "8px",
+            p: 5,
+            alignContent: "center",
+          }}
+        >
+          <Divider>
+            <Typography
+              // id="modal-modal-title"
+              variant="contained"
+              component="h2"
+              alignContent={"center"}
+              sx={{ mb: 3 }}
             >
-              <h4 className="modal-title">Registration for Online Programme</h4>
-            </div>
-            {/* Modal body */}
-            <div className="modal-body">
-              <div className="row">
-                <div className="col nationalStudents">
-                  <a
-                    className="btn btn-primary btnBlue float-left text"
-                    target="_blank"
-                    href="https://ignouiop.samarth.edu.in/index.php/registration/user/register"
-                    style={{
-                      backgroundColor: "#00ffff",
-                      borderColor: "#00ffff",
-                    }}
-                  >
-                    National Students
-                  </a>
-                </div>
-                <div className="col internationalStudents">
-                  <a
-                    className="btn btn-info btnInfo float-right text"
-                    target="_blank"
-                    href="https://ignouforeigniop.samarth.edu.in/index.php/registration/user/register"
-                    style={{
-                      backgroundColor: "#ff02ff",
-                      borderColor: "#ff02ff",
-                    }}
-                  >
-                    International Students
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              ONLINE PROGRAMME
+            </Typography>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                target="_blank"
+                href="https://ignouiop.samarth.edu.in/index.php/registration/user/register"
+                sx={{ mr: 2 }}
+              >
+                National Students
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                target="_blank"
+                href="https://ignouforeigniop.samarth.edu.in/index.php/registration/user/register"
+              >
+                International Students
+              </Button>
+            </Box>
+          </Divider>
+        </Box>
+      </Modal>
+    </Stack>
   );
 };
 

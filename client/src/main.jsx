@@ -15,6 +15,8 @@ import { Provider } from "react-redux";
 import Dashboard from "./components/Admin/Dashboard.jsx";
 import Sidebar from "./components/Admin/SideBar.jsx";
 import "./base.css";
+import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
+import AnnouncementPage from "./components/AnnouncementPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
   {
     path: "/Home",
     element: <Home></Home>,
+  },
+  {
+    path: "/AdminAnnouncementPage",
+    element: <AdminAnnouncementPage></AdminAnnouncementPage>,
+  },
+  {
+    path: "/AnnouncementPage",
+    element: <AnnouncementPage></AnnouncementPage>,
   },
   // {
   //   path: "/Sidebar",

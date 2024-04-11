@@ -2,11 +2,13 @@ import React from "react";
 import Carousel from "./Carousel";
 import ApplyNowBanner from "../ApplyNowBanner";
 import IgnouRegistrationBanner from "../Registration";
+import { Box, Stack } from "@mui/material";
+import AnnouncementBanner from "../AnnouncementBanner";
 
 const Banner = () => {
   const carouselData = [
-    { id: 1, imgURL: "/img1.webp" },
-    { id: 2, imgURL: "/img2.webp" },
+    { id: 1, imgURL: "/clg.avif" },
+    { id: 2, imgURL: "/clg2.avif" },
     { id: 3, imgURL: "/img1.webp" },
     { id: 4, imgURL: "/img2.webp" },
     { id: 5, imgURL: "/img1.webp" },
@@ -48,13 +50,49 @@ const Banner = () => {
         </button>
       </div>
       {/* apply banner */}
-      <div className="container service">
-        <div className="row">
-          <ApplyNowBanner></ApplyNowBanner>
-          <IgnouRegistrationBanner></IgnouRegistrationBanner>
-          <ApplyNowBanner></ApplyNowBanner>
-        </div>
-      </div>
+      <Stack
+        direction="row"
+        className="container service"
+        justifyContent="space-evenly"
+      >
+        <Stack
+          direction="row"
+          alignContent="center"
+          justifyContent="space-around"
+          spacing={4}
+          sx={{
+            flexWrap: "wrap",
+          }}
+        >
+          <Box
+            sx={{
+              flex: 1,
+              maxWidth: "33.33%",
+              minWidth: "300px",
+            }}
+          >
+            <ApplyNowBanner />
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              maxWidth: "33.33%",
+              minWidth: "300px",
+            }}
+          >
+            <IgnouRegistrationBanner />
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              maxWidth: "33.33%",
+              minWidth: "300px",
+            }}
+          >
+            <AnnouncementBanner />
+          </Box>
+        </Stack>
+      </Stack>
     </div>
   );
 };
