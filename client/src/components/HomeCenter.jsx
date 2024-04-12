@@ -4,6 +4,7 @@ import Important_Message from "./Important_Message";
 import TaskList from "./HomePage_Utilities/TaskList";
 import ListingView from "./HomePage_Utilities/ListingView";
 import Footer from "./HomePage_Utilities/Footer";
+import StudentProfileForm from "./StudentProfile";
 
 const NotificationCenter = () => {
   return (
@@ -13,7 +14,8 @@ const NotificationCenter = () => {
 
       <div className="container marketing">
         <TaskList></TaskList>
-        <ListingView></ListingView>
+        <StudentProfileForm></StudentProfileForm>
+        {/* <ListingView></ListingView> */}
       </div>
       <Footer></Footer>
     </div>

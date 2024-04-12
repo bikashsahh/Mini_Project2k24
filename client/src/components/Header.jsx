@@ -80,9 +80,9 @@ const Header = () => {
           <img src="logo.png" alt="Mnnit" width="55" height="55" />
         </Button>
         <span className="mt-2 logotext">
-          IGNOU ALLAHABAD
+          MNNIT ALLAHABAD
           <br />
-          <span className="">MNNIT Study Centre</span>
+          <span className="">IGNOU Study Centre</span>
         </span>
       </Stack>
 

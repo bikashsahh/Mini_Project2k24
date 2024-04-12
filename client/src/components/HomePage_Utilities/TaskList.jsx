@@ -1,20 +1,27 @@
 import React from "react";
 import Tasks from "./Tasks";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 const TaskList = () => {
   const tasksData = useSelector((state) => state.task.tasksData);
+
   return (
-    <div className="row">
+    <Box
+      sx={{
+        display: "flex",
+        // overflowX: "auto",
+        // overflowY: "hidden",
+        // whiteSpace: "nowrap",
+      }}
+    >
       {tasksData.map((data) => (
-        <Tasks
-          key={data.id}
-          image={data.image}
-          heading={data.heading}
-          text={data.text}
-        />
+        <Box key={data.id} sx={{ flexShrink: 0, mx: 2 }}>
+          <Tasks course={data.course} text={data.text} link={data.link} />
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
+
 export default TaskList;
