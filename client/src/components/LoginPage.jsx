@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Typography, Button, Grid, Box, TextField, Alert } from "@mui/material";
 import axios from "axios";
+import { styled } from "@mui/material/styles";
 
 const LoginPage = () => {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
@@ -45,86 +46,114 @@ const LoginPage = () => {
     }, 100);
   };
 
+  const Div = styled("div")(({ theme }) => ({
+    ...theme.typography.button,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
+
   return (
-    <div
-      className="d-flex align-items-center justify-content-end"
-      style={{
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
         height: "100vh",
         padding: "170px",
         overflow: "hidden",
       }}
     >
-      <div
-        className="position-fixed top-0 start-0 w-100 h-100"
-        style={{
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "50%",
+          height: "100%",
+          ml: 8,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          // filter: "blur(0px)", // Adjust blur intensity as needed
           zIndex: "-1",
-          // transform: `translate(${backgroundPosition.x}px, ${backgroundPosition.y}px)`,
-          backgroundImage: "url('loginbg4.jpeg')", // Add background image here
+          backgroundImage: "url('bg1.jpg')",
         }}
-      ></div>
-      <div className="" style={{ width: "400px", zIndex: "2" }}>
-        <div className="text-center mb-4">
-          <h2 className="text-primary mb-2">
-            Welcome to <span className="text-info">MNNIT-IGNOU</span>
-          </h2>
-          <p className="opacity-70">Login to your account</p>
-        </div>
-        <div className="login-form text-center">
-          <Form onSubmit={handleSubmit}>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <i className="fas fa-envelope text-primary"></i>
-              </span>
-              <input
+      />
+      <Box sx={{ width: "400px", zIndex: "2" }}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
+          <Typography
+            variant="h2"
+            className="design"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              p: "0.5rem 1rem",
+              borderRadius: "4px",
+              color: "#673AB7",
+            }}
+          >
+            Welcome To MNNIT-IGNOU
+          </Typography>
+          <Div className="opacity-70">Login to your account</Div>
+        </Box>
+        <Box sx={{ textAlign: "center" }}>
+          <form onSubmit={handleSubmit}>
+            <Box mb={3}>
+              <TextField
                 type="email"
                 name="email"
-                placeholder="Email"
-                className="form-control"
-                ref={emailRef}
+                variant="outlined"
+                label="Email"
+                color="secondary"
+                inputRef={emailRef}
                 required
+                fullWidth
               />
-            </div>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <i className="fas fa-lock text-primary"></i>
-              </span>
-              <input
+            </Box>
+            <Box mb={3}>
+              <TextField
                 type="password"
                 name="password"
-                placeholder="Password"
-                className="form-control"
-                ref={passwordRef}
+                variant="outlined"
+                label="Password"
+                color="secondary"
+                // helperText="All the best"
+                inputRef={passwordRef}
                 required
+                fullWidth
               />
-            </div>
+            </Box>
             {loginError && (
-              <div className="alert alert-danger" role="alert">
-                {loginError}
-              </div>
+              <Box mb={3}>
+                <Alert severity="error">{loginError}</Alert>
+              </Box>
             )}
             <Button
               type="submit"
-              variant="outline-primary"
+              variant="outlined"
+              color="secondary"
               className={`text-bold ${isButtonClicked ? "clicked" : ""}`}
+              fullWidth
             >
               Login
             </Button>
-          </Form>
-        </div>
-        <div className="signup-link text-center mt-3 opacity-70">
-          Don't have an account?{" "}
-          <a
-            href="https://ignou.samarth.edu.in/index.php/studentlogin/registration/register"
-            className="text-primary text-decoration-none"
-          >
-            Sign Up
-          </a>
-        </div>
-      </div>
-    </div>
+          </form>
+        </Box>
+        <Grid item sx={{ p: 2 }}>
+          <Typography variant="body2" align="center" gutterBottom>
+            Don't have an account?{" "}
+            <a
+              href="https://ignou.samarth.edu.in/index.php/studentlogin/registration/register"
+              className="text-decoration-none"
+            >
+              <Typography variant="contained" sx={{ color: "#673AB7" }}>
+                Sign Up
+              </Typography>
+            </a>
+          </Typography>
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 
