@@ -3,6 +3,7 @@ import cors from "cors";
 import db from "./database.js";
 import multer from "multer";
 import path from "path";
+import { log } from "console";
 
 const app = express();
 const port = 3000;
@@ -23,13 +24,13 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 //
-// -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     // Query the database to find a user with the provided email and password
     const result = await db.query(
-      "SELECT * FROM users WHERE email = $1 AND password = $2",
+      "SELECT * FROM users2 WHERE email = $1 AND password = $2",
       [email, password]
     );
     // If a user is found, send a success response
@@ -164,8 +165,32 @@ app.get("/announcements/download/:filePath", async (req, res) => {
   }
 });
 
-// ----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// Add the new route for "Check Status"
+// API endpoint to check user status
+app.post("/check-status", async (req, res) => {
+  const { enrollmentNumber, emailAddress } = req.body;
 
+  try {
+    // Query the database to find a user with the provided enrollment number and email
+    const result = await db.query(
+      "SELECT * FROM users2 WHERE enrollment_number = $1 AND email = $2",
+      [enrollmentNumber, emailAddress]
+    );
+
+    if (result.rows.length > 0) {
+      // If a user is found, send the user's details as a response
+      res.status(200).json(result.rows[0]);
+    } else {
+      // If no user is found, send an error response
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+// ----------------------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

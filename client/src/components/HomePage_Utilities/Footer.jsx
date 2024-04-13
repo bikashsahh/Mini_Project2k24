@@ -1,154 +1,176 @@
+import React from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Link,
+} from "@mui/material";
+import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+
 const Footer = () => {
   return (
-    <>
-      <hr className="line" />
-      <div className="container">
-        <footer className="py-5">
-          <div className="row">
-            <div className="col-6 col-md-2 mb-3">
-              <h5>Section</h5>
-              <ul className="nav flex-column">
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+    <Box component="footer" sx={{ bgcolor: "", pt: 6, pb: 6 }}>
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom>
+              Section
+            </Typography>
+            <Box component="nav">
+              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Home
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Features
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     About
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-6 col-md-2 mb-3">
-              <h5>Section</h5>
-              <ul className="nav flex-column">
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom>
+              Section
+            </Typography>
+            <Box component="nav">
+              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Home
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Features
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     About
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-6 col-md-2 mb-3">
-              <h5>Section</h5>
-              <ul className="nav flex-column">
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom>
+              Section
+            </Typography>
+            <Box component="nav">
+              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Home
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Features
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  </Link>
+                </Box>
+                <Box component="li" sx={{ mb: 1 }}>
+                  <Link href="#" color="text.secondary" variant="body2">
                     About
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-md-5 offset-md-1 mb-3">
-              <form>
-                <h5>Subscribe to our newsletter</h5>
-                <p>Monthly digest of what's new and exciting from us.</p>
-                <div className="d-flex flex-column flex-sm-row w-100 gap-2">
-                  <label htmlFor="newsletter1" className="visually-hidden">
-                    Email address
-                  </label>
-                  <input
+                  </Link>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom>
+              Subscribe to our newsletter
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Monthly digest of what's new and exciting from us.
+            </Typography>
+            <Box component="form" noValidate autoComplete="off" sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
                     id="newsletter1"
-                    type="text"
-                    className="form-control"
-                    placeholder="Email address"
+                    label="Email address"
+                    variant="outlined"
+                    fullWidth
                   />
-                  <button className="btn btn-primary" type="button">
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant="contained" color="primary" fullWidth>
                     Subscribe
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p>© 2024 Company, Inc. All rights reserved.</p>
-            <ul className="list-unstyled d-flex">
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width="24" height="24">
-                    <use xlinkHref="#twitter"></use>
-                  </svg>
-                </a>
-              </li>
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width="24" height="24">
-                    <use xlinkHref="#instagram"></use>
-                  </svg>
-                </a>
-              </li>
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width="24" height="24">
-                    <use xlinkHref="#facebook"></use>
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </footer>
-      </div>
-    </>
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
+        <Box
+          component="div"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 6,
+            borderTop: "1px solid #ccc",
+            pt: 2,
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            © 2024 Company, Inc. All rights reserved.
+          </Typography>
+          <Box>
+            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
+              <Facebook />
+            </Link>
+            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
+              <Instagram />
+            </Link>
+            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
+              <Twitter />
+            </Link>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
