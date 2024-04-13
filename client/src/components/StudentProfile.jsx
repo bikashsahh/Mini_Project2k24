@@ -1,15 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
   Button,
   Typography,
-  Avatar,
   Grid,
   Divider,
+  Alert,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import UserDetails from "./UserDetails";
 
 const StudentProfileForm = () => {
+  const [enrollmentNumber, setEnrollmentNumber] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async () => {
+    // Validate the form fields
+    if (enrollmentNumber && emailAddress) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/check-status",
+          {
+            enrollmentNumber,
+            emailAddress,
+          }
+        );
+
+        // Check if the user was found
+        if (response.data.error) {
+          setError(response.data.error);
+          setIsFormValid(false);
+        } else {
+          setIsFormValid(true);
+          navigate("/UserDetails", { state: response.data });
+        }
+      } catch (error) {
+        setError("No user Find");
+        setIsFormValid(false);
+      }
+    } else {
+      setError("Please fill in the Enrollment Number and Email Address.");
+      setIsFormValid(false);
+    }
+  };
+
+  const handleButtonClick = () => {
+    handleFormSubmit();
+  };
+
   return (
     <Grid container sx={{ mt: 10 }}>
       <Grid item xs={6}>
@@ -32,17 +75,33 @@ const StudentProfileForm = () => {
             color="secondary"
             fullWidth
             margin="normal"
+            value={enrollmentNumber}
+            onChange={(e) => setEnrollmentNumber(e.target.value)}
+            required
           />
           <TextField
-            label="Email"
+            label="Email Address"
             type="email"
             variant="outlined"
             color="secondary"
             fullWidth
+            required
             margin="normal"
+            value={emailAddress}
+            onChange={(e) => setEmailAddress(e.target.value)}
           />
+          {!isFormValid && error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error ||
+                "Please fill in the Enrollment Number and Email Address."}
+            </Alert>
+          )}
           <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleButtonClick}
+            >
               Check Status
             </Button>
           </Box>
@@ -63,11 +122,6 @@ const StudentProfileForm = () => {
             width="500"
             height="500"
           />
-          {/* <Avatar
-            alt="Student Profile"
-            src="img1.webp"
-            sx={{ width: 300, height: 300 }}
-          /> */}
         </Box>
       </Grid>
     </Grid>

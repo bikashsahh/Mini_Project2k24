@@ -17,7 +17,7 @@ import Sidebar from "./components/Admin/SideBar.jsx";
 import "./base.css";
 import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
 import AnnouncementPage from "./components/AnnouncementPage.jsx";
-
+import UserDetails from "./components/UserDetails.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/AnnouncementPage",
     element: <AnnouncementPage></AnnouncementPage>,
+  },
+  {
+    path: "/UserDetails",
+    element: <UserDetails></UserDetails>,
   },
   // {
   //   path: "/Sidebar",
