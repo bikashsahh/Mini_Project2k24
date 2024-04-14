@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Header from "./Header";
 import NotificationCenter from "./HomeCenter";
 import axios from "axios";
 import { addMessage } from "../redux/Slice/message"; // Import the addMessage action
-import "../base.css";
+import ContactPage from "./ContactPage";
+import AboutPage from "./AboutPage";
 
 function Home() {
   const [messages, setMessages] = useState([]);
@@ -35,30 +36,10 @@ function Home() {
   return (
     <div className="app-container">
       <Header />
-      <div className="content">
-        <NotificationCenter />
-        {/* <ScrollableCards></ScrollableCards> */}
-      </div>
+
+      <div className="content">{/* <NotificationCenter /> */}</div>
     </div>
   );
 }
 
 export default Home;
-
-// import Header from "./Header";
-// import NotificationCenter from "./NotificationCenter";
-// import ScrollableCards from "./ScrollableCards";
-
-// function Home() {
-//   return (
-//     <div className="app-container">
-//       <Header></Header>
-//       <div className="content">
-//         <NotificationCenter></NotificationCenter>
-//         {/* <ScrollableCards></ScrollableCards> */}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Home;

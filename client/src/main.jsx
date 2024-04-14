@@ -11,13 +11,13 @@ import ScrollableCards from "./components/ScrollableCards.jsx";
 import "./App.css";
 import { store } from "./redux/store.jsx";
 import { Provider } from "react-redux";
-// import Sidebar from "./components/Admin/Sidebar.jsx";
-import Dashboard from "./components/Admin/Dashboard.jsx";
-import Sidebar from "./components/Admin/SideBar.jsx";
 import "./base.css";
 import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
 import AnnouncementPage from "./components/AnnouncementPage.jsx";
 import UserDetails from "./components/UserDetails.jsx";
+import Programs from "./components/Programs.jsx";
+import AboutPage from "./components/AboutPage.jsx";
+import ContactPage from "./components/ContactPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,14 +55,17 @@ const router = createBrowserRouter([
     path: "/UserDetails",
     element: <UserDetails></UserDetails>,
   },
-  // {
-  //   path: "/Sidebar",
-  //   element: <Sidebar></Sidebar>,
-  // },
   {
-    path: "/Dashboard",
-    element: <Dashboard></Dashboard>,
-    children: [{ path: "Sidebar", element: <Sidebar></Sidebar> }],
+    path: "/Programs",
+    element: <Programs></Programs>,
+  },
+  {
+    path: "/Contact",
+    element: <ContactPage></ContactPage>,
+  },
+  {
+    path: "/About",
+    element: <AboutPage></AboutPage>,
   },
 ]);
 

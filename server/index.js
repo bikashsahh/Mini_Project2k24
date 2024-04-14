@@ -3,7 +3,8 @@ import cors from "cors";
 import db from "./database.js";
 import multer from "multer";
 import path from "path";
-import { log } from "console";
+import nodemailer from "nodemailer";
+// import { google } from "googleapis";
 
 const app = express();
 const port = 3000;
@@ -190,6 +191,43 @@ app.post("/check-status", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+// -----------------------------------------------------------------------
+///nodemailer
+app.post("/contact", async (req, res) => {
+  const { name, email, message } = req.body;
+  console.log(name + " " + email + " " + message);
+  try {
+    // Create a Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "macbookm12k23@gmail.com",
+        pass: "macbook_123@",
+      },
+    });
+
+    // Define the email options
+    const mailOptions = {
+      from: "macbookm12k23@gmail.com",
+      to: "bikashsah0312@gmail.com",
+      subject: "New Message from Contact Form",
+      text: `
+        Name: ${name}
+        Email: ${email}
+        Message: ${message}
+      `,
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error sending email" });
+  }
+});
+
 // ----------------------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

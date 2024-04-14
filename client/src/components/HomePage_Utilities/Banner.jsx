@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import ApplyNowBanner from "../ApplyNowBanner";
 import IgnouRegistrationBanner from "../Registration";
@@ -6,6 +6,7 @@ import { Box, Stack } from "@mui/material";
 import AnnouncementBanner from "../AnnouncementBanner";
 
 const Banner = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const carouselData = [
     { id: 1, imgURL: "/clg.avif" },
     { id: 2, imgURL: "/clg2.avif" },
@@ -15,15 +16,27 @@ const Banner = () => {
     { id: 6, imgURL: "/img2.webp" },
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselData.length);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [carouselData.length]);
+
   return (
     <div>
       <div id="carouselExample" className="carousel slide">
         <div className="carousel-inner">
-          {carouselData.map((Data) => (
-            <Carousel key={Data.id} id={Data.id} imgURL={Data.imgURL} />
+          {carouselData.map((Data, index) => (
+            <Carousel
+              key={Data.id}
+              id={Data.id}
+              imgURL={Data.imgURL}
+              active={index === currentIndex}
+            />
           ))}
         </div>
-
         <button
           className="carousel-control-prev"
           type="button"
@@ -49,7 +62,7 @@ const Banner = () => {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
-      {/* apply banner */}
+
       <Stack
         direction="row"
         className="container service"
@@ -60,35 +73,15 @@ const Banner = () => {
           alignContent="center"
           justifyContent="space-around"
           spacing={4}
-          sx={{
-            flexWrap: "wrap",
-          }}
+          sx={{ flexWrap: "wrap" }}
         >
-          <Box
-            sx={{
-              flex: 1,
-              maxWidth: "33.33%",
-              minWidth: "300px",
-            }}
-          >
+          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
             <ApplyNowBanner />
           </Box>
-          <Box
-            sx={{
-              flex: 1,
-              maxWidth: "33.33%",
-              minWidth: "300px",
-            }}
-          >
+          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
             <IgnouRegistrationBanner />
           </Box>
-          <Box
-            sx={{
-              flex: 1,
-              maxWidth: "33.33%",
-              minWidth: "300px",
-            }}
-          >
+          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
             <AnnouncementBanner />
           </Box>
         </Stack>
@@ -96,4 +89,5 @@ const Banner = () => {
     </div>
   );
 };
+
 export default Banner;
