@@ -4,10 +4,12 @@ import db from "./database.js";
 import multer from "multer";
 import path from "path";
 import nodemailer from "nodemailer";
+import env from "dotenv";
 // import { google } from "googleapis";
 
 const app = express();
 const port = 3000;
+env.config();
 
 // Multer setup for handling file uploads
 const storage = multer.diskStorage({
@@ -194,22 +196,25 @@ app.post("/check-status", async (req, res) => {
 // -----------------------------------------------------------------------
 ///nodemailer
 app.post("/contact", async (req, res) => {
+  console.log(process.env.WORD, " ", process.env.EMAIL);
   const { name, email, message } = req.body;
-  console.log(name + " " + email + " " + message);
+  // console.log(name + " " + email + " " + message);
   try {
     // Create a Nodemailer transporter
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Use `true` for port 465, `false` for all other ports
       auth: {
-        user: "macbookm12k23@gmail.com",
-        pass: "macbook_123@",
+        user: process.env.EMAIL,
+        pass: process.env.WORD,
       },
     });
 
     // Define the email options
     const mailOptions = {
-      from: "macbookm12k23@gmail.com",
-      to: "bikashsah0312@gmail.com",
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
       subject: "New Message from Contact Form",
       text: `
         Name: ${name}
@@ -218,7 +223,7 @@ app.post("/contact", async (req, res) => {
       `,
     };
 
-    // Send the email
+    // // Send the email
     await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: "Email sent successfully" });
