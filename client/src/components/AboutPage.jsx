@@ -30,7 +30,7 @@ const AboutPage = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <StyledSection>
-            <StyledLogo src="/img1.webp" alt="MNNIT Logo" />
+            {/* <StyledLogo src="/img1.webp" alt="MNNIT Logo" /> */}
             <Typography variant="h5" gutterBottom>
               About MNNIT Allahabad IGNOU Study Centre
             </Typography>

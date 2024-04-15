@@ -18,10 +18,15 @@ import UserDetails from "./components/UserDetails.jsx";
 import Programs from "./components/Programs.jsx";
 import AboutPage from "./components/AboutPage.jsx";
 import ContactPage from "./components/ContactPage.jsx";
+import AdminMessageForm from "./components/Admin/AddMessage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    // children: {
+    //   path: "/",
+    //   element: <Header></Header>,
+    // },
   },
   {
     path: "/LoginPage",
@@ -66,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: "/About",
     element: <AboutPage></AboutPage>,
+  },
+  {
+    path: "/AdminMessageForm",
+    element: <AdminMessageForm></AdminMessageForm>,
   },
 ]);
 

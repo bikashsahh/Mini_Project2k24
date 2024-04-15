@@ -11,7 +11,7 @@ const MessagesList = () => {
         // Fetch messages from the server
         const response = await axios.get("http://localhost:3000/messages");
         // Assuming the response data is an array of messages with `id` and `text` properties
-        console.log("jjjjjj", response.data);
+        // console.log("jjjjjj", response.data);
         setMessages(response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
