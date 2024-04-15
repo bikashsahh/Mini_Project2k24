@@ -196,7 +196,7 @@ app.post("/check-status", async (req, res) => {
 // -----------------------------------------------------------------------
 ///nodemailer
 app.post("/contact", async (req, res) => {
-  console.log(process.env.WORD, " ", process.env.EMAIL);
+  // console.log(process.env.WORD, " ", process.env.EMAIL);
   const { name, email, message } = req.body;
   // console.log(name + " " + email + " " + message);
   try {
