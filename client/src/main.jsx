@@ -3,22 +3,25 @@ import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import LoginPage from "./components/LoginPage.jsx";
-import Home from "./components/Home.jsx";
-import Header from "./components/Header.jsx";
-import NotificationCenter from "./components/HomeCenter.jsx";
+// import LoginPage from "./components/LoginPage.jsx";
+import Home from "./components/HomePage_Utilities/Home.jsx";
+import Header from "./components/HomePage_Utilities/Header.jsx";
+import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
 import ScrollableCards from "./components/ScrollableCards.jsx";
-import "./App.css";
-import { store } from "./redux/store.jsx";
+import { store } from "./redux/Store/store.jsx";
 import { Provider } from "react-redux";
 import "./base.css";
-import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
-import AnnouncementPage from "./components/AnnouncementPage.jsx";
-import UserDetails from "./components/UserDetails.jsx";
+// import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
+import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
+// import AnnouncementPage from "./components/"
+// import UserDetails from "./components/UserDetails.jsx";
+import UserDetails from "./components/Students/UserDetails.jsx";
 import Programs from "./components/Programs.jsx";
-import AboutPage from "./components/AboutPage.jsx";
-import ContactPage from "./components/ContactPage.jsx";
-import AdminMessageForm from "./components/Admin/AddMessage.jsx";
+import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
+import ContactPage from "./components/HomePage_Utilities/ContactPage.jsx";
+import AdminMessageForm from "./components/Admin/Messages/AddMessage.jsx";
+import LoginPage from "./components/Common/LoginPage.jsx";
+import AdminAnnouncementPage from "./components/Admin/Messages/AdminAnnouncementPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",

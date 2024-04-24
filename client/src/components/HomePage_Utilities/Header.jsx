@@ -9,7 +9,7 @@ import { List, ListItem, ListItemText, ListItemButton } from "@mui/material";
 import ContactPage from "./ContactPage";
 import NotificationCenter from "./HomeCenter";
 import AboutPage from "./AboutPage";
-import Footer from "./HomePage_Utilities/Footer";
+import Footer from "./Footer";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

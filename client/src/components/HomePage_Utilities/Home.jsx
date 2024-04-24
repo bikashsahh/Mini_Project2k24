@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import Header from "./Header";
 import NotificationCenter from "./HomeCenter";
 import axios from "axios";
-import { addMessage } from "../redux/Slice/message"; // Import the addMessage action
+import { addMessage } from "../../redux/Slice/message"; // Import the addMessage action
 import ContactPage from "./ContactPage";
 import AboutPage from "./AboutPage";
 

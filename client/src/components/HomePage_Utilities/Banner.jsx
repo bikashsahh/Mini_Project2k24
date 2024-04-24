@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
-import ApplyNowBanner from "../ApplyNowBanner";
-import IgnouRegistrationBanner from "../Registration";
+import ApplyNowBanner from "../Students/ApplyNowBanner";
+import IgnouRegistrationBanner from "../Students/Registration";
 import { Box, Stack } from "@mui/material";
-import AnnouncementBanner from "../AnnouncementBanner";
+import AnnouncementBanner from "../Common/AnnouncementBanner";
 
 const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
