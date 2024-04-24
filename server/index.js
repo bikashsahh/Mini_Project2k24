@@ -5,7 +5,14 @@ import multer from "multer";
 import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
-// import { google } from "googleapis";
+import xlsx from "xlsx";
+// const express = require('express');
+// const multer = require('multer');
+// const xlsx = require('xlsx');
+
+// const app = express();
+// const upload = multer({ dest: 'uploads/' });
+
 
 const app = express();
 const port = 3000;
@@ -28,6 +35,10 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 //
 // ---------------------------------------------------------------------------
+app.get('/', (req, res) => {
+  res.json("Server running");
+});
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -193,6 +204,57 @@ app.post("/check-status", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+// Configure Multer for file uploads
+// const upload = multer({ dest: 'uploads/' });
+
+//-------------------file uploading ----------------------------
+// Route for handling file uploads
+// Assuming db already holds the connected database instance
+
+app.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+      // Access the uploaded file
+      const file = req.file;
+
+      // Read the Excel file
+      const workbook = xlsx.readFile(file.path);
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const data = xlsx.utils.sheet_to_json(worksheet);
+
+      // Define table name and column names
+      const tableName = 'finnoto';
+const columns = ['serialno', 'name', 'registrationno', 'department', 'course'];
+
+// Construct the SQL INSERT statement
+const placeholders = columns.map((_, idx) => `$${idx + 1}`).join(', ');
+
+const insertQuery = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
+
+// Construct values array
+const values = data.map(row => {
+    return columns.map(column => row[column]);
+});
+
+      
+      console.log("Uploaded File:",values);
+      
+      // Insert the data into the database
+      await db.query(insertQuery, values);
+      console.log(`${data.length} rows inserted`);
+
+      // Send response
+      res.send('File uploaded and data inserted into the database');
+  } catch (err) {
+      console.error('Error:', err);
+      res.status(500).send('Error uploading file and inserting data');
+  }
+});
+
+
+
 // -----------------------------------------------------------------------
 ///nodemailer
 app.post("/contact", async (req, res) => {
@@ -233,8 +295,22 @@ app.post("/contact", async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------
+app.get('/students', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM users2');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 // ----------------------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 //-------------------------------------------------------//
+
+

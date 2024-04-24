@@ -7,7 +7,6 @@ const App = () => {
   return (
     <>
       <Header />
-
       {/* <Home></Home> */}
       {/* </Header> */}
     </>
