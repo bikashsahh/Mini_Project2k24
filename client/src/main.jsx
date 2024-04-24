@@ -1,33 +1,30 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./base.css";
+// import "./components/Admin/Admin.css";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-// import LoginPage from "./components/LoginPage.jsx";
 import Home from "./components/HomePage_Utilities/Home.jsx";
 import Header from "./components/HomePage_Utilities/Header.jsx";
 import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
 import { store } from "./redux/Store/store.jsx";
 import { Provider } from "react-redux";
-import "./base.css";
-// import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
 import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
-// import AnnouncementPage from "./components/"
-// import UserDetails from "./components/UserDetails.jsx";
 import UserDetails from "./components/Students/UserDetails.jsx";
 import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
 import ContactPage from "./components/HomePage_Utilities/ContactPage.jsx";
 import AdminMessageForm from "./components/Admin/Messages/AddMessage.jsx";
 import LoginPage from "./components/Common/LoginPage.jsx";
 import AdminAnnouncementPage from "./components/Admin/Messages/AdminAnnouncementPage.jsx";
+import Courses from "./components/Admin/Sidebar/Students/Courses.jsx";
+import Students from "./components/Admin/Sidebar/Students/Students.jsx";
+import SendEmailsButton from "./components/Admin/Sidebar/SendEmail/SendEmailsButton.jsx";
+import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // children: {
-    //   path: "/",
-    //   element: <Header></Header>,
-    // },
   },
   {
     path: "/LoginPage",
@@ -69,6 +66,22 @@ const router = createBrowserRouter([
   {
     path: "/AdminMessageForm",
     element: <AdminMessageForm></AdminMessageForm>,
+  },
+  {
+    path: "/courses",
+    element: <Courses></Courses>,
+  },
+  {
+    path: "/students",
+    element: <Students></Students>,
+  },
+  {
+    path: "/SendEmailsButton",
+    element: <SendEmailsButton></SendEmailsButton>,
+  },
+  {
+    path: "/Dashboard",
+    element: <Dashboard></Dashboard>,
   },
 ]);
 

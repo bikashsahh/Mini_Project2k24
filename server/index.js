@@ -5,7 +5,7 @@ import multer from "multer";
 import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
-// import { google } from "googleapis";
+import sendEmailToAllUsers from "./mailer.js";
 
 const app = express();
 const port = 3000;
@@ -233,7 +233,21 @@ app.post("/contact", async (req, res) => {
   }
 });
 
-// ----------------------------------------------------------------------
+//--------------------------------------------------------------------------
+app.get("/students", async (req, res) => {
+  try {
+    const { rows } = await db.query("SELECT * FROM studentsinformation");
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+// =============================
+// app.get('/sendmailtoallusers', sendEmailToAllUsers);
+app.post("/sendmailtoallusers", sendEmailToAllUsers);
+
+// -----------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
