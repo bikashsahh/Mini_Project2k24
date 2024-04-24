@@ -7,7 +7,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./components/HomePage_Utilities/Home.jsx";
 import Header from "./components/HomePage_Utilities/Header.jsx";
 import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
-import ScrollableCards from "./components/ScrollableCards.jsx";
 import { store } from "./redux/Store/store.jsx";
 import { Provider } from "react-redux";
 import "./base.css";
@@ -16,7 +15,6 @@ import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
 // import AnnouncementPage from "./components/"
 // import UserDetails from "./components/UserDetails.jsx";
 import UserDetails from "./components/Students/UserDetails.jsx";
-import Programs from "./components/Programs.jsx";
 import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
 import ContactPage from "./components/HomePage_Utilities/ContactPage.jsx";
 import AdminMessageForm from "./components/Admin/Messages/AddMessage.jsx";
@@ -44,10 +42,6 @@ const router = createBrowserRouter([
     element: <NotificationCenter></NotificationCenter>,
   },
   {
-    path: "/ScrollableCards",
-    element: <ScrollableCards></ScrollableCards>,
-  },
-  {
     path: "/Home",
     element: <Home></Home>,
   },
@@ -63,10 +57,7 @@ const router = createBrowserRouter([
     path: "/UserDetails",
     element: <UserDetails></UserDetails>,
   },
-  {
-    path: "/Programs",
-    element: <Programs></Programs>,
-  },
+
   {
     path: "/Contact",
     element: <ContactPage></ContactPage>,
