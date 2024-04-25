@@ -6,10 +6,13 @@ import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
 import sendEmailToAllUsers from "./mailer.js";
-
+// import ExcelFile from "./excelFile.js";/
+import xlsx from "xlsx";
 const app = express();
 const port = 3000;
 env.config();
+
+const uploads = multer({ storage: multer.memoryStorage() });
 
 // Multer setup for handling file uploads
 const storage = multer.diskStorage({
@@ -25,7 +28,9 @@ const upload = multer({ storage: storage });
 // Middleware
 app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+// app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+// app.use(express.json({ limit: "50mb" }));
+// app.use(express.urlencoded({ limit: "50mb", extended: true }));
 //
 // ---------------------------------------------------------------------------
 app.post("/login", async (req, res) => {
@@ -248,6 +253,75 @@ app.get("/students", async (req, res) => {
 app.post("/sendmailtoallusers", sendEmailToAllUsers);
 
 // -----------------------------------------------
+// app.post("/upload-excel", ExcelFile);
+// Route to handle Excel file upload
+// app.post("/upload-excel", async (req, res) => {
+//   try {
+//     console.log("Request Body:", req.body);
+
+//     const { buffer } = req.body;
+//     console.log("Received buffer size:", buffer.length);
+
+//     const workbook = xlsx.read(buffer, { type: "buffer" });
+//     const sheetName = workbook.SheetNames[0];
+//     const worksheet = workbook.Sheets[sheetName];
+//     const data = xlsx.utils.sheet_to_json(worksheet);
+
+//     console.log("Number of rows in the Excel file:", data.length);
+
+//     // Insert data into PostgreSQL database
+//     const client = await db.connect();
+//     for (const row of data) {
+//       const query =
+//         "INSERT INTO studentsinformation (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
+//       const values = [
+//         row.registrationno,
+//         row.name,
+//         row.programme,
+//         row.courses,
+//         row.mobile,
+//         row.email,
+//       ];
+//       await client.query(query, values);
+//     }
+//     client.release();
+
+//     res.status(200).json({ message: "Excel data uploaded successfully" });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Error uploading Excel data" });
+//   }
+// });
+
+app.post("/upload-excel", uploads.single("file"), async (req, res) => {
+  try {
+    // console.log("Received file:", req.file.buffer);
+    const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const data = xlsx.utils.sheet_to_json(worksheet);
+
+    // Assuming you have a table named 'excel_data' with columns 'col1', 'col2', 'col3'
+    const query =
+      "INSERT INTO studentsinformation (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
+    for (const row of data) {
+      await db.query(query, [
+        row.registrationno,
+        row.name,
+        row.programme,
+        row.courses,
+        row.mobile,
+        row.email,
+      ]);
+    }
+
+    res.status(200).send("File uploaded and data saved to database");
+  } catch (err) {
+    console.error("Error uploading file:", err);
+    res.status(500).send("Error uploading file");
+  }
+});
+//-------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

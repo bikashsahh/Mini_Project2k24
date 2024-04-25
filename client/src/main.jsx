@@ -21,6 +21,7 @@ import Courses from "./components/Admin/Sidebar/Students/Courses.jsx";
 import Students from "./components/Admin/Sidebar/Students/Students.jsx";
 import SendEmailsButton from "./components/Admin/Sidebar/SendEmail/SendEmailsButton.jsx";
 import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
+import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
   {
     path: "/Dashboard",
     element: <Dashboard></Dashboard>,
+  },
+  {
+    path: "/ImportStudentData",
+    element: <ImportStudentData></ImportStudentData>,
   },
 ]);
 
