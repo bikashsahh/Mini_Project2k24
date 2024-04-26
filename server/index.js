@@ -6,13 +6,20 @@ import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
 import sendEmailToAllUsers from "./mailer.js";
-// import ExcelFile from "./excelFile.js";/
-import xlsx from "xlsx";
-const app = express();
-const port = 3000;
+import ExcelFile from "./excelFile.js";
+import formidable from "formidable";
+// import pinataSDK from "@pinata/sdk";
+import fs from "fs";
+
 env.config();
 
+const app = express();
+const port = 3000;
+
+// ---------------------------------------------
+//for student details uploading.
 const uploads = multer({ storage: multer.memoryStorage() });
+// ---------------------------------------
 
 // Multer setup for handling file uploads
 const storage = multer.diskStorage({
@@ -28,10 +35,6 @@ const upload = multer({ storage: storage });
 // Middleware
 app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Parse JSON bodies
-// app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-// app.use(express.json({ limit: "50mb" }));
-// app.use(express.urlencoded({ limit: "50mb", extended: true }));
-//
 // ---------------------------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -252,75 +255,82 @@ app.get("/students", async (req, res) => {
 // app.get('/sendmailtoallusers', sendEmailToAllUsers);
 app.post("/sendmailtoallusers", sendEmailToAllUsers);
 
-// -----------------------------------------------
-// app.post("/upload-excel", ExcelFile);
-// Route to handle Excel file upload
-// app.post("/upload-excel", async (req, res) => {
-//   try {
-//     console.log("Request Body:", req.body);
+// ----------------------------------
+app.post("/upload-excel", uploads.single("file"), ExcelFile);
 
-//     const { buffer } = req.body;
-//     console.log("Received buffer size:", buffer.length);
-
-//     const workbook = xlsx.read(buffer, { type: "buffer" });
-//     const sheetName = workbook.SheetNames[0];
-//     const worksheet = workbook.Sheets[sheetName];
-//     const data = xlsx.utils.sheet_to_json(worksheet);
-
-//     console.log("Number of rows in the Excel file:", data.length);
-
-//     // Insert data into PostgreSQL database
-//     const client = await db.connect();
-//     for (const row of data) {
-//       const query =
-//         "INSERT INTO studentsinformation (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
-//       const values = [
-//         row.registrationno,
-//         row.name,
-//         row.programme,
-//         row.courses,
-//         row.mobile,
-//         row.email,
-//       ];
-//       await client.query(query, values);
-//     }
-//     client.release();
-
-//     res.status(200).json({ message: "Excel data uploaded successfully" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Error uploading Excel data" });
-//   }
-// });
-
-app.post("/upload-excel", uploads.single("file"), async (req, res) => {
+//--------------------------------------------
+app.get("/courses", async (req, res) => {
   try {
-    // console.log("Received file:", req.file.buffer);
-    const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-    const data = xlsx.utils.sheet_to_json(worksheet);
-
-    // Assuming you have a table named 'excel_data' with columns 'col1', 'col2', 'col3'
-    const query =
-      "INSERT INTO studentsinformation (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
-    for (const row of data) {
-      await db.query(query, [
-        row.registrationno,
-        row.name,
-        row.programme,
-        row.courses,
-        row.mobile,
-        row.email,
-      ]);
-    }
-
-    res.status(200).send("File uploaded and data saved to database");
-  } catch (err) {
-    console.error("Error uploading file:", err);
-    res.status(500).send("Error uploading file");
+    const client = await pool.connect();
+    const result = await client.query("SELECT id, course_name FROM courses");
+    client.release();
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    res.status(500).json({ error: "Failed to fetch courses" });
   }
 });
+
+app.post("/assignments", async (req, res) => {
+  try {
+    const form = formidable({ multiples: true });
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
+        console.error("Error parsing form data:", err);
+        return res.status(500).json({ error: "Failed to parse form data" });
+      }
+
+      const { courseId } = fields;
+      const file = files.file;
+
+      const client = await db.connect();
+
+      // Check if the course exists
+      const courseResult = await client.query(
+        "SELECT id FROM courses WHERE id = $1",
+        [courseId]
+      );
+      if (courseResult.rows.length === 0) {
+        client.release();
+        return res.status(400).json({ error: "Invalid course ID" });
+      }
+
+      // Upload the file to Pinata
+      const formData = new FormData();
+      formData.append("file", fs.createReadStream(file.filepath));
+
+      const pinataResponse = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+            pinata_api_key: "process.env.PINATA_API_KEY",
+            pinata_secret_api_key: "process.env.PINATA_API_SECRET",
+          },
+        }
+      );
+
+      const fileHash = pinataResponse.data.IpfsHash;
+      const fileUrl = `https://gateway.pinata.cloud/ipfs/${fileHash}`;
+
+      // Insert the submission into the database
+      const insertQuery = {
+        text: "INSERT INTO submissions (student_id, assignment_id, file_path) VALUES ($1, $2, $3)",
+        values: [, , /* student_id */ /* assignment_id */ fileUrl],
+      };
+      await client.query(insertQuery);
+
+      client.release();
+      res.json({ message: "Assignment submitted successfully", fileUrl });
+    });
+  } catch (error) {
+    console.error("Error submitting assignment:", error);
+    res.status(500).json({ error: "Failed to submit assignment" });
+  }
+});
+
 //-------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
