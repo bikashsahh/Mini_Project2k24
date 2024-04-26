@@ -13,7 +13,7 @@ const ExcelFile = async (req, res) => {
 
     // Assuming you have a table named 'excel_data' with columns 'col1', 'col2', 'col3'
     const query =
-      "INSERT INTO studentsinformation (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
+      "INSERT INTO students (registrationno,name,programme,courses,mobile,email) VALUES ($1, $2,$3,$4,$5,$6)";
     for (const row of data) {
       await db.query(query, [
         row.registrationno,

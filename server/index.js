@@ -10,7 +10,7 @@ import ExcelFile from "./excelFile.js";
 import formidable from "formidable";
 // import pinataSDK from "@pinata/sdk";
 import fs from "fs";
-
+import axios from "axios";
 env.config();
 
 const app = express();
@@ -22,12 +22,13 @@ const uploads = multer({ storage: multer.memoryStorage() });
 // ---------------------------------------
 
 // Multer setup for handling file uploads
+// Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "uploads/"); // Destination folder for file uploads
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
   },
 });
 const upload = multer({ storage: storage });
@@ -37,12 +38,12 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Parse JSON bodies
 // ---------------------------------------------------------------------------
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { registration, password } = req.body;
   try {
     // Query the database to find a user with the provided email and password
     const result = await db.query(
-      "SELECT * FROM users2 WHERE email = $1 AND password = $2",
-      [email, password]
+      "SELECT * FROM students WHERE registrationno = $1 AND registrationno = $2",
+      [registration, password] //password==registration no.
     );
     // If a user is found, send a success response
     if (result.rows.length > 0) {
@@ -259,12 +260,24 @@ app.post("/sendmailtoallusers", sendEmailToAllUsers);
 app.post("/upload-excel", uploads.single("file"), ExcelFile);
 
 //--------------------------------------------
+
 app.get("/courses", async (req, res) => {
   try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT id, course_name FROM courses");
-    client.release();
-    res.json(result.rows);
+    const registrationno = req.query.registrationno;
+    console.log("Registration No:", registrationno);
+
+    let query = `
+      SELECT courses
+      FROM students
+      WHERE registrationno = $1;
+    `;
+    const result = await db.query(query, [registrationno]);
+
+    const courses = result.rows[0].courses;
+
+    const courseList = courses.split(",");
+
+    res.json(courseList);
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).json({ error: "Failed to fetch courses" });
@@ -273,61 +286,25 @@ app.get("/courses", async (req, res) => {
 
 app.post("/assignments", async (req, res) => {
   try {
-    const form = formidable({ multiples: true });
+    const { registrationno } = req.query;
+    const { selectedCourse, ImgHash } = req.body;
 
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error("Error parsing form data:", err);
-        return res.status(500).json({ error: "Failed to parse form data" });
-      }
+    // Check if required parameters are present
+    if (!registrationno || !selectedCourse || !ImgHash) {
+      return res.status(400).send("Missing parameters");
+    }
 
-      const { courseId } = fields;
-      const file = files.file;
+    // Insert submission into the database
+    const result = await db.query(
+      "INSERT INTO submissions (registrationno, file_path, course_name) VALUES ($1, $2, $3)",
+      [registrationno, ImgHash, selectedCourse]
+    );
 
-      const client = await db.connect();
-
-      // Check if the course exists
-      const courseResult = await client.query(
-        "SELECT id FROM courses WHERE id = $1",
-        [courseId]
-      );
-      if (courseResult.rows.length === 0) {
-        client.release();
-        return res.status(400).json({ error: "Invalid course ID" });
-      }
-
-      // Upload the file to Pinata
-      const formData = new FormData();
-      formData.append("file", fs.createReadStream(file.filepath));
-
-      const pinataResponse = await axios.post(
-        "https://api.pinata.cloud/pinning/pinFileToIPFS",
-        formData,
-        {
-          headers: {
-            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-            pinata_api_key: "process.env.PINATA_API_KEY",
-            pinata_secret_api_key: "process.env.PINATA_API_SECRET",
-          },
-        }
-      );
-
-      const fileHash = pinataResponse.data.IpfsHash;
-      const fileUrl = `https://gateway.pinata.cloud/ipfs/${fileHash}`;
-
-      // Insert the submission into the database
-      const insertQuery = {
-        text: "INSERT INTO submissions (student_id, assignment_id, file_path) VALUES ($1, $2, $3)",
-        values: [, , /* student_id */ /* assignment_id */ fileUrl],
-      };
-      await client.query(insertQuery);
-
-      client.release();
-      res.json({ message: "Assignment submitted successfully", fileUrl });
-    });
-  } catch (error) {
-    console.error("Error submitting assignment:", error);
-    res.status(500).json({ error: "Failed to submit assignment" });
+    console.log("Data inserted successfully");
+    res.status(200).send("File uploaded and submission recorded");
+  } catch (err) {
+    console.error("Error inserting data:", err);
+    res.status(500).send("Error uploading file and recording submission");
   }
 });
 

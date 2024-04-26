@@ -75,9 +75,7 @@ async function sendEmail(email, name, subject, body) {
 const sendEmailToAllUsers = async (req, res) => {
   try {
     const { subject, body } = req.body;
-    const { rows } = await db.query(
-      "SELECT name, email FROM studentsinformation"
-    );
+    const { rows } = await db.query("SELECT name, email FROM students");
     const usersWithEmailAndName = rows.map((user) => ({
       name: user.name,
       email: user.email,

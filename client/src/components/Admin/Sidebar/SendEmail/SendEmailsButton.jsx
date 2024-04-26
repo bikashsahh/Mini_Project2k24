@@ -2,13 +2,23 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Box, Typography, TextField, Button, Container } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Container,
+  CircularProgress,
+} from "@mui/material";
 
 function SendEmailsButton() {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
+    setIsLoading(true); // Set loading state to true before sending emails
+
     try {
       await axios
         .post("http://localhost:3000/sendmailtoallusers", { subject, body })
@@ -19,10 +29,14 @@ function SendEmailsButton() {
         .catch((err) => {
           console.log("Error in sending mail to all users:", err.message);
           toast.error("Error sending emails. Please try again.");
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading state to false after the email sending process is complete
         });
     } catch (error) {
       console.error("Error sending emails:", error);
       toast.error("Error sending emails. Please try again.");
+      setIsLoading(false); // Set loading state to false in case of an error
     }
   };
 
@@ -56,8 +70,13 @@ function SendEmailsButton() {
             color="primary"
             onClick={handleClick}
             disableElevation
+            disabled={isLoading}
           >
-            Send Emails to All Users
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Send Emails to All Users"
+            )}
           </Button>
         </Box>
       </Box>

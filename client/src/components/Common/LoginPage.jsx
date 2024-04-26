@@ -10,18 +10,18 @@ const LoginPage = () => {
   const [loginError, setLoginError] = useState("");
 
   const navigate = useNavigate();
-  const emailRef = useRef(null);
+  const registrationRef = useRef(null);
   const passwordRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const email = emailRef.current.value;
+    const registration = registrationRef.current.value;
     const password = passwordRef.current.value;
 
     try {
       const response = await axios.post("http://localhost:3000/login", {
-        email,
+        registration,
         password,
       });
 
@@ -30,7 +30,10 @@ const LoginPage = () => {
         if (response.data.isAdmin) {
           navigate("/Home");
         } else {
-          navigate("/Header");
+          // navigate("/AssignmentForm");
+          navigate("/AssignmentForm", {
+            state: { registrationno: registration },
+          });
         }
       } else {
         setLoginError("Email or password is incorrect. Please try again.");
@@ -100,12 +103,12 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit}>
             <Box mb={3}>
               <TextField
-                type="email"
-                name="email"
+                type="RegistrationNo"
+                name="RegistrationNo"
                 variant="outlined"
-                label="Email"
+                label="Registration Number"
                 color="secondary"
-                inputRef={emailRef}
+                inputRef={registrationRef}
                 required
                 fullWidth
               />
@@ -115,7 +118,7 @@ const LoginPage = () => {
                 type="password"
                 name="password"
                 variant="outlined"
-                label="Password"
+                label="Password Is Your Registration No"
                 color="secondary"
                 // helperText="All the best"
                 inputRef={passwordRef}

@@ -4,7 +4,11 @@ import "./base.css";
 // import "./components/Admin/Admin.css";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  BrowserRouter,
+} from "react-router-dom";
 import Home from "./components/HomePage_Utilities/Home.jsx";
 import Header from "./components/HomePage_Utilities/Header.jsx";
 import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
@@ -22,10 +26,16 @@ import Students from "./components/Admin/Sidebar/Students/Students.jsx";
 import SendEmailsButton from "./components/Admin/Sidebar/SendEmail/SendEmailsButton.jsx";
 import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
 import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
+import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
+import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/side",
+    element: <SidebarNew />,
   },
   {
     path: "/LoginPage",
@@ -55,7 +65,6 @@ const router = createBrowserRouter([
     path: "/UserDetails",
     element: <UserDetails></UserDetails>,
   },
-
   {
     path: "/Contact",
     element: <ContactPage></ContactPage>,
@@ -88,12 +97,21 @@ const router = createBrowserRouter([
     path: "/ImportStudentData",
     element: <ImportStudentData></ImportStudentData>,
   },
+  {
+    path: "/AssignmentForm",
+    element: <AssignmentForm></AssignmentForm>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+      {/* <BrowserRouter>
+        <App />
+      </BrowserRouter> */}
     </Provider>
   </React.StrictMode>
 );
