@@ -30,7 +30,14 @@ import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudent
 import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
 import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
 import Admin from "./components/Admin/Admin.jsx";
+import Contacts from "./components/Pages/contacts/index.jsx";
+import Sidebar from "./components/Admin/Sidebar/Sidebar.jsx";
+import Topbar from "./components/Admin/Sidebar/topbar.jsx";
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App></App>,
+  },
   {
     path: "/LoginPage",
     element: <LoginPage></LoginPage>,
@@ -84,8 +91,32 @@ const router = createBrowserRouter([
     element: <AssignmentForm></AssignmentForm>,
   },
   {
-    path: "/Admin",
-    element: <Admin></Admin>,
+    path: "/side",
+    element: <Sidebar></Sidebar>,
+  },
+  {
+    path: "/email",
+    element: <SendEmailsButton></SendEmailsButton>,
+  },
+  {
+    path: "/message",
+    element: <AdminMessageForm></AdminMessageForm>,
+  },
+  {
+    path: "/announcement",
+    element: <AdminAnnouncementPage></AdminAnnouncementPage>,
+  },
+  {
+    path: "/contact",
+    element: <Contacts></Contacts>,
+  },
+  {
+    path: "/SidebarNew",
+    element: <SidebarNew></SidebarNew>,
+  },
+  {
+    path: "/topbar",
+    element: <Topbar></Topbar>,
   },
 ]);
 

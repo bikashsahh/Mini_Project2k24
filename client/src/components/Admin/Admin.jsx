@@ -21,31 +21,28 @@ import AdminMessageForm from "./Messages/AddMessage";
 import AdminAnnouncementPage from "./Messages/AdminAnnouncementPage";
 // import Contacts from "../components/Pages/contacts";
 import Contacts from "../Pages/contacts";
+// import Contacts from "../Pages/contacts";
 // import Home from "../components/HomePage_Utilities/Home";
 import { BrowserRouter } from "react-router-dom";
+import Home from "../HomePage_Utilities/Home";
 const Admin = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <SidebarNew isSidebar={isSidebar} />
+          {/* <SidebarNew isSidebar={isSidebar} handlePage={handlePage} /> */}
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
-            <Routes>
-              <Route path="/" element={<DashboardNew />} />
-              <Route
-                path="/ImportStudentData"
-                element={<ImportStudentData />}
-              />
-              <Route path="/email" element={<SendEmailsButton />} />
-              <Route path="/message" element={<AdminMessageForm />} />
-              <Route path="/announcement" element={<AdminAnnouncementPage />} />
-              <Route path="/contactdemo" element={<Contacts />} />
-            </Routes>
+            {/* <Topbar setIsSidebar={setIsSidebar} /> */}
+
+            {/* <SendEmailsButton></SendEmailsButton>
+            <SendEmailsButton></SendEmailsButton> */}
+            <></>
           </main>
+          {/* <Contacts></Contacts> */}
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

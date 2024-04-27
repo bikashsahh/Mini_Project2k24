@@ -52,11 +52,15 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const SidebarNew = () => {
+const SidebarNew = ({ handlePage }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  function handleClick(pg) {
+    // console.log("Side Bar click", pg);
+    handlePage(pg);
+  }
 
   return (
     <Box
@@ -136,14 +140,15 @@ const SidebarNew = () => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to="/"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
+            <Box onClick={() => handleClick("Dashboard")}>
+              <Item
+                title="Dashboard"
+                // to="/"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -151,28 +156,33 @@ const SidebarNew = () => {
             >
               Student
             </Typography>
-            <Item
-              title="Student List"
-              to="/"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Assignment"
-              to="/"
-              icon={<AssignmentIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Import Excel"
-              to="/ImportStudentData"
-              icon={<ImportExportIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
+            <Box onClick={() => handleClick("StudentList")}>
+              <Item
+                title="Student List"
+                // to="/"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("Assignment")}>
+              <Item
+                title="Assignment"
+                // to="/"
+                icon={<AssignmentIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("ImportExcel")}>
+              <Item
+                title="Import Excel"
+                // to="/ImportStudentData"
+                icon={<ImportExportIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -180,27 +190,33 @@ const SidebarNew = () => {
             >
               Services
             </Typography>
-            <Item
-              title="Email"
-              to="/email"
-              icon={<AttachEmailIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Message"
-              to="/message"
-              icon={<MessageIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Announcement"
-              to="/announcement"
-              icon={<AnnouncementIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <Box onClick={() => handleClick("Email")}>
+              <Item
+                title="Email"
+                // to="/email"
+                icon={<AttachEmailIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("Message")}>
+              <Item
+                title="Message"
+                // to="/message"
+                icon={<MessageIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("Announcement")}>
+              <Item
+                title="Announcement"
+                // to="/announcement"
+                icon={<AnnouncementIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -208,34 +224,42 @@ const SidebarNew = () => {
             >
               Programs
             </Typography>
-            <Item
-              title="MCA"
-              to="/mca"
-              icon={<SubjectIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="BCA"
-              to="/bca"
-              icon={<LibraryBooksIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="CIT"
-              to="/cit"
-              icon={<NotesIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="PGDCA"
-              to="/pgdca"
-              icon={<DvrIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <Box onClick={() => handleClick("MCA")}>
+              <Item
+                title="MCA"
+                // to="/mca"
+                icon={<SubjectIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("BCA")}>
+              <Item
+                title="BCA"
+                // to="/bca"
+                icon={<LibraryBooksIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("CIT")}>
+              <Item
+                title="CIT"
+                // to="/cit"
+                icon={<NotesIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+            <Box onClick={() => handleClick("PGDCA")}>
+              <Item
+                title="PGDCA"
+                // to="/pgdca"
+                icon={<DvrIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
           </Box>
         </Menu>
       </ProSidebar>

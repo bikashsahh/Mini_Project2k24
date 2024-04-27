@@ -16,21 +16,24 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import AdminAnnouncementPage from "../Messages/AdminAnnouncementPage";
 import { useNavigate } from "react-router-dom";
 
-const DashboardNew = () => {
+const DashboardNew = ({ handlePage }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
   const handleEmailClick = () => {
-    navigate("/email");
+    handlePage("Email");
+    // navigate("/email");
   };
 
   const handleStudentListClick = () => {
-    navigate("/student-list-route");
+    handlePage("StudentList");
+    // navigate("/student-list-route");
   };
 
   const handleProgrammeClick = () => {
-    navigate("/program");
+    // navigate("/program");
+    handlePage("MCA");
   };
 
   return (
