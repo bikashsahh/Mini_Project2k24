@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-// import { tokens } from "../../theme";
 import { tokens } from "../../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -17,6 +23,16 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import MessageIcon from "@mui/icons-material/Message";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import SubjectIcon from "@mui/icons-material/Subject";
+import NotesIcon from "@mui/icons-material/Notes";
+import DvrIcon from "@mui/icons-material/Dvr";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -80,10 +96,13 @@ const SidebarNew = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                <Typography variant="h2" color={colors.grey[100]}>
+                  Admin
                 </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <IconButton
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  sx={{ marginLeft: "10px" }}
+                >
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
@@ -91,27 +110,25 @@ const SidebarNew = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box mb="25px">
+            <Box mb="5px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src={`logo.png`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
               <Box textAlign="center">
                 <Typography
-                  variant="h2"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+                  // className=" logotext"
+                  variant="h4"
+                  sx={{ marginLeft: "10px", p: 1 }}
                 >
-                  Ed Roh
-                </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
+                  MNNIT ALLAHABAD
+                  <br />
+                  <span className="">IGNOU Study Centre</span>
                 </Typography>
               </Box>
             </Box>
@@ -131,55 +148,26 @@ const SidebarNew = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Data
+              Student
             </Typography>
             <Item
-              title="Manage Team"
-              to="/team"
+              title="Student List"
+              to="/"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              title="Assignment"
+              to="/"
+              icon={<AssignmentIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pages
-            </Typography>
-            <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
+              title="Import Excel"
+              to="/ImportStudentData"
+              icon={<ImportExportIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -189,33 +177,61 @@ const SidebarNew = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Charts
+              Services
             </Typography>
             <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
+              title="Email"
+              to="/email"
+              icon={<AttachEmailIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
+              title="Message"
+              to="/message"
+              icon={<MessageIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
+              title="Announcement"
+              to="/announcement"
+              icon={<AnnouncementIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Programs
+            </Typography>
+            <Item
+              title="MCA"
+              to="/mca"
+              icon={<SubjectIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
+              title="BCA"
+              to="/bca"
+              icon={<LibraryBooksIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="CIT"
+              to="/cit"
+              icon={<NotesIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="PGDCA"
+              to="/pgdca"
+              icon={<DvrIcon />}
               selected={selected}
               setSelected={setSelected}
             />

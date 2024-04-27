@@ -57,7 +57,7 @@ const AdminAnnouncementPage = () => {
         // bgcolor: "#E3F2FD",
         justifyContent: "center",
         p: 2,
-        mt: "10%",
+        // mt: "10%",
       }}
     >
       <Typography
@@ -68,14 +68,14 @@ const AdminAnnouncementPage = () => {
           fontSize: "3rem",
           fontWeight: "bold",
           padding: "0.5rem 1rem",
-          mb: 3,
+          mb: 1,
         }}
       >
         Make a Announcement
       </Typography>
       <Box
         sx={{
-          bgcolor: "#EDE7F6",
+          // bgcolor: "#EDE7F6",
           color: "",
           p: 2,
           borderRadius: "20px",

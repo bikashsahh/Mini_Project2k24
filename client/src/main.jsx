@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./base.css";
+
 // import "./components/Admin/Admin.css";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
@@ -106,12 +107,12 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}>
+      {/* <RouterProvider router={router}>
         <App />
-      </RouterProvider>
-      {/* <BrowserRouter>
+      </RouterProvider> */}
+      <BrowserRouter>
         <App />
-      </BrowserRouter> */}
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
