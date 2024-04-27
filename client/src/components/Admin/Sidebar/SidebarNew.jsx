@@ -85,8 +85,9 @@ const SidebarNew = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "10px 0 10px 0",
               color: colors.grey[100],
+              // padding: "5px",
             }}
           >
             {!isCollapsed && (
@@ -96,9 +97,18 @@ const SidebarNew = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h2" color={colors.grey[100]}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <img
+                    alt="profile-user"
+                    width="100px"
+                    height="90px"
+                    src={`logo.png`}
+                    style={{ cursor: "pointer", borderRadius: "50%" }}
+                  />
+                </Box>
+                {/* <Typography variant="h2" color={colors.grey[100]}>
                   Admin
-                </Typography>
+                </Typography> */}
                 <IconButton
                   onClick={() => setIsCollapsed(!isCollapsed)}
                   sx={{ marginLeft: "10px" }}
@@ -111,15 +121,6 @@ const SidebarNew = () => {
 
           {!isCollapsed && (
             <Box mb="5px">
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={`logo.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
-              </Box>
               <Box textAlign="center">
                 <Typography
                   // className=" logotext"

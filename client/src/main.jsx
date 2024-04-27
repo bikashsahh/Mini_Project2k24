@@ -29,15 +29,8 @@ import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
 import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
 import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
 import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
+import Admin from "./components/Admin/Admin.jsx";
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/side",
-    element: <SidebarNew />,
-  },
   {
     path: "/LoginPage",
     element: <LoginPage></LoginPage>,
@@ -54,10 +47,7 @@ const router = createBrowserRouter([
     path: "/Home",
     element: <Home></Home>,
   },
-  {
-    path: "/AdminAnnouncementPage",
-    element: <AdminAnnouncementPage></AdminAnnouncementPage>,
-  },
+
   {
     path: "/AnnouncementPage",
     element: <AnnouncementPage></AnnouncementPage>,
@@ -74,10 +64,7 @@ const router = createBrowserRouter([
     path: "/About",
     element: <AboutPage></AboutPage>,
   },
-  {
-    path: "/AdminMessageForm",
-    element: <AdminMessageForm></AdminMessageForm>,
-  },
+
   {
     path: "/courses",
     element: <Courses></Courses>,
@@ -86,33 +73,31 @@ const router = createBrowserRouter([
     path: "/students",
     element: <Students></Students>,
   },
-  {
-    path: "/SendEmailsButton",
-    element: <SendEmailsButton></SendEmailsButton>,
-  },
+
   {
     path: "/Dashboard",
     element: <Dashboard></Dashboard>,
   },
-  {
-    path: "/ImportStudentData",
-    element: <ImportStudentData></ImportStudentData>,
-  },
+
   {
     path: "/AssignmentForm",
     element: <AssignmentForm></AssignmentForm>,
+  },
+  {
+    path: "/Admin",
+    element: <Admin></Admin>,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <RouterProvider router={router}>
+      <RouterProvider router={router}>
         <App />
-      </RouterProvider> */}
-      <BrowserRouter>
+      </RouterProvider>
+      {/* <BrowserRouter>
         <App />
-      </BrowserRouter>
+      </BrowserRouter> */}
     </Provider>
   </React.StrictMode>
 );

@@ -28,7 +28,7 @@ const LoginPage = () => {
       if (response.data.success) {
         window.localStorage.setItem("isLogedIn", true);
         if (response.data.isAdmin) {
-          navigate("/Home");
+          navigate("/Admin");
         } else {
           // navigate("/AssignmentForm");
           navigate("/AssignmentForm", {

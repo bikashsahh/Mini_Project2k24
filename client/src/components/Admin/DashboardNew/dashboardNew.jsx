@@ -14,10 +14,24 @@ import EmailIcon from "@mui/icons-material/Email";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AdminAnnouncementPage from "../Messages/AdminAnnouncementPage";
+import { useNavigate } from "react-router-dom";
 
 const DashboardNew = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
+
+  const handleEmailClick = () => {
+    navigate("/email");
+  };
+
+  const handleStudentListClick = () => {
+    navigate("/student-list-route");
+  };
+
+  const handleProgrammeClick = () => {
+    navigate("/program");
+  };
 
   return (
     <Box m="35px">
@@ -27,7 +41,6 @@ const DashboardNew = () => {
           title="Welcome To Your Dashboard"
           subtitle="MNNIT Allahabad Ignou Study Center"
         />
-
         <Box>
           <Button
             sx={{
@@ -38,8 +51,7 @@ const DashboardNew = () => {
               padding: "10px 20px",
             }}
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
+            <DownloadOutlinedIcon sx={{ mr: "10px" }} /> Download Reports
           </Button>
         </Box>
       </Box>
@@ -55,7 +67,6 @@ const DashboardNew = () => {
         justifyContent="center"
       >
         {/* ROW 1 */}
-
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -65,6 +76,8 @@ const DashboardNew = () => {
           justifyContent="center"
           sx={{ p: 4 }}
           borderRadius={"10px"}
+          onClick={handleEmailClick}
+          style={{ cursor: "pointer" }}
         >
           <StatBox
             title="Sent Email's"
@@ -77,8 +90,6 @@ const DashboardNew = () => {
                   color: colors.greenAccent[600],
                   fontSize: "35px",
                   marginLeft: "30%",
-                  // alignItems: "center",
-                  // justifyContent: "center",
                 }}
               />
             }
@@ -92,6 +103,8 @@ const DashboardNew = () => {
           justifyContent="center"
           sx={{ p: 4 }}
           borderRadius={"10px"}
+          onClick={handleStudentListClick}
+          style={{ cursor: "pointer" }}
         >
           <StatBox
             title="Student's List"
@@ -117,6 +130,8 @@ const DashboardNew = () => {
           justifyContent="center"
           sx={{ p: 4 }}
           borderRadius={"10px"}
+          onClick={handleProgrammeClick}
+          style={{ cursor: "pointer" }}
         >
           <StatBox
             title="Programme"
