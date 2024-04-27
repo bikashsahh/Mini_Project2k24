@@ -322,6 +322,29 @@ app.get("/studentslist", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//-------------------------------------------
+app.get("/assignmentlist", async (req, res) => {
+  try {
+    const query = `
+      SELECT
+        s.registrationno,
+        s.name,
+        s.programme,
+        sub.course_name,
+        sub.submitted_at,
+        sub.file_path
+      FROM
+        students s
+        LEFT JOIN submissions sub ON s.registrationno = sub.registrationno
+    `;
+    const { rows } = await db.query(query);
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //-------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -6,9 +6,10 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Divider,
 } from "@mui/material";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminAnnouncementPage = () => {
   const [title, setTitle] = useState("");
@@ -37,8 +38,10 @@ const AdminAnnouncementPage = () => {
       setTitle("");
       setDescription("");
       setFile(null);
+      toast.success("Announcement created successfully!"); // Show success notification
     } catch (error) {
       console.error("Error creating announcement:", error);
+      toast.error("Failed to create announcement. Please try again."); // Show error notification
     } finally {
       setIsLoading(false);
     }
@@ -54,10 +57,8 @@ const AdminAnnouncementPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        // bgcolor: "#E3F2FD",
         justifyContent: "center",
         p: 2,
-        // mt: "10%",
       }}
     >
       <Typography
@@ -73,16 +74,7 @@ const AdminAnnouncementPage = () => {
       >
         Make a Announcement
       </Typography>
-      <Box
-        sx={{
-          // bgcolor: "#EDE7F6",
-          color: "",
-          p: 2,
-          borderRadius: "20px",
-          mb: 2,
-          width: "90%",
-        }}
-      >
+      <Box sx={{ p: 2, borderRadius: "20px", mb: 2, width: "90%" }}>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
@@ -122,6 +114,7 @@ const AdminAnnouncementPage = () => {
           </Stack>
         </form>
       </Box>
+      <ToastContainer /> {/* Add the ToastContainer */}
     </Box>
   );
 };

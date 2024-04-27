@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Grid, Typography, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
+import { useTheme } from "@mui/material";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   padding: theme.spacing(6),
@@ -14,7 +25,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 }));
 
 const StyledContact = styled("div")(({ theme }) => ({
-  backgroundColor: "#f5f5f5",
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: "8px",
   [theme.breakpoints.down("sm")]: {
@@ -40,11 +51,15 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const ContactPage = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,13 +67,16 @@ const ContactPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await axios.post("http://localhost:3000/contact", formData);
       setFormData({ name: "", email: "", message: "" });
-      alert("Message sent successfully!");
+      toast.success("Message sent successfully!");
     } catch (error) {
       console.error(error);
-      alert("Error sending message. Please try again later.");
+      toast.error("Error sending message. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,8 +120,13 @@ const ContactPage = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                 />
-                <StyledButton variant="contained" fullWidth type="submit">
-                  Send Message
+                <StyledButton
+                  variant="contained"
+                  fullWidth
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? <CircularProgress size={24} /> : "Send Message"}
                 </StyledButton>
               </form>
             </StyledContact>
@@ -162,6 +185,7 @@ const ContactPage = () => {
           </Grid>
         </Grid>
       </StyledRoot>
+      <ToastContainer />
     </div>
   );
 };

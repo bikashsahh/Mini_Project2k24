@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addMessage } from "../../../redux/Slice/message";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Box,
   Typography,
@@ -17,7 +18,6 @@ const AdminMessageForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const formRef = useRef(null);
-  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setNewMessage(event.target.value);
@@ -41,9 +41,7 @@ const AdminMessageForm = () => {
     if (!newMessage) {
       return;
     }
-
     setIsLoading(true);
-
     try {
       await axios.post("http://localhost:3000/messages", {
         message: newMessage,
@@ -51,9 +49,10 @@ const AdminMessageForm = () => {
       dispatch(addMessage(newMessage));
       setNewMessage("");
       formRef.current.reset();
-      navigate("/Home");
+      toast.success("Message sent successfully!"); // Show success notification
     } catch (error) {
       console.error("Error adding message:", error);
+      toast.error("Failed to send message. Please try again."); // Show error notification
     } finally {
       setIsLoading(false);
     }
@@ -104,6 +103,7 @@ const AdminMessageForm = () => {
           </Button>
         </Box>
       </Box>
+      <ToastContainer /> {/* Add the ToastContainer */}
     </Box>
   );
 };

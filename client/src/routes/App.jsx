@@ -1,5 +1,4 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../base.css";
@@ -11,9 +10,8 @@ import ImportStudentData from "../components/Admin/Sidebar/Students/ImportStuden
 import SendEmailsButton from "../components/Admin/Sidebar/SendEmail/SendEmailsButton";
 import AdminMessageForm from "../components/Admin/Messages/AddMessage";
 import AdminAnnouncementPage from "../components/Admin/Messages/AdminAnnouncementPage";
-import Contacts from "../components/Pages/contacts";
-import Home from "../components/HomePage_Utilities/Home";
-import Admin from "../components/Admin/Admin";
+import StudentsList from "../components/Students/StudentsList";
+import AssignmentList from "../components/Students/Assignment/AssignmentList";
 const App = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -34,8 +32,8 @@ const App = () => {
             {page === "Dashboard" && (
               <DashboardNew handlePage={handlePage}></DashboardNew>
             )}
-            {page === "StudentList" && <Contacts></Contacts>}
-            {page === "Assignment" && <></>}
+            {page === "StudentList" && <StudentsList></StudentsList>}
+            {page === "Assignment" && <AssignmentList></AssignmentList>}
             {page === "ImportExcel" && <ImportStudentData></ImportStudentData>}
             {page === "Email" && <SendEmailsButton></SendEmailsButton>}
             {page === "Message" && <AdminMessageForm></AdminMessageForm>}

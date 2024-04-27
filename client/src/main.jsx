@@ -29,10 +29,10 @@ import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
 import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
 import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
 import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
-import Admin from "./components/Admin/Admin.jsx";
-import Contacts from "./components/Pages/contacts/index.jsx";
 import Sidebar from "./components/Admin/Sidebar/Sidebar.jsx";
 import Topbar from "./components/Admin/Sidebar/topbar.jsx";
+import StudentsList from "./components/Students/StudentsList/index.jsx";
+import AssignmentList from "./components/Students/Assignment/AssignmentList.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -107,9 +107,18 @@ const router = createBrowserRouter([
     element: <AdminAnnouncementPage></AdminAnnouncementPage>,
   },
   {
-    path: "/contact",
-    element: <Contacts></Contacts>,
+    path: "/studentlist",
+    element: <StudentsList></StudentsList>,
   },
+  {
+    path: "/assignmentlist",
+    element: <AssignmentList></AssignmentList>,
+  },
+  // {
+  //   path: "/contact",
+  //   element: <Contacts></Contacts>,
+  // },
+
   {
     path: "/SidebarNew",
     element: <SidebarNew></SidebarNew>,

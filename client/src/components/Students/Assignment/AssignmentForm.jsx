@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import {
@@ -9,6 +9,8 @@ import {
   MenuItem,
   CircularProgress,
 } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AssignmentForm = () => {
   const [courses, setCourses] = useState([]);
@@ -19,6 +21,7 @@ const AssignmentForm = () => {
   const registrationno = location.state?.registrationno || "";
   const [fileName, setFileName] = useState("No image selected");
   const [fileUrl, setFileUrl] = useState("");
+  const fileInputRef = useRef(null); // Ref for file input element
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -29,23 +32,24 @@ const AssignmentForm = () => {
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
+        toast.error("Error fetching courses. Please try again later.");
       }
     };
-
     fetchCourses();
   }, [registrationno]);
 
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
-    // console.log("course: ", selectedCourse);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     if (file) {
       try {
         const formData = new FormData();
         formData.append("file", file);
-
         const resFile = await axios({
           method: "post",
           url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
@@ -58,7 +62,6 @@ const AssignmentForm = () => {
         });
         const ImgHash =
           "https://gateway.pinata.cloud/ipfs/" + resFile.data.IpfsHash;
-        // const ImgHash=`ipfs://${resFile.data.IpfsHash}`;
         setFileUrl(ImgHash);
 
         try {
@@ -70,23 +73,25 @@ const AssignmentForm = () => {
             `http://localhost:3000/assignments?registrationno=${registrationno}`,
             fileData
           );
-          console.log("Succesfully Submitted");
+          console.log("Successfully Submitted");
+          toast.success("Assignment submitted successfully!");
+          resetForm(); // Reset the form
         } catch (error) {
           console.log("Error in form submitting:", error);
+          toast.error("Error submitting assignment. Please try again.");
         }
-        alert("Successfully Image Uploaded");
-        setFileName("No image selected");
-        setFile(null);
       } catch (e) {
-        alert("Unable to upload image to Pinata");
+        toast.error("Unable to upload image to Pinata");
       }
+    } else {
+      toast.error("Please select a file to upload.");
     }
-    setFile(null);
+
+    setIsLoading(false);
   };
 
   const handleFileChange = (e) => {
-    const data = e.target.files[0]; //files array of files object
-    // console.log(data);
+    const data = e.target.files[0];
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(data);
     reader.onloadend = () => {
@@ -94,6 +99,16 @@ const AssignmentForm = () => {
     };
     setFileName(e.target.files[0].name);
     e.preventDefault();
+  };
+
+  const resetForm = () => {
+    setSelectedCourse("");
+    setFile(null);
+    setFileName("No image selected");
+    // Clear file input value
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -117,8 +132,10 @@ const AssignmentForm = () => {
           </MenuItem>
         ))}
       </Select>
+      {/* Add ref to file input */}
       <input
         type="file"
+        ref={fileInputRef}
         id="file-upload"
         name="data"
         onChange={handleFileChange}
@@ -131,6 +148,7 @@ const AssignmentForm = () => {
       >
         {isLoading ? <CircularProgress size={24} /> : "Submit"}
       </Button>
+      <ToastContainer />
     </Box>
   );
 };
