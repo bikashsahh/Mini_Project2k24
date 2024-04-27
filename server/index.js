@@ -243,7 +243,7 @@ app.post("/contact", async (req, res) => {
 });
 
 //--------------------------------------------------------------------------
-app.get("/students", async (req, res) => {
+app.get("list", async (req, res) => {
   try {
     const { rows } = await db.query("SELECT * FROM studentsinformation");
     res.json(rows);
@@ -307,7 +307,21 @@ app.post("/assignments", async (req, res) => {
     res.status(500).send("Error uploading file and recording submission");
   }
 });
-
+//-----------------------------------------
+// Route to fetch student and submission data
+app.get("/studentslist", async (req, res) => {
+  try {
+    const query = `
+    SELECT s.registrationno, s.name, s.programme, s.courses, s.mobile, s.email, s.registrationno AS id 
+    FROM students s 
+    `;
+    const { rows } = await db.query(query);
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //-------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

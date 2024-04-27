@@ -20,7 +20,7 @@ const App = () => {
   const [page, setPage] = useState("Dashboard");
 
   function handlePage(pg) {
-    console.log("I got clicked:", pg);
+    console.log("App got clicked:", pg);
     setPage(pg);
   }
   return (

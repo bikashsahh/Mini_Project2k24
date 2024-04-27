@@ -33,6 +33,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import SubjectIcon from "@mui/icons-material/Subject";
 import NotesIcon from "@mui/icons-material/Notes";
 import DvrIcon from "@mui/icons-material/Dvr";
+import { useSelector } from "react-redux";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -58,10 +59,14 @@ const SidebarNew = ({ handlePage }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   function handleClick(pg) {
-    // console.log("Side Bar click", pg);
+    console.log("Side Bar click", pg);
+    setSelected(pg);
     handlePage(pg);
   }
-
+  // const dispatch = useDispatch();
+  // const tab = useSelector((state) => state.selectedTab.tab);
+  // // const setTab = useSelector((state) => state.selectedTab.setTab);
+  // console.log("settab at sidebar", tab);
   return (
     <Box
       sx={{
@@ -104,8 +109,8 @@ const SidebarNew = ({ handlePage }) => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
-                    width="100px"
-                    height="90px"
+                    width="50px"
+                    height="50px"
                     src={`logo.png`}
                     style={{ cursor: "pointer", borderRadius: "50%" }}
                   />

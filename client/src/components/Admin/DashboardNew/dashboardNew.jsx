@@ -14,26 +14,38 @@ import EmailIcon from "@mui/icons-material/Email";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AdminAnnouncementPage from "../Messages/AdminAnnouncementPage";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { setTab } from "../../../redux/Slice/selectedtab";
 
 const DashboardNew = ({ handlePage }) => {
+  // const dispatch = useDispatch();
+  // const tab = useSelector((state) => state.selectedTab.tab);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // function
 
   const handleEmailClick = () => {
     handlePage("Email");
+    // setTab("Email");
+    // dispatch(tab("Email"));
     // navigate("/email");
   };
 
   const handleStudentListClick = () => {
     handlePage("StudentList");
+    // setTab("StudentList");
+    // dispatch(setTab("StudentList"));
     // navigate("/student-list-route");
   };
 
   const handleProgrammeClick = () => {
     // navigate("/program");
+    // setTab("MCA");
     handlePage("MCA");
+    // dispatch(setTab("MCA"));
   };
 
   return (

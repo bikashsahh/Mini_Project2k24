@@ -8,7 +8,7 @@ import App from "./routes/App.jsx";
 import {
   RouterProvider,
   createBrowserRouter,
-  BrowserRouter,
+  // BrowserRouter,
 } from "react-router-dom";
 import Home from "./components/HomePage_Utilities/Home.jsx";
 import Header from "./components/HomePage_Utilities/Header.jsx";
