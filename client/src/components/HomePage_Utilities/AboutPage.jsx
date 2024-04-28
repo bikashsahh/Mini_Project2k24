@@ -1,40 +1,38 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
-import { Grid, Typography, Box } from "@mui/material";
+import { Box, Typography, Grid, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import styled from "@emotion/styled";
 
-const StyledRoot = styled("div")(({ theme }) => ({
-  padding: theme.spacing(6),
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3),
-  },
+const StyledSection = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[5],
+  // borderBlockColor: "black",
+  // border: "0.0001px outset white",
+  textAlign: "justify",
 }));
 
-const StyledSection = styled("div")(({ theme }) => ({
-  backgroundColor: "#f5f5f5",
-  padding: theme.spacing(4),
-  borderRadius: "8px",
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3),
-  },
-}));
+const About = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-const StyledLogo = styled("img")(({ theme }) => ({
-  width: "100px",
-  height: "auto",
-  marginBottom: theme.spacing(2),
-}));
-
-const AboutPage = () => {
   return (
-    <StyledRoot>
-      <Grid container spacing={4}>
+    <Box sx={{ my: 4 }}>
+      <Typography
+        variant="h1"
+        component="h1"
+        gutterBottom
+        sx={{ textAlign: "center", p: 0 }}
+      >
+        About Us
+      </Typography>
+      <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={6}>
           <StyledSection>
-            {/* <StyledLogo src="/img1.webp" alt="MNNIT Logo" /> */}
-            <Typography variant="h5" gutterBottom>
+            {/* <Typography variant="h4" gutterBottom>
               About MNNIT Allahabad IGNOU Study Centre
-            </Typography>
-            <Typography variant="body1">
+            </Typography> */}
+            <Typography variant="h4">
               MNNIT Allahabad IGNOU Study Centre is a collaborative effort
               between Motilal Nehru National Institute of Technology Allahabad
               and Indira Gandhi National Open University (IGNOU). The study
@@ -43,44 +41,29 @@ const AboutPage = () => {
             </Typography>
           </StyledSection>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <StyledSection>
-            <Typography variant="h5" gutterBottom>
+        {/* <Grid md={0} p={2} mt={1} ml={8} mr={7}> */}
+        {/* <StyledSection> */}
+        {/* <Typography
+              variant="h3"
+              gutterBottom
+              sx={{ textAlign: "center", p: 0 }}
+            >
               Our Mission
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="h4">
               Our mission is to empower students with accessible and flexible
               learning options, fostering their academic and personal growth.
               Through our collaborative efforts, we aim to expand educational
               horizons and contribute to the holistic development of the
               community.
-            </Typography>
-          </StyledSection>
-        </Grid>
-        <Grid item xs={12}>
-          <StyledSection>
-            <Typography variant="h5" gutterBottom>
-              Our Values
-            </Typography>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography variant="body1">
-                - Commitment to Excellence
-              </Typography>
-              <Typography variant="body1">
-                - Inclusivity and Diversity
-              </Typography>
-              <Typography variant="body1">
-                - Fostering Innovation and Collaboration
-              </Typography>
-              <Typography variant="body1">
-                - Empowering Lifelong Learning
-              </Typography>
-            </Box>
-          </StyledSection>
-        </Grid>
+            </Typography> */}
+        {/* </StyledSection> */}
+        {/* </Grid> */}
+        {/* <Grid item xs={12}> */}
       </Grid>
-    </StyledRoot>
+      {/* </Grid> */}
+    </Box>
   );
 };
 
-export default AboutPage;
+export default About;

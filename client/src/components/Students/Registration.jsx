@@ -14,7 +14,7 @@ const IgnouRegistrationBanner = () => {
         flexDirection: "column",
         alignItems: "center",
         bgcolor: "#B9F6CA",
-        color: "",
+        color: "black",
         p: 0,
         borderRadius: "8px",
       }}
@@ -71,8 +71,8 @@ const IgnouRegistrationBanner = () => {
             transform: "translate(-50%, -50%)",
             width: 600,
             height: 200,
-            bgcolor: "#EDE7F6",
-            color: "",
+            bgcolor: "#e1e2fe",
+            color: "black",
             borderRadius: "8px",
             p: 5,
             alignContent: "center",
@@ -80,7 +80,7 @@ const IgnouRegistrationBanner = () => {
         >
           <Divider>
             <Typography
-              variant="h4"
+              variant="contained"
               component="h2"
               alignContent={"center"}
               sx={{ mb: 3 }}
@@ -90,7 +90,7 @@ const IgnouRegistrationBanner = () => {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 variant="outlined"
-                color="secondary"
+                color="primary"
                 target="_blank"
                 href="https://ignouiop.samarth.edu.in/index.php/registration/user/register"
                 sx={{ mr: 2 }}
@@ -99,7 +99,7 @@ const IgnouRegistrationBanner = () => {
               </Button>
               <Button
                 variant="outlined"
-                color="secondary"
+                color="primary"
                 target="_blank"
                 href="https://onlinerr.ignou.ac.in/"
               >

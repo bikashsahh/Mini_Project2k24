@@ -34,8 +34,8 @@ const AnnouncementBanner = () => {
         flexDirection: "column",
         alignItems: "center",
         bgcolor: "#B39DDB",
-        color: "",
-        p: 0,
+        color: "black",
+        p: 1.5,
         borderRadius: "8px",
         cursor: "pointer",
       }}

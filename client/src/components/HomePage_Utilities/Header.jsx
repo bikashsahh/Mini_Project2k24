@@ -1,6 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  CssBaseline,
+  IconButton,
+  Stack,
+  TextField,
+  ThemeProvider,
+} from "@mui/material";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import CommentBankIcon from "@mui/icons-material/CommentBank";
 import OnDeviceTrainingIcon from "@mui/icons-material/OnDeviceTraining";
@@ -10,15 +19,20 @@ import ContactPage from "./ContactPage";
 import NotificationCenter from "./HomeCenter";
 import AboutPage from "./AboutPage";
 import Footer from "./Footer";
+import { ColorModeContext, tokens, useMode } from "../../theme";
+import { useTheme } from "@emotion/react";
 
 const Header = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+  // const [theme, colorMode] = useMode();
   const [isOpen, setIsOpen] = useState(false);
   const handleHover = () => setIsOpen(!isOpen);
 
   const navigate = useNavigate();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
-  // const isAuthenticated = window.localStorage.getItem("isLogedIn");
   const [isAuthenticated, setIsAuthenticated] = useState(
     window.localStorage.getItem("isLogedIn") &&
       !location.pathname.includes("/admin")
@@ -29,7 +43,7 @@ const Header = () => {
   const programsRef = useRef(null);
   const contactRef = useRef(null);
   const aboutRef = useRef(null);
-
+  // const colorMode = useContext(ColorModeContext);
   const DropdownList = ({ isOpen }) => {
     if (!isOpen) return null;
     return (
@@ -38,8 +52,9 @@ const Header = () => {
           position: "absolute",
           listStyle: "none",
           padding: 3,
-          background: "#EDE7F6",
-          borderRadius: "15px",
+          background: "#dbf5ee",
+          color: "black",
+          // borderRadius: "15px",
         }}
       >
         <ListItem disablePadding>
@@ -73,6 +88,7 @@ const Header = () => {
       behavior: "smooth",
     });
   };
+
   const handleNavigation = (path, buttonName) => {
     setActiveButton(buttonName);
     switch (buttonName) {
@@ -99,13 +115,18 @@ const Header = () => {
     setIsAuthenticated(false);
     navigate("/LoginPage");
   };
+
   useEffect(() => {
     if (location.pathname.includes("/Home")) {
       setIsAuthenticated(false);
     }
   }, [location.pathname]);
+
   return (
     <>
+      {/* <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline /> */}
       <Stack
         direction="row"
         spacing={4}
@@ -114,14 +135,17 @@ const Header = () => {
           position: "fixed",
           width: "100%",
           zIndex: 2,
-          background: "#ede7f6",
+          background:
+            useTheme().palette.mode === "dark"
+              ? tokens("dark").blueAccent[900]
+              : "white",
         }}
       >
         <Stack direction={"row"} spacing={1.5}>
           <Button href="/">
             <img src="logo.png" alt="Mnnit" width="55" height="55" />
           </Button>
-          <span className="mt-2 logotext">
+          <span className="mt-2">
             MNNIT ALLAHABAD
             <br />
             <span className="">IGNOU Study Centre</span>
@@ -152,7 +176,6 @@ const Header = () => {
               startIcon={<CommentBankIcon />}
               sx={{ border: 0 }}
               onClick={() => scrollToSection(null, "Programs")}
-              // onClick={() => handleNavigation("/Programs", "Programs")}
             >
               Programs
             </Button>
@@ -224,62 +247,28 @@ const Header = () => {
             </Stack>
           )}
         </Stack>
-        {/* <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={2}
-        >
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            color="secondary"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          {isAuthenticated ? (
-            <Button
-              variant="outlined"
-              color="secondary"
-              size="medium"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+        <IconButton onClick={colorMode.toggleColorMode}>
+          {theme.palette.mode === "dark" ? (
+            <DarkModeOutlinedIcon />
           ) : (
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="medium"
-                onClick={() => handleNavigation("/LoginPage")}
-              >
-                Login
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="medium"
-                href="https://ignouadmission.samarth.edu.in/index.php/registration/user/register"
-              >
-                Sign-Up
-              </Button>
-            </Stack>
+            <LightModeOutlinedIcon />
           )}
-        </Stack> */}
+        </IconButton>
       </Stack>
+      {/* </ThemeProvider> */}
+      {/* </ColorModeContext.Provider> */}
 
       <div ref={homeRef}>
         <NotificationCenter></NotificationCenter>
       </div>
-      <div ref={programsRef}>{/* Programs section content */}</div>
+      {/* <div ref={programsRef}>Programs section content</div> */}
 
-      <div ref={aboutRef}>
-        <AboutPage></AboutPage>
-      </div>
       <div ref={contactRef}>
         <ContactPage></ContactPage>
+      </div>
+      {/* <AboutPage></AboutPage> */}
+      <div ref={aboutRef}>
+        <AboutPage></AboutPage>
       </div>
       <Footer></Footer>
     </>

@@ -7,7 +7,7 @@ import StudentProfileForm from "../Students/StudentProfile";
 
 const NotificationCenter = () => {
   return (
-    <div className="scroll">
+    <div className="">
       <Banner></Banner>
       <Important_Message />
 
