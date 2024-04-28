@@ -13,8 +13,8 @@ import {
 import Home from "./components/HomePage_Utilities/Home.jsx";
 import Header from "./components/HomePage_Utilities/Header.jsx";
 import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
-import { store } from "./redux/Store/store.jsx";
-import { Provider } from "react-redux";
+// import { store } from "./redux/Store/store.jsx";
+// import { Provider } from "react-redux";
 import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
 import UserDetails from "./components/Students/UserDetails.jsx";
 import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
@@ -37,7 +37,7 @@ import Admin from "./components/Admin/Admin.jsx";
 import Users from "./components/Students/StudentDashboard/Users.jsx";
 import StudentProfileForm from "./components/Students/StudentProfile.jsx";
 import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
-
+import { Provider } from "./context/context.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -145,7 +145,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider>
       <RouterProvider router={router}>
         <App />
       </RouterProvider>

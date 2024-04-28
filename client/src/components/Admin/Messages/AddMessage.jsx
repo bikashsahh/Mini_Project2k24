@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addMessage } from "../../../redux/Slice/message";
+// import { addMessage } from "../../../redux/Slice/message";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,7 @@ const AdminMessageForm = () => {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const formRef = useRef(null);
 
   const handleInputChange = (event) => {
@@ -46,7 +46,7 @@ const AdminMessageForm = () => {
       await axios.post("http://localhost:3000/messages", {
         message: newMessage,
       });
-      dispatch(addMessage(newMessage));
+      // dispatch(addMessage(newMessage));
       setNewMessage("");
       formRef.current.reset();
       toast.success("Message sent successfully!"); // Show success notification

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tokens, ColorModeContext, useMode } from "../../theme";
 // import { tokens } from "../../theme";
+import { useUserContext } from "../../context/context";
 import {
   Typography,
   Button,
@@ -15,6 +16,8 @@ import axios from "axios";
 import { ThemeProvider, styled } from "@mui/material/styles";
 
 const LoginPage = () => {
+  const { setRegistrationNo, userData } = useUserContext();
+
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -28,6 +31,7 @@ const LoginPage = () => {
 
     const registration = registrationRef.current.value;
     const password = passwordRef.current.value;
+    setRegistrationNo(registration);
 
     try {
       const response = await axios.post("http://localhost:3000/login", {
@@ -65,6 +69,7 @@ const LoginPage = () => {
     padding: theme.spacing(1),
   }));
   const [theme, colorMode] = useMode();
+  console.log("User data from login: ", userData);
   return (
     // <ColorModeContext.ThemeProvider value={colorMode}>
     // <ThemeProvider theme={theme}>
