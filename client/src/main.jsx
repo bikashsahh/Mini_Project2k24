@@ -103,7 +103,7 @@ const router = createBrowserRouter([
     path: "/StudentProfile",
     element: <ProfilePage></ProfilePage>,
   },
-  
+
   {
     path: "/side",
     element: <Sidebar></Sidebar>,
@@ -129,7 +129,6 @@ const router = createBrowserRouter([
     element: <AssignmentList></AssignmentList>,
   },
 
-
   {
     path: "/SidebarNew",
     element: <SidebarNew></SidebarNew>,
@@ -142,7 +141,6 @@ const router = createBrowserRouter([
     path: "/users",
     element: <Users></Users>,
   },
-
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

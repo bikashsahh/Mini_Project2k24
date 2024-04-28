@@ -12,17 +12,18 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AssignmentForm = () => {
+const AssignmentForm = ({ registrationno }) => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
-  const registrationno = location.state?.registrationno || "";
+  // const location = useLocation();
+  // const registrationno = location.state?.registrationno || "";
   const [fileName, setFileName] = useState("No image selected");
   const [fileUrl, setFileUrl] = useState("");
   const fileInputRef = useRef(null); // Ref for file input element
 
+  console.log("asss", registrationno);
   useEffect(() => {
     const fetchCourses = async () => {
       try {

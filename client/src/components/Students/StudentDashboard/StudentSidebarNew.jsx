@@ -1,39 +1,17 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import {
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import ListAltIcon from "@mui/icons-material/ListAlt";
+
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
-import MessageIcon from "@mui/icons-material/Message";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import SubjectIcon from "@mui/icons-material/Subject";
-import NotesIcon from "@mui/icons-material/Notes";
-import DvrIcon from "@mui/icons-material/Dvr";
-import { useSelector } from "react-redux";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -145,7 +123,7 @@ const StudentSidebarNew = ({ handlePage }) => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Box onClick={() => handleClick("DashBoardNew")}>
+            <Box onClick={() => handleClick("Dashboard")}>
               <Item
                 title="Dashboard"
                 // to="/"
@@ -170,7 +148,7 @@ const StudentSidebarNew = ({ handlePage }) => {
                 setSelected={setSelected}
               />
             </Box>
-            
+
             <Box onClick={() => handleClick("EnrolledCourses")}>
               <Item
                 title="Enrolled Courses"
