@@ -7,6 +7,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import { Box } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -24,22 +25,21 @@ const StyledRoot = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledContact = styled("div")(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(4),
-  borderRadius: "8px",
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3),
-  },
+const StyledContact = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(2),
+  padding: theme.spacing(2),
+  // backgroundColor: theme.palette.background.paper,
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[1],
 }));
 
-const StyledIcon = styled(({ className, ...props }) => (
-  <div className={className}>
-    <props.icon />
-  </div>
-))(({ theme }) => ({
-  color: theme.palette.primary.main,
-  marginRight: theme.spacing(2),
+const StyledIcon = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  alignItems: "center",
+  marginRight: theme.spacing(1),
+  color: theme.palette.text.secondary,
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -86,7 +86,72 @@ const ContactPage = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <StyledContact>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h2" gutterBottom>
+                Contact Information
+              </Typography>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <PhoneIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">+1 (123) 456-7890</Typography>
+                </Box>
+                <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <EmailIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">info@example.com</Typography>
+                </Box>
+                <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <LocationOnIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">
+                    123 Main Street, Anytown USA
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Typography variant="h4" gutterBottom sx={{ marginTop: "20px" }}>
+                Motilal Nehru National Institute of Technology Allahabad
+              </Typography>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Typography variant="body1">
+                  Prayagraj - 211004, INDIA
+                </Typography>
+                <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <PhoneIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">
+                    91-0532-2545404, 2545407
+                  </Typography>
+                </Box>
+                {/* <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <PhoneIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">
+                    Fax No.: 91-0532-2545341
+                  </Typography>
+                </Box> */}
+                <Box display="flex" alignItems="center">
+                  <StyledIcon>
+                    <EmailIcon />
+                  </StyledIcon>
+                  <Typography variant="body1">secretary@mnnit.ac.in</Typography>
+                </Box>
+                <Typography variant="body1">
+                  <a href="http://www.mnnit.ac.in/index.php/tel">
+                    Telephone Directory (Click Here)
+                  </a>
+                </Typography>
+              </Box>
+            </StyledContact>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <StyledContact>
+              <Typography variant="h3" gutterBottom>
                 Get in Touch
               </Typography>
               <form onSubmit={handleSubmit}>
@@ -96,6 +161,7 @@ const ContactPage = () => {
                   variant="outlined"
                   fullWidth
                   margin="normal"
+                  color="secondary"
                   value={formData.name}
                   onChange={handleInputChange}
                 />
@@ -110,6 +176,7 @@ const ContactPage = () => {
                   onChange={handleInputChange}
                 />
                 <TextField
+                  color="secondary"
                   label="Message"
                   name="message"
                   multiline
@@ -120,67 +187,16 @@ const ContactPage = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                 />
-                <StyledButton
+                <Button
                   variant="contained"
                   fullWidth
                   type="submit"
+                  color="secondary"
                   disabled={isLoading}
                 >
                   {isLoading ? <CircularProgress size={24} /> : "Send Message"}
-                </StyledButton>
+                </Button>
               </form>
-            </StyledContact>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <StyledContact>
-              <Typography variant="h5" gutterBottom>
-                Contact Information
-              </Typography>
-              <div>
-                <StyledIcon icon={PhoneIcon} />
-                <Typography variant="body1">+1 (123) 456-7890</Typography>
-              </div>
-              <div>
-                <StyledIcon icon={EmailIcon} />
-                <Typography variant="body1">info@example.com</Typography>
-              </div>
-              <div>
-                <StyledIcon icon={LocationOnIcon} />
-                <Typography variant="body1">
-                  123 Main Street, Anytown USA
-                </Typography>
-              </div>
-              <div>
-                <Typography variant="h5" gutterBottom>
-                  Motilal Nehru National Institute of Technology Allahabad
-                </Typography>
-                <Typography variant="body1">
-                  Prayagraj - 211004, INDIA
-                </Typography>
-                <div>
-                  <StyledIcon icon={PhoneIcon} />
-                  <Typography variant="body1">
-                    91-0532-2545404, 2545407
-                  </Typography>
-                </div>
-                <div>
-                  <StyledIcon icon={PhoneIcon} />
-                  <Typography variant="body1">
-                    Fax No.: 91-0532-2545341
-                  </Typography>
-                </div>
-                <div>
-                  <StyledIcon icon={EmailIcon} />
-                  <Typography variant="body1">secretary@mnnit.ac.in</Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <a href="http://www.mnnit.ac.in/index.php/tel">
-                      Telephone Directory (Click Here)
-                    </a>
-                  </Typography>
-                </div>
-              </div>
             </StyledContact>
           </Grid>
         </Grid>

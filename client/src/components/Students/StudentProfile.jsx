@@ -101,6 +101,7 @@ const StudentProfileForm = () => {
               variant="contained"
               color="secondary"
               onClick={handleButtonClick}
+              fullWidth
             >
               Check Status
             </Button>

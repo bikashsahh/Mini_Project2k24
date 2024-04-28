@@ -4,8 +4,11 @@ import ApplyNowBanner from "../Students/ApplyNowBanner";
 import IgnouRegistrationBanner from "../Students/Registration";
 import { Box, Stack } from "@mui/material";
 import AnnouncementBanner from "../Common/AnnouncementBanner";
+import { ColorModeContext, useMode } from "../../theme";
+import { ThemeProvider } from "@mui/material/styles";
 
 const Banner = () => {
+  const [theme, colorMode] = useMode();
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselData = [
     { id: 1, imgURL: "/clg.avif" },
@@ -20,73 +23,75 @@ const Banner = () => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselData.length);
     }, 500);
-
     return () => clearInterval(interval);
   }, [carouselData.length]);
 
   return (
-    <div>
-      <div id="carouselExample" className="carousel slide">
-        <div className="carousel-inner">
-          {carouselData.map((Data, index) => (
-            <Carousel
-              key={Data.id}
-              id={Data.id}
-              imgURL={Data.imgURL}
-              active={index === currentIndex}
-            />
-          ))}
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <div className="scroll">
+          <div id="carouselExample" className="carousel slide">
+            <div className="carousel-inner">
+              {carouselData.map((Data, index) => (
+                <Carousel
+                  key={Data.id}
+                  id={Data.id}
+                  imgURL={Data.imgURL}
+                  active={index === currentIndex}
+                />
+              ))}
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="prev"
+            >
+              <span
+                className="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="next"
+            >
+              <span
+                className="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+          <Stack
+            direction="row"
+            className="container service"
+            justifyContent="space-evenly"
+          >
+            <Stack
+              direction="row"
+              alignContent="center"
+              justifyContent="space-around"
+              spacing={4}
+              sx={{ flexWrap: "wrap" }}
+            >
+              <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
+                <ApplyNowBanner />
+              </Box>
+              <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
+                <IgnouRegistrationBanner />
+              </Box>
+              <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
+                <AnnouncementBanner />
+              </Box>
+            </Stack>
+          </Stack>
         </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExample"
-          data-bs-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExample"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      <Stack
-        direction="row"
-        className="container service"
-        justifyContent="space-evenly"
-      >
-        <Stack
-          direction="row"
-          alignContent="center"
-          justifyContent="space-around"
-          spacing={4}
-          sx={{ flexWrap: "wrap" }}
-        >
-          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
-            <ApplyNowBanner />
-          </Box>
-          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
-            <IgnouRegistrationBanner />
-          </Box>
-          <Box sx={{ flex: 1, maxWidth: "33.33%", minWidth: "300px" }}>
-            <AnnouncementBanner />
-          </Box>
-        </Stack>
-      </Stack>
-    </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 
