@@ -9,8 +9,6 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { tokens, ColorModeContext, useMode } from "../../theme";
-// import { tokens } from "../../theme";
-// import { useTheme } from "@mui/material";
 import HeaderNew from "../Admin/DashboardNew/HeaderNew";
 
 const UserDetails = () => {

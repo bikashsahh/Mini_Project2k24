@@ -41,7 +41,7 @@ const LoginPage = () => {
           navigate("/Admin");
         } else {
           // navigate("/AssignmentForm");
-          navigate("/AssignmentForm", {
+          navigate("/users", {
             state: { registrationno: registration },
           });
         }

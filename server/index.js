@@ -345,8 +345,48 @@ app.get("/assignmentlist", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+
+
+
 //-------------------------------------------
+
+
+
+
+
+//------------------------------profile--------------------------
+// Route to fetch user data
+app.get('/studentpro', async (req, res) => {
+  try {
+    const registrationno = req.query.registrationno;
+    const query = `
+      SELECT u.name, u.registrationno, u.programme, array_agg(c.name) AS courses, u.mobile, u.email
+      FROM students u
+      LEFT JOIN user_courses uc ON u.id = uc.user_id
+      LEFT JOIN courses c ON uc.course_id = c.id
+      WHERE u.registrationno = $1
+      GROUP BY u.name, u.registrationno, u.programme, u.mobile, u.email
+    `;
+    const { rows } = await db.query(query, [registrationno]);
+    if (rows.length > 0) {
+      res.json(rows[0]);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 //-------------------------------------------------------//
+
+
+
+

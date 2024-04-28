@@ -1,26 +1,14 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../base.css";
-import SidebarNew from "../components/Admin/Sidebar/SidebarNew";
-import DashboardNew from "../components/Admin/DashboardNew/dashboardNew";
-import { ColorModeContext, useMode } from "../theme";
-import Topbar from "../components/Admin/Sidebar/topbar";
-import ImportStudentData from "../components/Admin/Sidebar/Students/ImportStudentData";
-import SendEmailsButton from "../components/Admin/Sidebar/SendEmail/SendEmailsButton";
-import AdminMessageForm from "../components/Admin/Messages/AddMessage";
-import AdminAnnouncementPage from "../components/Admin/Messages/AdminAnnouncementPage";
-import StudentsList from "../components/Students/StudentsList";
-import AssignmentList from "../components/Students/Assignment/AssignmentList";
-import Admin from "../components/Admin/Admin";
 import Home from "../components/HomePage_Utilities/Home";
+
 const App = () => {
   // const [theme, colorMode] = useMode();
   // const [isSidebar, setIsSidebar] = useState(true);
   // const [page, setPage] = useState("Dashboard");
 
   // function handlePage(pg) {
-  //   console.log("App got clicked:", pg);
+  //   console.log("I got clicked:", pg);
   //   setPage(pg);
   // }
   return (
@@ -34,8 +22,8 @@ const App = () => {
     //         {page === "Dashboard" && (
     //           <DashboardNew handlePage={handlePage}></DashboardNew>
     //         )}
-    //         {page === "StudentList" && <StudentsList></StudentsList>}
-    //         {page === "Assignment" && <AssignmentList></AssignmentList>}
+    //         {page === "StudentList" && <Students></Students>}
+    //         {page === "Assignment" && <></>}
     //         {page === "ImportExcel" && <ImportStudentData></ImportStudentData>}
     //         {page === "Email" && <SendEmailsButton></SendEmailsButton>}
     //         {page === "Message" && <AdminMessageForm></AdminMessageForm>}
@@ -50,7 +38,6 @@ const App = () => {
     //     </div>
     //   </ThemeProvider>
     // </ColorModeContext.Provider>
-    // <Admin></Admin>
     <Home></Home>
   );
 };

@@ -34,6 +34,10 @@ import Topbar from "./components/Admin/Sidebar/topbar.jsx";
 import StudentsList from "./components/Students/StudentsList/index.jsx";
 import AssignmentList from "./components/Students/Assignment/AssignmentList.jsx";
 import Admin from "./components/Admin/Admin.jsx";
+import Users from "./components/Students/StudentDashboard/Users.jsx";
+import StudentProfileForm from "./components/Students/StudentProfile.jsx";
+import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -96,6 +100,11 @@ const router = createBrowserRouter([
     element: <AssignmentForm></AssignmentForm>,
   },
   {
+    path: "/StudentProfile",
+    element: <ProfilePage></ProfilePage>,
+  },
+  
+  {
     path: "/side",
     element: <Sidebar></Sidebar>,
   },
@@ -132,6 +141,11 @@ const router = createBrowserRouter([
     path: "/topbar",
     element: <Topbar></Topbar>,
   },
+  {
+    path: "/users",
+    element: <Users></Users>,
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
