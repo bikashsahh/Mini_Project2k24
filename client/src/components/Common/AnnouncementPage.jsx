@@ -1,17 +1,62 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Divider,
-  Typography,
-  Button,
-  Link,
-  Stack,
+  IconButton,
   Chip,
+  ThemeProvider,
+  CssBaseline,
 } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+// import { tokens } from "../../../theme";
+import { tokens, ColorModeContext, useMode } from "../../theme";
+import { useTheme } from "@mui/material";
+import HeaderNew from "../Admin/DashboardNew/HeaderNew";
+// import HeaderNew from "../../Admin/DashboardNew/HeaderNew";
+import DownloadIcon from "@mui/icons-material/Download";
 import axios from "axios";
-
+import Topbar from "../Admin/Sidebar/topbar";
 const AnnouncementPage = () => {
+  const [themes, colorMode] = useMode();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [announcements, setAnnouncements] = useState([]);
+
+  const columns = [
+    { field: "title", headerName: "Title", flex: 1 },
+    {
+      field: "description",
+      headerName: "Description",
+      flex: 2,
+      renderCell: (params) =>
+        params.value ? params.value : <span>No description</span>,
+    },
+    {
+      field: "file_path",
+      headerName: "File",
+      flex: 1,
+      renderCell: (params) =>
+        params.value ? (
+          <IconButton onClick={() => handleDownload(params.value)}>
+            <DownloadIcon />
+          </IconButton>
+        ) : (
+          <span>No file</span>
+        ),
+    },
+    { field: "created_at", headerName: "Created At", flex: 1 },
+    {
+      field: "isNew",
+      headerName: "New",
+      flex: 1,
+      renderCell: (params) => (
+        <>
+          {isNew(params.row.created_at) && (
+            <Chip label="New" color="error" variant="outlined" size="small" />
+          )}
+        </>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -51,98 +96,22 @@ const AnnouncementPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        bgcolor: "#E3F2FD",
-        p: 1,
-      }}
-    >
-      <Typography
-        variant="h2"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          fontSize: "3rem",
-          fontWeight: "bold",
-          padding: "0.5rem 1rem",
-          mb: 3,
-        }}
-      >
-        ALL ANNOUNCEMENTS
-      </Typography>
-      {announcements.map((announcement) => (
-        <Box
-          key={announcement.id}
-          sx={{
-            bgcolor: "#EDE7F6",
-            color: "",
-            p: 2,
-            borderRadius: "20px",
-            mb: 2,
-            width: "90%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
-          {isNew(announcement.created_at) && (
-            <Chip
-              label="New"
-              color="error"
-              variant="Text"
-              size="medium"
-              sx={{
-                position: "absolute",
-                top: "-12px",
-                left: "-7px",
-                // ml: "50%",
-                maxWidth: "100px", // Add this line
-                overflow: "hidden", // Add this line
-                textOverflow: "ellipsis", // Add this line
-                whiteSpace: "nowrap", // Add this line
-              }}
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={themes}>
+        <CssBaseline />
+        <Box m="20px">
+          {/* <Topbar></Topbar> */}
+          <HeaderNew title="Announcements" subtitle="List of Acoouncements" />
+          <Box m="40px 0 0 0" height="75vh">
+            <DataGrid
+              rows={announcements}
+              columns={columns}
+              components={{ Toolbar: GridToolbar }}
             />
-          )}
-          <Box
-            sx={{
-              flex: 1, // Add this line
-              overflow: "hidden", // Add this line
-              textOverflow: "ellipsis", // Add this line
-              whiteSpace: "nowrap", // Add this line
-            }}
-          >
-            <Typography variant="h4" sx={{ mb: 1, mr: 1 }}>
-              {announcement.title}
-            </Typography>
-            <Typography>{announcement.description}</Typography>
           </Box>
-          {announcement.file_path && (
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => handleDownload(announcement.file_path)}
-              >
-                Download
-              </Button>
-              <Button variant="text">
-                <Link
-                  onClick={() => handleDownload(announcement.file_path)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View File
-                </Link>
-              </Button>
-            </Stack>
-          )}
         </Box>
-      ))}
-    </Box>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 

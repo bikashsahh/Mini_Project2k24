@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserDetails from "./UserDetails";
+// import UserDetails from "./UserDetails";
 
 const StudentProfileForm = () => {
-  const [enrollmentNumber, setEnrollmentNumber] = useState("");
+  const [registrationno, setRegistrationno] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [error, setError] = useState(null);
@@ -21,12 +21,12 @@ const StudentProfileForm = () => {
 
   const handleFormSubmit = async () => {
     // Validate the form fields
-    if (enrollmentNumber && emailAddress) {
+    if (registrationno && emailAddress) {
       try {
         const response = await axios.post(
           "http://localhost:3000/check-status",
           {
-            enrollmentNumber,
+            registrationno,
             emailAddress,
           }
         );
@@ -44,7 +44,7 @@ const StudentProfileForm = () => {
         setIsFormValid(false);
       }
     } else {
-      setError("Please fill in the Enrollment Number and Email Address.");
+      setError("Please fill in the Registration Number and Email Address.");
       setIsFormValid(false);
     }
   };
@@ -75,8 +75,8 @@ const StudentProfileForm = () => {
             color="secondary"
             fullWidth
             margin="normal"
-            value={enrollmentNumber}
-            onChange={(e) => setEnrollmentNumber(e.target.value)}
+            value={registrationno}
+            onChange={(e) => setRegistrationno(e.target.value)}
             required
           />
           <TextField
@@ -93,7 +93,7 @@ const StudentProfileForm = () => {
           {!isFormValid && error && (
             <Alert severity="error" sx={{ mt: 2 }}>
               {error ||
-                "Please fill in the Enrollment Number and Email Address."}
+                "Please fill in the Registration Number and Email Address."}
             </Alert>
           )}
           <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>

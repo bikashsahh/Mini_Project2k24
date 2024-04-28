@@ -33,10 +33,15 @@ import Sidebar from "./components/Admin/Sidebar/Sidebar.jsx";
 import Topbar from "./components/Admin/Sidebar/topbar.jsx";
 import StudentsList from "./components/Students/StudentsList/index.jsx";
 import AssignmentList from "./components/Students/Assignment/AssignmentList.jsx";
+import Admin from "./components/Admin/Admin.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+  },
+  {
+    path: "/Admin",
+    element: <Admin></Admin>,
   },
   {
     path: "/LoginPage",

@@ -12,42 +12,46 @@ import AdminMessageForm from "../components/Admin/Messages/AddMessage";
 import AdminAnnouncementPage from "../components/Admin/Messages/AdminAnnouncementPage";
 import StudentsList from "../components/Students/StudentsList";
 import AssignmentList from "../components/Students/Assignment/AssignmentList";
+import Admin from "../components/Admin/Admin";
+import Home from "../components/HomePage_Utilities/Home";
 const App = () => {
-  const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
-  const [page, setPage] = useState("Dashboard");
+  // const [theme, colorMode] = useMode();
+  // const [isSidebar, setIsSidebar] = useState(true);
+  // const [page, setPage] = useState("Dashboard");
 
-  function handlePage(pg) {
-    console.log("App got clicked:", pg);
-    setPage(pg);
-  }
+  // function handlePage(pg) {
+  //   console.log("App got clicked:", pg);
+  //   setPage(pg);
+  // }
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          <SidebarNew isSidebar={isSidebar} handlePage={handlePage} />
-          <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
-            {page === "Dashboard" && (
-              <DashboardNew handlePage={handlePage}></DashboardNew>
-            )}
-            {page === "StudentList" && <StudentsList></StudentsList>}
-            {page === "Assignment" && <AssignmentList></AssignmentList>}
-            {page === "ImportExcel" && <ImportStudentData></ImportStudentData>}
-            {page === "Email" && <SendEmailsButton></SendEmailsButton>}
-            {page === "Message" && <AdminMessageForm></AdminMessageForm>}
-            {page === "Announcement" && (
-              <AdminAnnouncementPage></AdminAnnouncementPage>
-            )}
-            {page === "MCA" && <></>}
-            {page === "CIT" && <></>}
-            {page === "BCA" && <></>}
-            {page === "PGDCA" && <></>}
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    // <ColorModeContext.Provider value={colorMode}>
+    //   <ThemeProvider theme={theme}>
+    //     <CssBaseline />
+    //     <div className="app">
+    //       <SidebarNew isSidebar={isSidebar} handlePage={handlePage} />
+    //       <main className="content">
+    //         <Topbar setIsSidebar={setIsSidebar} />
+    //         {page === "Dashboard" && (
+    //           <DashboardNew handlePage={handlePage}></DashboardNew>
+    //         )}
+    //         {page === "StudentList" && <StudentsList></StudentsList>}
+    //         {page === "Assignment" && <AssignmentList></AssignmentList>}
+    //         {page === "ImportExcel" && <ImportStudentData></ImportStudentData>}
+    //         {page === "Email" && <SendEmailsButton></SendEmailsButton>}
+    //         {page === "Message" && <AdminMessageForm></AdminMessageForm>}
+    //         {page === "Announcement" && (
+    //           <AdminAnnouncementPage></AdminAnnouncementPage>
+    //         )}
+    //         {page === "MCA" && <></>}
+    //         {page === "CIT" && <></>}
+    //         {page === "BCA" && <></>}
+    //         {page === "PGDCA" && <></>}
+    //       </main>
+    //     </div>
+    //   </ThemeProvider>
+    // </ColorModeContext.Provider>
+    // <Admin></Admin>
+    <Home></Home>
   );
 };
 

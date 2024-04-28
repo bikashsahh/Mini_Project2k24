@@ -181,13 +181,13 @@ app.get("/announcements/download/:filePath", async (req, res) => {
 // Add the new route for "Check Status"
 // API endpoint to check user status
 app.post("/check-status", async (req, res) => {
-  const { enrollmentNumber, emailAddress } = req.body;
+  const { registrationno, emailAddress } = req.body;
 
   try {
     // Query the database to find a user with the provided enrollment number and email
     const result = await db.query(
-      "SELECT * FROM users2 WHERE enrollment_number = $1 AND email = $2",
-      [enrollmentNumber, emailAddress]
+      "SELECT * FROM students WHERE registrationno = $1 AND email = $2",
+      [registrationno, emailAddress]
     );
 
     if (result.rows.length > 0) {
@@ -245,7 +245,7 @@ app.post("/contact", async (req, res) => {
 //--------------------------------------------------------------------------
 app.get("list", async (req, res) => {
   try {
-    const { rows } = await db.query("SELECT * FROM studentsinformation");
+    const { rows } = await db.query("SELECT * FROM students");
     res.json(rows);
   } catch (error) {
     console.error("Error fetching students:", error);

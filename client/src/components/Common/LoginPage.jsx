@@ -1,8 +1,18 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Button, Grid, Box, TextField, Alert } from "@mui/material";
+import { tokens, ColorModeContext, useMode } from "../../theme";
+// import { tokens } from "../../theme";
+import {
+  Typography,
+  Button,
+  Grid,
+  Box,
+  TextField,
+  Alert,
+  CssBaseline,
+} from "@mui/material";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
+import { ThemeProvider, styled } from "@mui/material/styles";
 
 const LoginPage = () => {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
@@ -28,7 +38,7 @@ const LoginPage = () => {
       if (response.data.success) {
         window.localStorage.setItem("isLogedIn", true);
         if (response.data.isAdmin) {
-          navigate("/");
+          navigate("/Admin");
         } else {
           // navigate("/AssignmentForm");
           navigate("/AssignmentForm", {
@@ -54,8 +64,11 @@ const LoginPage = () => {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
   }));
-
+  const [theme, colorMode] = useMode();
   return (
+    // <ColorModeContext.ThemeProvider value={colorMode}>
+    // <ThemeProvider theme={theme}>
+    // <CssBaseline />
     <Box
       sx={{
         display: "flex",
@@ -157,6 +170,8 @@ const LoginPage = () => {
         </Grid>
       </Box>
     </Box>
+    // </ThemeProvider>
+    // </ColorModeContext.ThemeProvider>
   );
 };
 
