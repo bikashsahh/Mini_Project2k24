@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@mui/material";
+import { useUserContext } from "../../../context/context";
 
 function ProfilePage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const registrationno = location.state?.registrationno || "";
+  // const location = useLocation();
+  // const registrationno = location.state?.registrationno || "";
   const [studentData, setStudentData] = useState(null);
 
-  console.log("registrationno:", registrationno); // Corrected console log
-
+  // const { userData } = useUserContext();
+  // console.log("studentProfile :", userData); // Corrected console log
+  const { registrationno } = useUserContext();
+  console.log("student Profile ", registrationno);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,29 +22,15 @@ function ProfilePage() {
           `http://localhost:3000/studentsprofile?registrationno=${registrationno}`
         );
         setStudentData(response.data);
+        navigate("/UserDetails", { state: response.data });
       } catch (error) {
         console.error("Error fetching student data:", error);
-        // Handle error if needed
       }
     };
     fetchData();
   }, [registrationno]);
 
-  const handleNavigateToUserDetails = () => {
-    if (studentData) {
-      navigate("/UserDetails", { state: { studentData } });
-    }
-  };
-
-  return (
-    <>
-      <div>Profile</div>
-      {/* Render your profile page content here */}
-      <Button variant="contained" onClick={handleNavigateToUserDetails}>
-        button
-      </Button>
-    </>
-  );
+  return <></>;
 }
 
 export default ProfilePage;

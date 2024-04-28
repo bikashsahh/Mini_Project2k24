@@ -375,6 +375,34 @@ app.get("/studentsprofile", async (req, res) => {
   }
 });
 
+//-----------------submision assignment by particular student list-----------------------------------
+app.get("/studentsubmissionslist", async (req, res) => {
+  const registrationno = req.query.registrationno;
+
+  try {
+    const result = await db.query(
+      `
+        SELECT s.course_name, s.submitted_at, s.file_path
+        FROM submissions s
+        JOIN students st ON s.registrationno = st.registrationno
+        WHERE st.registrationno = $1
+        ORDER BY s.submitted_at DESC;
+      `,
+      [registrationno]
+    );
+
+    if (result.rows.length > 0) {
+      // If submissions are found, send them as a response
+      res.status(200).json(result.rows);
+    } else {
+      // If no submissions are found, send an error response
+      res.status(404).json({ error: "No submissions found" });
+    }
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //----------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

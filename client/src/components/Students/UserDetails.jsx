@@ -14,35 +14,18 @@ import HeaderNew from "../Admin/DashboardNew/HeaderNew";
 const UserDetails = () => {
   const { state } = useLocation();
   const [theme, colorMode] = useMode();
-  // const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // Check if the state object has user data
   if (!state || Object.keys(state).length === 0) {
     return (
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Box
-          // sx={{
-          //   mt: 10,
-          //   display: "flex",
-          //   flexDirection: "column",
-          //   alignItems: "center",
-          //   backgroundColor: colors.primary[400],
-          //   padding: "2rem",
-          //   borderRadius: "8px",
-          //   boxShadow: `0 2px 4px ${colors.blueAccent[600]}`,
-          // }}
-          >
+          <Box>
             <HeaderNew
               title="Welcome To Your Profile"
               subtitle="Have a Good Day"
             />
-            {/* <Typography variant="h4" gutterBottom>
-              User Details
-            </Typography>
-            <Typography variant="body1">No user data available.</Typography> */}
           </Box>
         </ThemeProvider>
       </ColorModeContext.Provider>
@@ -61,9 +44,10 @@ const UserDetails = () => {
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: colors.primary[400],
-            padding: "10rem",
+            padding: "2rem",
             borderRadius: "100px",
-            // boxShadow: `0 2px 4px ${colors.blueAccent[700]}`,
+            height: "80vh", // Set a fixed height
+            overflow: "hidden", // Hide overflow content
           }}
         >
           <HeaderNew

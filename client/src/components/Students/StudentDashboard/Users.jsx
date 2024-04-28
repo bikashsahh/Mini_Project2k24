@@ -7,6 +7,7 @@ import StudentDashboardNew from "./StudentDashboardNew";
 import ProfilePage from "./StudentProfileDash";
 import AssignmentForm from "../Assignment/AssignmentForm";
 import { useLocation } from "react-router-dom";
+import SubmissionList from "./SubmissionList";
 
 const Users = () => {
   const location = useLocation();
@@ -41,9 +42,7 @@ const Users = () => {
             )}
             {page === "Profile" && <ProfilePage></ProfilePage>}
             {page === "Assignments" && <AssignmentForm></AssignmentForm>}
-            {page === "PreviousAssignment" && (
-              <PreviousAssignment></PreviousAssignment>
-            )}
+            {page === "PreviousAssignment" && <SubmissionList></SubmissionList>}
           </main>
         </div>
       </ThemeProvider>

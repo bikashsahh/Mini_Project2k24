@@ -38,6 +38,7 @@ import Users from "./components/Students/StudentDashboard/Users.jsx";
 import StudentProfileForm from "./components/Students/StudentProfile.jsx";
 import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
 import { Provider } from "./context/context.jsx";
+import SubmissionList from "./components/Students/StudentDashboard/SubmissionList.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/Admin",
     element: <Admin></Admin>,
+  },
+  {
+    path: "/submissionslist",
+    element: <SubmissionList></SubmissionList>,
   },
   {
     path: "/LoginPage",

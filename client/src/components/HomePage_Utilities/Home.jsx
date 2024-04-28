@@ -13,17 +13,19 @@ import Banner from "./Banner";
 import Important_Message from "../Admin/Messages/Important_Message";
 import TaskList from "./TaskList";
 import StudentProfileForm from "../Students/StudentProfile";
+import { useUserContext } from "../../context/context";
 
 function Home() {
+  const { messages } = useUserContext();
   const [theme, colorMode] = useMode();
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   // const dispatch = useDispatch(); // Initialize the dispatch function
 
   useEffect(() => {
     return async () => {};
 
     // fetchMessages();
-  }, []); // Include dispatch function in dependency array to prevent unnecessary re-fetching
+  }, [messages]); // Include dispatch function in dependency array to prevent unnecessary re-fetching
   const homeRef = useRef(null);
   const programsRef = useRef(null);
   const contactRef = useRef(null);

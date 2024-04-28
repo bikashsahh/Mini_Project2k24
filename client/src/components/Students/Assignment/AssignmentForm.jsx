@@ -8,22 +8,23 @@ import {
   Select,
   MenuItem,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserContext } from "../../../context/context";
 
-const AssignmentForm = ({ registrationno }) => {
+const AssignmentForm = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const location = useLocation();
-  // const registrationno = location.state?.registrationno || "";
   const [fileName, setFileName] = useState("No image selected");
   const [fileUrl, setFileUrl] = useState("");
-  const fileInputRef = useRef(null); // Ref for file input element
+  const fileInputRef = useRef(null);
 
-  console.log("asss", registrationno);
+  const { registrationno } = useUserContext();
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -76,7 +77,7 @@ const AssignmentForm = ({ registrationno }) => {
           );
           console.log("Successfully Submitted");
           toast.success("Assignment submitted successfully!");
-          resetForm(); // Reset the form
+          resetForm();
         } catch (error) {
           console.log("Error in form submitting:", error);
           toast.error("Error submitting assignment. Please try again.");
@@ -106,7 +107,6 @@ const AssignmentForm = ({ registrationno }) => {
     setSelectedCourse("");
     setFile(null);
     setFileName("No image selected");
-    // Clear file input value
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -118,11 +118,20 @@ const AssignmentForm = ({ registrationno }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        mt: 4,
+        mt: 10,
+        boxShadow: 2,
+        p: 4,
+        borderRadius: 2,
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <Select
-        value={selectedCourse}
+      <Typography variant="h5" gutterBottom>
+        Submit Your Assignment
+      </Typography>
+      <TextField
+        value={selectedCourse || "Select a course"}
+        select
         onChange={handleCourseChange}
         sx={{ mb: 2, width: 300 }}
       >
@@ -132,8 +141,7 @@ const AssignmentForm = ({ registrationno }) => {
             {course}
           </MenuItem>
         ))}
-      </Select>
-      {/* Add ref to file input */}
+      </TextField>
       <input
         type="file"
         ref={fileInputRef}
@@ -145,7 +153,7 @@ const AssignmentForm = ({ registrationno }) => {
         variant="contained"
         onClick={handleSubmit}
         disabled={!selectedCourse || !file || isLoading}
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, color: "secondary.main", width: "fit-content" }}
       >
         {isLoading ? <CircularProgress size={24} /> : "Submit"}
       </Button>

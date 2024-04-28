@@ -149,7 +149,7 @@ const StudentSidebarNew = ({ handlePage }) => {
               />
             </Box>
 
-            <Box onClick={() => handleClick("EnrolledCourses")}>
+            {/* <Box onClick={() => handleClick("EnrolledCourses")}>
               <Item
                 title="Enrolled Courses"
                 // to="/ImportStudentData"
@@ -157,7 +157,7 @@ const StudentSidebarNew = ({ handlePage }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            </Box>
+            </Box> */}
             <Typography
               variant="h6"
               color={colors.grey[300]}

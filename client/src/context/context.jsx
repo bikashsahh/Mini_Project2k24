@@ -4,7 +4,7 @@ const UserContext = createContext();
 
 const Provider = ({ children }) => {
   const [userData, setUserData] = useState();
-  const [registrationNo, setRegistrationNo] = useState();
+  const [registrationno, setRegistrationNo] = useState();
   const [messages, addMessages] = useState([]);
   const [tasksData, setTaskData] = useState([
     {
@@ -38,7 +38,7 @@ const Provider = ({ children }) => {
   }, []);
 
   async function fetchStudentProfile() {
-    const url = `http://localhost:3000/studentsprofile?registrationno=${registrationNo}`;
+    const url = `http://localhost:3000/studentsprofile?registrationno=${registrationno}`;
 
     try {
       const response = await axios.get(url);
@@ -70,7 +70,7 @@ const Provider = ({ children }) => {
       value={{
         userData,
         setUserData,
-        registrationNo,
+        registrationno,
         setRegistrationNo,
         tasksData,
         messages,
