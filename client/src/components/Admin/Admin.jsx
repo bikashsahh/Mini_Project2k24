@@ -22,6 +22,7 @@ import AdminAnnouncementPage from "./Messages/AdminAnnouncementPage";
 import StudentsList from "../Students/StudentsList";
 // import AssignmentList from "../components/Students/Assignment/AssignmentList";
 import AssignmentList from "../Students/Assignment/AssignmentList";
+import AttendanceSheet from "./Sidebar/Students/Attendance";
 const Admin = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -50,6 +51,7 @@ const Admin = () => {
             {page === "Announcement" && (
               <AdminAnnouncementPage></AdminAnnouncementPage>
             )}
+            {page === "Attendance" && <AttendanceSheet></AttendanceSheet>}
             {page === "MCA" && <></>}
             {page === "CIT" && <></>}
             {page === "BCA" && <></>}

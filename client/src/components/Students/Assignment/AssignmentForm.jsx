@@ -123,7 +123,6 @@ const AssignmentForm = () => {
         p: 4,
         borderRadius: 2,
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
       <Typography variant="h5" gutterBottom>

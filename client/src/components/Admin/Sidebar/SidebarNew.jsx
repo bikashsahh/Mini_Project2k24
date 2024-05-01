@@ -222,6 +222,15 @@ const SidebarNew = ({ handlePage }) => {
                 setSelected={setSelected}
               />
             </Box>
+            <Box onClick={() => handleClick("Attendance")}>
+              <Item
+                title="Attendance Sheet"
+                // to="/announcement"
+                icon={<AnnouncementIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
             <Typography
               variant="h6"
               color={colors.grey[300]}

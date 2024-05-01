@@ -39,6 +39,7 @@ import StudentProfileForm from "./components/Students/StudentProfile.jsx";
 import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
 import { Provider } from "./context/context.jsx";
 import SubmissionList from "./components/Students/StudentDashboard/SubmissionList.jsx";
+import AttendanceSheet from "./components/Admin/Sidebar/Students/Attendance.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
   {
     path: "/users",
     element: <Users></Users>,
+  },
+  {
+    path: "/attendancesheet",
+    element: <AttendanceSheet></AttendanceSheet>,
   },
 ]);
 

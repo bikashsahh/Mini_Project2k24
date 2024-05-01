@@ -403,6 +403,29 @@ app.get("/studentsubmissionslist", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//-----------------attendance sheet-------------------------
+app.get("/attendancesheet", async (req, res) => {
+  try {
+    const result = await db.query(
+      `
+        SELECT
+          s.registrationno,
+          s.name,
+          s.programme,
+          NULL AS signature,
+          NULL AS remark
+        FROM students s
+        ORDER BY s.registrationno;
+      `
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching attendance sheet data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //----------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
