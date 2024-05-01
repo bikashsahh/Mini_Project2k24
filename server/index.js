@@ -285,6 +285,31 @@ app.get("/courses", async (req, res) => {
   }
 });
 
+// app.post("/assignments", async (req, res) => {
+//   try {
+//     const { registrationno } = req.query;
+//     const { selectedCourse, ImgHash } = req.body;
+
+//     // Check if required parameters are present
+//     if (!registrationno || !selectedCourse || !ImgHash) {
+//       return res.status(400).send("Missing parameters");
+//     }
+
+//     // Insert submission into the database
+//     const result = await db.query(
+//       "INSERT INTO submissions (registrationno, file_path, course_name) VALUES ($1, $2, $3)",
+//       [registrationno, ImgHash, selectedCourse]
+//     );
+
+//     console.log("Data inserted successfully");
+//     res.status(200).send("File uploaded and submission recorded");
+//   } catch (err) {
+//     console.error("Error inserting data:", err);
+//     res.status(500).send("Error uploading file and recording submission");
+//   }
+// });
+
+
 app.post("/assignments", async (req, res) => {
   try {
     const { registrationno } = req.query;
@@ -295,19 +320,35 @@ app.post("/assignments", async (req, res) => {
       return res.status(400).send("Missing parameters");
     }
 
-    // Insert submission into the database
-    const result = await db.query(
-      "INSERT INTO submissions (registrationno, file_path, course_name) VALUES ($1, $2, $3)",
-      [registrationno, ImgHash, selectedCourse]
+    // Check if the student has already submitted an assignment for the selected course
+    const existingSubmission = await db.query(
+      "SELECT * FROM submissions WHERE registrationno = $1 AND course_name = $2",
+      [registrationno, selectedCourse]
     );
 
-    console.log("Data inserted successfully");
-    res.status(200).send("File uploaded and submission recorded");
+    if (existingSubmission.rows.length > 0) {
+      // If a submission exists, update the existing record
+      await db.query(
+        "UPDATE submissions SET file_path = $1 WHERE registrationno = $2 AND course_name = $3",
+        [ImgHash, registrationno, selectedCourse]
+      );
+    } else {
+      // If no submission exists, insert a new record
+      await db.query(
+        "INSERT INTO submissions (registrationno, file_path, course_name) VALUES ($1, $2, $3)",
+        [registrationno, ImgHash, selectedCourse]
+      );
+    }
+
+    console.log("Assignment submitted successfully");
+    res.status(200).send("Assignment submitted successfully");
   } catch (err) {
-    console.error("Error inserting data:", err);
-    res.status(500).send("Error uploading file and recording submission");
+    console.error("Error submitting assignment:", err);
+    res.status(500).send("Error submitting assignment");
   }
 });
+
+
 //-----------------------------------------
 // Route to fetch student and submission data
 app.get("/studentslist", async (req, res) => {
