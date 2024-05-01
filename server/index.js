@@ -309,7 +309,6 @@ app.get("/courses", async (req, res) => {
 //   }
 // });
 
-
 app.post("/assignments", async (req, res) => {
   try {
     const { registrationno } = req.query;
@@ -347,7 +346,6 @@ app.post("/assignments", async (req, res) => {
     res.status(500).send("Error submitting assignment");
   }
 });
-
 
 //-----------------------------------------
 // Route to fetch student and submission data

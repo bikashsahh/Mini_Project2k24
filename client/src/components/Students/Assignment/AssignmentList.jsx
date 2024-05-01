@@ -68,6 +68,7 @@ const AssignmentList = () => {
     axios
       .get("http://localhost:3000/assignmentlist")
       .then((response) => {
+        console.log(response.data);
         setData(response.data);
         // Exclude the "Download" column from pdfColumns
         setPdfColumns(columns.filter((column) => column.field !== "file_path"));
@@ -83,7 +84,10 @@ const AssignmentList = () => {
 
   const generateReport = () => {
     const doc = new jsPDF();
-
+    // Add logo (if available)
+    // You need to provide the logo image file path or data URL
+    const logoImageData = "/logo.png"; // Replace with the actual logo image file path or data URL
+    doc.addImage(logoImageData, "PNG", 10, 10, 30, 30); // Adjust the positioning and dimensions as needed
     // Add header
     const headerText = "Indira Gandhi National Open University";
     doc.setFontSize(18);
@@ -201,7 +205,9 @@ const AssignmentList = () => {
           rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
-          getRowId={(row) => row.registrationno}
+          getRowId={(row) =>
+            `${row.registrationno}-${row.name}-${row.course_name}-${row.submitted_at}-${row.file_path}`
+          }
         />
       </Box>
     </Box>
