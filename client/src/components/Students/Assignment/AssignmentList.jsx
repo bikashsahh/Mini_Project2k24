@@ -19,6 +19,10 @@ const AssignmentList = () => {
   const [data, setData] = useState([]);
   const [isReportDownloaded, setIsReportDownloaded] = useState(false);
   const [pdfColumns, setPdfColumns] = useState([]);
+  const [semesterFilter, setSemesterFilter] = useState("");
+  const [programmeFilter, setProgrammeFilter] = useState("");
+  const [submittedFilter, setSubmittedFilter] = useState("");
+  const [courseFilter, setCourseFilter] = useState("");
 
   const columns = [
     { field: "registrationno", headerName: "Registration No.", flex: 1 },
@@ -70,7 +74,6 @@ const AssignmentList = () => {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
-        // Exclude the "Download" column from pdfColumns
         setPdfColumns(columns.filter((column) => column.field !== "file_path"));
       })
       .catch((error) => {
@@ -81,6 +84,40 @@ const AssignmentList = () => {
   const downloadFile = (filePath) => {
     saveAs(filePath);
   };
+
+  const handleSemesterFilterChange = (event) => {
+    setSemesterFilter(event.target.value);
+  };
+
+  const handleProgrammeFilterChange = (event) => {
+    setProgrammeFilter(event.target.value);
+  };
+
+  const handleSubmittedFilterChange = (event) => {
+    setSubmittedFilter(event.target.value);
+  };
+
+  const handleCourseFilterChange = (event) => {
+    setCourseFilter(event.target.value);
+  };
+
+  const filteredData = data.filter((row) => {
+    const semesterMatch = !semesterFilter || row.semester === semesterFilter;
+    const programmeMatch =
+      !programmeFilter ||
+      (row.programme && row.programme.toString().includes(programmeFilter));
+    // !programmeFilter || row.programme === programmeFilter;
+    const submittedMatch =
+      submittedFilter === ""
+        ? true
+        : submittedFilter === "true"
+        ? row.submitted_at
+        : !row.submitted_at;
+    const courseMatch =
+      !courseFilter ||
+      (row.course_name && row.course_name.toString().includes(courseFilter));
+    return semesterMatch && programmeMatch && submittedMatch && courseMatch;
+  });
 
   const generateReport = () => {
     const doc = new jsPDF();
@@ -119,7 +156,7 @@ const AssignmentList = () => {
     ); // Align subheading 2 to center
 
     // Add table data
-    const tableRows = data.map((row) =>
+    const tableRows = filteredData.map((row) =>
       pdfColumns.map((column) => row[column.field])
     );
     const tableColumns = pdfColumns.map((column) => ({
@@ -153,6 +190,43 @@ const AssignmentList = () => {
         title="Assignment List"
         subtitle="List of Assignments for Future Reference"
       />
+      <Box display="flex" alignItems="center" mb={2}>
+        {/* <Box mr={2}>
+          <label>Semester:</label>
+          <input
+            type="text"
+            value={semesterFilter}
+            onChange={handleSemesterFilterChange}
+          />
+        </Box> */}
+        <Box mr={2}>
+          <label>Programme:</label>
+          <input
+            type="text"
+            value={programmeFilter}
+            onChange={handleProgrammeFilterChange}
+          />
+        </Box>
+        <Box mr={2}>
+          <label>Course:</label>
+          <input
+            type="text"
+            value={courseFilter}
+            onChange={handleCourseFilterChange}
+          />
+        </Box>
+        <Box>
+          <label>Submitted:</label>
+          <select
+            value={submittedFilter}
+            onChange={handleSubmittedFilterChange}
+          >
+            <option value="">All</option>
+            <option value="true">Submitted</option>
+            <option value="false">Not Submitted</option>
+          </select>
+        </Box>
+      </Box>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -202,7 +276,7 @@ const AssignmentList = () => {
         }}
       >
         <DataGrid
-          rows={data}
+          rows={filteredData}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
           getRowId={(row) =>

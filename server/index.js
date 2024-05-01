@@ -276,7 +276,7 @@ app.get("/courses", async (req, res) => {
 
     const courses = result.rows[0].courses;
 
-    const courseList = courses.split(",");
+    const courseList = courses.split(" ");
 
     res.json(courseList);
   } catch (error) {

@@ -19,11 +19,14 @@ const ExcelFile = async (req, res) => {
     for (const row of data) {
       const lastLetter = row.programme.slice(-1);
       const semester = isNaN(lastLetter) ? "1" : lastLetter;
+      const updatedProgramme = isNaN(lastLetter)
+        ? `${row.programme}1`
+        : row.programme;
 
       await db.query(query, [
         row.registrationno,
         row.name,
-        row.programme,
+        updatedProgramme,
         row.courses,
         row.mobile,
         row.email,
@@ -37,5 +40,4 @@ const ExcelFile = async (req, res) => {
     res.status(500).send("Error uploading file");
   }
 };
-
 export default ExcelFile;

@@ -33,6 +33,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import SubjectIcon from "@mui/icons-material/Subject";
 import NotesIcon from "@mui/icons-material/Notes";
 import DvrIcon from "@mui/icons-material/Dvr";
+import CoPresentIcon from "@mui/icons-material/CoPresent";
 import { useSelector } from "react-redux";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -226,12 +227,12 @@ const SidebarNew = ({ handlePage }) => {
               <Item
                 title="Attendance Sheet"
                 // to="/announcement"
-                icon={<AnnouncementIcon />}
+                icon={<CoPresentIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
             </Box>
-            <Typography
+            {/* <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
@@ -273,7 +274,7 @@ const SidebarNew = ({ handlePage }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Menu>
       </ProSidebar>

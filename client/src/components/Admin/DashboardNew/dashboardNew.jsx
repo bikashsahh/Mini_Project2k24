@@ -14,6 +14,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AdminAnnouncementPage from "../Messages/AdminAnnouncementPage";
+import CoPresentIcon from "@mui/icons-material/CoPresent";
 // import { useNavigate } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { setTab } from "../../../redux/Slice/selectedtab";
@@ -44,7 +45,7 @@ const DashboardNew = ({ handlePage }) => {
   const handleProgrammeClick = () => {
     // navigate("/program");
     // setTab("MCA");
-    handlePage("MCA");
+    handlePage("Attendance");
     // dispatch(setTab("MCA"));
   };
 
@@ -149,12 +150,12 @@ const DashboardNew = ({ handlePage }) => {
           style={{ cursor: "pointer" }}
         >
           <StatBox
-            title="Programme"
+            title="Attendance Sheet"
             subtitle=""
             progress=""
             increase=""
             icon={
-              <ViewListIcon
+              <CoPresentIcon
                 sx={{
                   color: colors.greenAccent[600],
                   fontSize: "35px",

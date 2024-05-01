@@ -106,7 +106,7 @@ const AssignmentForm = () => {
   const resetForm = () => {
     setSelectedCourse("");
     setFile(null);
-    setFileName("No image selected");
+    setFileName("No files selected");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
