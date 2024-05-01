@@ -10,11 +10,15 @@ import { saveAs } from "file-saver";
 import DownloadIcon from "@mui/icons-material/Download";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import FileDownloadOffIcon from "@mui/icons-material/FileDownloadOff";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const AssignmentList = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [isReportDownloaded, setIsReportDownloaded] = useState(false);
+  const [pdfColumns, setPdfColumns] = useState([]);
 
   const columns = [
     { field: "registrationno", headerName: "Registration No.", flex: 1 },
@@ -65,6 +69,8 @@ const AssignmentList = () => {
       .get("http://localhost:3000/assignmentlist")
       .then((response) => {
         setData(response.data);
+        // Exclude the "Download" column from pdfColumns
+        setPdfColumns(columns.filter((column) => column.field !== "file_path"));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -73,6 +79,68 @@ const AssignmentList = () => {
 
   const downloadFile = (filePath) => {
     saveAs(filePath);
+  };
+
+  const generateReport = () => {
+    const doc = new jsPDF();
+
+    // Add header
+    const headerText = "Indira Gandhi National Open University";
+    doc.setFontSize(18);
+    const headerWidth = doc.getTextWidth(headerText) + 10; // Add some padding
+    doc.text(
+      headerText,
+      (doc.internal.pageSize.getWidth() - headerWidth) / 2,
+      20
+    ); // Align header to center
+
+    // Add subheading 1
+    const subheading1Text = "Study Center MNNIT Allahabad";
+    doc.setFontSize(14);
+    const subheading1Width = doc.getTextWidth(subheading1Text) + 10; // Add some padding
+    doc.text(
+      subheading1Text,
+      (doc.internal.pageSize.getWidth() - subheading1Width) / 2,
+      30
+    ); // Align subheading 1 to center
+
+    // Add subheading 2
+    const subheading2Text = "Assignments Report";
+    doc.setFontSize(14);
+    const subheading2Width = doc.getTextWidth(subheading2Text) + 10; // Add some padding
+    doc.text(
+      subheading2Text,
+      (doc.internal.pageSize.getWidth() - subheading2Width) / 2,
+      40
+    ); // Align subheading 2 to center
+
+    // Add table data
+    const tableRows = data.map((row) =>
+      pdfColumns.map((column) => row[column.field])
+    );
+    const tableColumns = pdfColumns.map((column) => ({
+      header: column.headerName,
+      dataKey: column.field,
+    }));
+
+    doc.autoTable({
+      head: [tableColumns.map((column) => column.header)],
+      body: tableRows,
+      startY: 50, // Start the table a bit below the subheadings
+    });
+
+    // Add footer
+    const footerText = "Page " + doc.getCurrentPageInfo().pageNumber;
+    const footerWidth = doc.getTextWidth(footerText);
+    doc.text(
+      footerText,
+      doc.internal.pageSize.getWidth() - footerWidth - 10,
+      doc.internal.pageSize.getHeight() - 10
+    ); // Position the footer on the bottom-right
+
+    doc.save("assignments_report.pdf");
+    setIsReportDownloaded(true);
+    setPdfColumns([]); // Reset pdfColumns to an empty array
   };
 
   return (
@@ -93,6 +161,9 @@ const AssignmentList = () => {
             Download CSV{" "}
           </Button>
         </CSVLink>
+        <Button variant="contained" color="primary" onClick={generateReport}>
+          Download Report
+        </Button>
       </Box>
       <Box
         m="40px 0 0 0"
