@@ -1,10 +1,11 @@
 import React from "react";
 import Tasks from "./Tasks";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-
+import { useUserContext } from "../../context/context";
 const TaskList = () => {
-  const tasksData = useSelector((state) => state.task.tasksData);
+  const { tasksData } = useUserContext();
+  // const tasksData = useSelector((state) => state.task.tasksData);
 
   return (
     <Box

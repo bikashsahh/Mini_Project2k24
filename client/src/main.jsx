@@ -1,27 +1,56 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./base.css";
+
+// import "./components/Admin/Admin.css";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import LoginPage from "./components/LoginPage.jsx";
-import Home from "./components/Home.jsx";
-import Header from "./components/Header.jsx";
-import NotificationCenter from "./components/HomeCenter.jsx";
-import ScrollableCards from "./components/ScrollableCards.jsx";
-import "./App.css";
-import { store } from "./redux/store.jsx";
-import { Provider } from "react-redux";
-import "./base.css";
-import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
-import AnnouncementPage from "./components/AnnouncementPage.jsx";
-import UserDetails from "./components/UserDetails.jsx";
-import Programs from "./components/Programs.jsx";
-import AboutPage from "./components/AboutPage.jsx";
-import ContactPage from "./components/ContactPage.jsx";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  // BrowserRouter,
+} from "react-router-dom";
+import Home from "./components/HomePage_Utilities/Home.jsx";
+import Header from "./components/HomePage_Utilities/Header.jsx";
+import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
+// import { store } from "./redux/Store/store.jsx";
+// import { Provider } from "react-redux";
+import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
+import UserDetails from "./components/Students/UserDetails.jsx";
+import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
+import ContactPage from "./components/HomePage_Utilities/ContactPage.jsx";
+import AdminMessageForm from "./components/Admin/Messages/AddMessage.jsx";
+import LoginPage from "./components/Common/LoginPage.jsx";
+import AdminAnnouncementPage from "./components/Admin/Messages/AdminAnnouncementPage.jsx";
+import Courses from "./components/Admin/Sidebar/Students/Courses.jsx";
+import Students from "./components/Admin/Sidebar/Students/Students.jsx";
+import SendEmailsButton from "./components/Admin/Sidebar/SendEmail/SendEmailsButton.jsx";
+import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
+import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
+import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
+import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
+import Sidebar from "./components/Admin/Sidebar/Sidebar.jsx";
+import Topbar from "./components/Admin/Sidebar/topbar.jsx";
+import StudentsList from "./components/Students/StudentsList/index.jsx";
+import AssignmentList from "./components/Students/Assignment/AssignmentList.jsx";
+import Admin from "./components/Admin/Admin.jsx";
+import Users from "./components/Students/StudentDashboard/Users.jsx";
+import StudentProfileForm from "./components/Students/StudentProfile.jsx";
+import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
+import { Provider } from "./context/context.jsx";
+import SubmissionList from "./components/Students/StudentDashboard/SubmissionList.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <App></App>,
+  },
+  {
+    path: "/Admin",
+    element: <Admin></Admin>,
+  },
+  {
+    path: "/submissionslist",
+    element: <SubmissionList></SubmissionList>,
   },
   {
     path: "/LoginPage",
@@ -36,17 +65,10 @@ const router = createBrowserRouter([
     element: <NotificationCenter></NotificationCenter>,
   },
   {
-    path: "/ScrollableCards",
-    element: <ScrollableCards></ScrollableCards>,
-  },
-  {
     path: "/Home",
     element: <Home></Home>,
   },
-  {
-    path: "/AdminAnnouncementPage",
-    element: <AdminAnnouncementPage></AdminAnnouncementPage>,
-  },
+
   {
     path: "/AnnouncementPage",
     element: <AnnouncementPage></AnnouncementPage>,
@@ -56,10 +78,6 @@ const router = createBrowserRouter([
     element: <UserDetails></UserDetails>,
   },
   {
-    path: "/Programs",
-    element: <Programs></Programs>,
-  },
-  {
     path: "/Contact",
     element: <ContactPage></ContactPage>,
   },
@@ -67,12 +85,78 @@ const router = createBrowserRouter([
     path: "/About",
     element: <AboutPage></AboutPage>,
   },
+
+  {
+    path: "/courses",
+    element: <Courses></Courses>,
+  },
+  {
+    path: "/students",
+    element: <Students></Students>,
+  },
+
+  {
+    path: "/Dashboard",
+    element: <Dashboard></Dashboard>,
+  },
+
+  {
+    path: "/AssignmentForm",
+    element: <AssignmentForm></AssignmentForm>,
+  },
+  {
+    path: "/StudentProfile",
+    element: <ProfilePage></ProfilePage>,
+  },
+
+  {
+    path: "/side",
+    element: <Sidebar></Sidebar>,
+  },
+  {
+    path: "/email",
+    element: <SendEmailsButton></SendEmailsButton>,
+  },
+  {
+    path: "/message",
+    element: <AdminMessageForm></AdminMessageForm>,
+  },
+  {
+    path: "/announcement",
+    element: <AdminAnnouncementPage></AdminAnnouncementPage>,
+  },
+  {
+    path: "/studentlist",
+    element: <StudentsList></StudentsList>,
+  },
+  {
+    path: "/assignmentlist",
+    element: <AssignmentList></AssignmentList>,
+  },
+
+  {
+    path: "/SidebarNew",
+    element: <SidebarNew></SidebarNew>,
+  },
+  {
+    path: "/topbar",
+    element: <Topbar></Topbar>,
+  },
+  {
+    path: "/users",
+    element: <Users></Users>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
+    <Provider>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+      {/* <BrowserRouter>
+        <App />
+      </BrowserRouter> */}
     </Provider>
   </React.StrictMode>
 );
