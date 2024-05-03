@@ -18,6 +18,8 @@ const StudentsList = () => {
   const [courseFilter, setCourseFilter] = useState("");
   const [nameFilter, setNameFilter] = useState("");
   const [registrationFilter, setRegistrationFilter] = useState("");
+  const [sessionFilter, setSessionFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
 
   const columns = [
     { field: "registrationno", headerName: "Registration No.", flex: 1 },
@@ -26,6 +28,8 @@ const StudentsList = () => {
     { field: "courses", headerName: "Courses", flex: 1 },
     { field: "mobile", headerName: "Mobile", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
+    { field: "session", headerName: "Session", flex: 1 }, // Add this line
+    { field: "year", headerName: "Year", flex: 1 }, // Add this line
   ];
 
   const csvData = data.map((row) => columns.map((column) => row[column.field]));
@@ -59,6 +63,13 @@ const StudentsList = () => {
     setRegistrationFilter(event.target.value);
   };
 
+  const handleSessionFilterChange = (event) => {
+    setSessionFilter(event.target.value);
+  };
+
+  const handleYearFilterChange = (event) => {
+    setYearFilter(event.target.value);
+  };
   const filteredData = data.filter((row) => {
     const programmeMatch =
       !programmeFilter ||
@@ -86,7 +97,22 @@ const StudentsList = () => {
           .toLowerCase()
           .includes(registrationFilter.toLowerCase()));
 
-    return programmeMatch && courseMatch && nameMatch && registrationMatch;
+    const sessionMatch =
+      !sessionFilter ||
+      (row.session &&
+        row.session
+          .toString()
+          .toLowerCase()
+          .includes(sessionFilter.toLowerCase()));
+    const yearMatch = !yearFilter || row.year === parseInt(yearFilter);
+    return (
+      programmeMatch &&
+      courseMatch &&
+      nameMatch &&
+      registrationMatch &&
+      sessionMatch &&
+      yearMatch
+    );
   });
 
   const generateReport = () => {
@@ -191,6 +217,22 @@ const StudentsList = () => {
             type="text"
             value={courseFilter}
             onChange={handleCourseFilterChange}
+          />
+        </Box>
+        <Box mr={2}>
+          <label>Session:</label>
+          <input
+            type="text"
+            value={sessionFilter}
+            onChange={handleSessionFilterChange}
+          />
+        </Box>
+        <Box mr={2}>
+          <label>Year:</label>
+          <input
+            type="text"
+            value={yearFilter}
+            onChange={handleYearFilterChange}
           />
         </Box>
       </Box>

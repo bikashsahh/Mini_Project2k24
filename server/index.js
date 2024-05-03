@@ -352,7 +352,7 @@ app.post("/assignments", async (req, res) => {
 app.get("/studentslist", async (req, res) => {
   try {
     const query = `
-    SELECT s.registrationno, s.name, s.programme, s.courses, s.mobile, s.email, s.registrationno AS id 
+    SELECT s.registrationno, s.name, s.programme, s.courses, s.mobile, s.email, s.session,s.year,s.registrationno AS id 
     FROM students s 
     `;
     const { rows } = await db.query(query);
@@ -371,6 +371,8 @@ app.get("/assignmentlist", async (req, res) => {
         s.registrationno,
         s.name,
         s.programme,
+        s.session,
+        s.year,
         sub.course_name,
         sub.submitted_at,
         sub.file_path

@@ -23,6 +23,8 @@ const AssignmentList = () => {
   const [programmeFilter, setProgrammeFilter] = useState("");
   const [submittedFilter, setSubmittedFilter] = useState("");
   const [courseFilter, setCourseFilter] = useState("");
+  const [sessionFilter, setSessionFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
 
   const columns = [
     { field: "registrationno", headerName: "Registration No.", flex: 1 },
@@ -33,15 +35,17 @@ const AssignmentList = () => {
       headerName: "Courses",
       flex: 1,
       renderCell: (params) =>
-        params.value ? params.value : <HorizontalRuleIcon size={24} />,
+        params.value ? params.value : <HorizontalRuleIcon />,
     },
     {
       field: "submitted_at",
       headerName: "Submitted At",
       flex: 1,
       renderCell: (params) =>
-        params.value ? params.value : <HorizontalRuleIcon size={24} />,
+        params.value ? params.value : <HorizontalRuleIcon />,
     },
+    { field: "session", headerName: "Session", flex: 1 }, // Add this line
+    { field: "year", headerName: "Year", flex: 1 }, // Add this line
     {
       field: "file_path",
       headerName: "Download",
@@ -55,7 +59,7 @@ const AssignmentList = () => {
                 <DownloadIcon />
               </IconButton>
             ) : (
-              <FileDownloadOffIcon size={24} />
+              <FileDownloadOffIcon />
             )
           }
           label="Download"
@@ -74,7 +78,11 @@ const AssignmentList = () => {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
-        setPdfColumns(columns.filter((column) => column.field !== "file_path"));
+        setPdfColumns([
+          ...columns.filter((column) => column.field !== "file_path"),
+          { field: "session", headerName: "Session" },
+          { field: "year", headerName: "Year" },
+        ]);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -101,12 +109,19 @@ const AssignmentList = () => {
     setCourseFilter(event.target.value);
   };
 
+  const handleSessionFilterChange = (event) => {
+    setSessionFilter(event.target.value);
+  };
+
+  const handleYearFilterChange = (event) => {
+    setYearFilter(event.target.value);
+  };
+
   const filteredData = data.filter((row) => {
     const semesterMatch = !semesterFilter || row.semester === semesterFilter;
     const programmeMatch =
       !programmeFilter ||
       (row.programme && row.programme.toString().includes(programmeFilter));
-    // !programmeFilter || row.programme === programmeFilter;
     const submittedMatch =
       submittedFilter === ""
         ? true
@@ -116,7 +131,17 @@ const AssignmentList = () => {
     const courseMatch =
       !courseFilter ||
       (row.course_name && row.course_name.toString().includes(courseFilter));
-    return semesterMatch && programmeMatch && submittedMatch && courseMatch;
+    const sessionMatch = !sessionFilter || row.session === sessionFilter;
+    const yearMatch = !yearFilter || row.year === parseInt(yearFilter);
+
+    return (
+      semesterMatch &&
+      programmeMatch &&
+      submittedMatch &&
+      courseMatch &&
+      sessionMatch &&
+      yearMatch
+    );
   });
 
   const generateReport = () => {
@@ -128,7 +153,9 @@ const AssignmentList = () => {
     // Add header
     const headerText = "Indira Gandhi National Open University";
     doc.setFontSize(18);
-    const headerWidth = doc.getTextWidth(headerText) + 10; // Add some padding
+    const headerWidth =
+      (doc.getStringUnitWidth(headerText) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
     doc.text(
       headerText,
       (doc.internal.pageSize.getWidth() - headerWidth) / 2,
@@ -138,7 +165,9 @@ const AssignmentList = () => {
     // Add subheading 1
     const subheading1Text = "Study Center MNNIT Allahabad";
     doc.setFontSize(14);
-    const subheading1Width = doc.getTextWidth(subheading1Text) + 10; // Add some padding
+    const subheading1Width =
+      (doc.getStringUnitWidth(subheading1Text) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
     doc.text(
       subheading1Text,
       (doc.internal.pageSize.getWidth() - subheading1Width) / 2,
@@ -148,7 +177,9 @@ const AssignmentList = () => {
     // Add subheading 2
     const subheading2Text = "Assignments Report";
     doc.setFontSize(14);
-    const subheading2Width = doc.getTextWidth(subheading2Text) + 10; // Add some padding
+    const subheading2Width =
+      (doc.getStringUnitWidth(subheading2Text) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
     doc.text(
       subheading2Text,
       (doc.internal.pageSize.getWidth() - subheading2Width) / 2,
@@ -171,14 +202,15 @@ const AssignmentList = () => {
     });
 
     // Add footer
-    const footerText = "Page " + doc.getCurrentPageInfo().pageNumber;
-    const footerWidth = doc.getTextWidth(footerText);
+    const footerText = "Page " + doc.internal.getNumberOfPages();
+    const footerWidth =
+      (doc.getStringUnitWidth(footerText) * doc.internal.getFontSize()) /
+      doc.internal.scaleFactor;
     doc.text(
       footerText,
       doc.internal.pageSize.getWidth() - footerWidth - 10,
       doc.internal.pageSize.getHeight() - 10
-    ); // Position the footer on the bottom-right
-
+    );
     doc.save("assignments_report.pdf");
     setIsReportDownloaded(true);
     setPdfColumns([]); // Reset pdfColumns to an empty array
@@ -191,14 +223,6 @@ const AssignmentList = () => {
         subtitle="List of Assignments for Future Reference"
       />
       <Box display="flex" alignItems="center" mb={2}>
-        {/* <Box mr={2}>
-          <label>Semester:</label>
-          <input
-            type="text"
-            value={semesterFilter}
-            onChange={handleSemesterFilterChange}
-          />
-        </Box> */}
         <Box mr={2}>
           <label>Programme:</label>
           <input
@@ -213,6 +237,22 @@ const AssignmentList = () => {
             type="text"
             value={courseFilter}
             onChange={handleCourseFilterChange}
+          />
+        </Box>
+        <Box mr={2}>
+          <label>Session:</label>
+          <input
+            type="text"
+            value={sessionFilter}
+            onChange={handleSessionFilterChange}
+          />
+        </Box>
+        <Box mr={2}>
+          <label>Year:</label>
+          <input
+            type="text"
+            value={yearFilter}
+            onChange={handleYearFilterChange}
           />
         </Box>
         <Box>
@@ -235,46 +275,14 @@ const AssignmentList = () => {
       >
         <CSVLink data={csvData} headers={headers} filename="assignments.csv">
           <Button variant="contained" color="primary">
-            {" "}
-            Download CSV{" "}
+            Download CSV
           </Button>
         </CSVLink>
         <Button variant="contained" color="primary" onClick={generateReport}>
           Download Report
         </Button>
       </Box>
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
-        }}
-      >
+      <Box m="40px 0 0 0" height="75vh">
         <DataGrid
           rows={filteredData}
           columns={columns}

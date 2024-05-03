@@ -7,6 +7,10 @@ import {
   Input,
   CircularProgress,
   Snackbar,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MuiAlert from "@mui/material/Alert";
@@ -21,6 +25,8 @@ const ImportStudentData = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [session, setsession] = useState("");
+  const [year, setYear] = useState("");
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -30,6 +36,9 @@ const ImportStudentData = () => {
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("session", session);
+    formData.append("year", year);
+
     try {
       await axios.post("http://localhost:3000/upload-excel", formData, {
         headers: {
@@ -64,8 +73,8 @@ const ImportStudentData = () => {
       alignItems="center"
       justifyContent="center"
       height="80vh"
-      elevation={4} // Add elevation here
-      p={4} // Add some padding
+      elevation={4}
+      p={4}
     >
       <Typography variant="h2" gutterBottom>
         Upload Student Data
@@ -73,13 +82,50 @@ const ImportStudentData = () => {
       <Box mb={2} color="secondary">
         <Input type="file" onChange={handleFileChange} />
       </Box>
+      <Box mb={2} display="flex" alignItems="center">
+        <FormControl sx={{ mr: 2 }}>
+          <InputLabel id="session-label" color="secondary">
+            Session
+          </InputLabel>
+          <Select
+            labelId="session-label"
+            value={session}
+            onChange={(e) => setsession(e.target.value)}
+            label="session"
+            sx={{ minWidth: 200 }}
+          >
+            <MenuItem value="">Select Session</MenuItem>
+            <MenuItem value="January-June">January-June</MenuItem>
+            <MenuItem value="July-December">July-December</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="year-label" color="secondary">
+            Year
+          </InputLabel>
+          <Select
+            labelId="year-label"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            label="Year"
+            sx={{ minWidth: 200 }}
+          >
+            <MenuItem value="">Select Year</MenuItem>
+            {Array.from({ length: 26 }, (_, i) => (
+              <MenuItem key={i} value={2015 + i}>
+                {2015 + i}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
       <Box display="flex" alignItems="center">
         <Button
           variant="contained"
           color="secondary"
           startIcon={<CloudUploadIcon />}
           onClick={handleUpload}
-          disabled={!file || isUploading}
+          disabled={!file || isUploading || !session || !year}
         >
           Upload Excel
         </Button>
