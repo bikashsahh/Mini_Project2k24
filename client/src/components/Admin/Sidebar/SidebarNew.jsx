@@ -35,6 +35,7 @@ import NotesIcon from "@mui/icons-material/Notes";
 import DvrIcon from "@mui/icons-material/Dvr";
 import CoPresentIcon from "@mui/icons-material/CoPresent";
 import { useSelector } from "react-redux";
+import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -232,32 +233,32 @@ const SidebarNew = ({ handlePage }) => {
                 setSelected={setSelected}
               />
             </Box>
-            {/* <Typography
+            <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Programs
+              Manipulate
             </Typography>
-            <Box onClick={() => handleClick("MCA")}>
+            <Box onClick={() => handleClick("MessageList")}>
               <Item
-                title="MCA"
+                title="Message List"
                 // to="/mca"
-                icon={<SubjectIcon />}
+                icon={<SpeakerNotesOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
             </Box>
-            <Box onClick={() => handleClick("BCA")}>
+            <Box onClick={() => handleClick("AnnouncementDeletePage")}>
               <Item
-                title="BCA"
+                title="Announcement List"
                 // to="/bca"
                 icon={<LibraryBooksIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
             </Box>
-            <Box onClick={() => handleClick("CIT")}>
+            {/*<Box onClick={() => handleClick("CIT")}>
               <Item
                 title="CIT"
                 // to="/cit"

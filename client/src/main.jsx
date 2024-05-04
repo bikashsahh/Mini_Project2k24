@@ -40,6 +40,8 @@ import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDa
 import { Provider } from "./context/context.jsx";
 import SubmissionList from "./components/Students/StudentDashboard/SubmissionList.jsx";
 import AttendanceSheet from "./components/Admin/Sidebar/Students/Attendance.jsx";
+import MessagesList from "./components/Admin/Messages/MessagesList.jsx";
+import AnnouncementDeletePage from "./components/Admin/Messages/AccouncementDeletePage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -150,6 +152,14 @@ const router = createBrowserRouter([
   {
     path: "/attendancesheet",
     element: <AttendanceSheet></AttendanceSheet>,
+  },
+  {
+    path: "/messageList",
+    element: <MessagesList></MessagesList>,
+  },
+  {
+    path: "/announcementDeletePage",
+    element: <AnnouncementDeletePage></AnnouncementDeletePage>,
   },
 ]);
 

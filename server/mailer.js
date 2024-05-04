@@ -72,10 +72,44 @@ async function sendEmail(email, name, subject, body) {
   }
 }
 
-const sendEmailToAllUsers = async (req, res) => {
+// const sendEmailToAllUsers = async (req, res) => {
+//   try {
+//     const { subject, body } = req.body;
+//     const { rows } = await db.query("SELECT name, email FROM students");
+//     const usersWithEmailAndName = rows.map((user) => ({
+//       name: user.name,
+//       email: user.email,
+//     }));
+
+//     for (const user of usersWithEmailAndName) {
+//       try {
+//         const result = await sendEmail(user.email, user.name, subject, body);
+//         console.log(result);
+//       } catch (err) {
+//         console.log("Error in mail function", err.message);
+//       }
+//     }
+
+//     return res.json({
+//       status: "success",
+//       message: "Mail sent to all!",
+//     });
+//   } catch (error) {
+//     console.error("Error fetching students:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+const sendEmailToSelectedUsers = async (req, res) => {
   try {
-    const { subject, body } = req.body;
-    const { rows } = await db.query("SELECT name, email FROM students");
+    let { subject, body, programme, semester, session, year } = req.body; // Changed const to let
+    const updatedProgramme = programme + semester;
+    programme = updatedProgramme;
+    const { rows } = await db.query(
+      "SELECT name, email FROM students WHERE programme = $1 AND session = $2 AND year = $3",
+      [programme, session, year]
+    );
+
+    console.log("server--->", session, year);
     const usersWithEmailAndName = rows.map((user) => ({
       name: user.name,
       email: user.email,
@@ -84,7 +118,7 @@ const sendEmailToAllUsers = async (req, res) => {
     for (const user of usersWithEmailAndName) {
       try {
         const result = await sendEmail(user.email, user.name, subject, body);
-        console.log(result);
+        console.log("server---->", result);
       } catch (err) {
         console.log("Error in mail function", err.message);
       }
@@ -92,7 +126,7 @@ const sendEmailToAllUsers = async (req, res) => {
 
     return res.json({
       status: "success",
-      message: "Mail sent to all!",
+      message: "Mail sent to selected students!",
     });
   } catch (error) {
     console.error("Error fetching students:", error);
@@ -100,4 +134,4 @@ const sendEmailToAllUsers = async (req, res) => {
   }
 };
 
-export default sendEmailToAllUsers;
+export default sendEmailToSelectedUsers;

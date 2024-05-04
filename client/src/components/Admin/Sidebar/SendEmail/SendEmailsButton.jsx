@@ -14,20 +14,44 @@ const SendEmailsButton = () => {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [programme, setProgramme] = useState("");
+  const [semester, setSemester] = useState("");
+  const [session, setSession] = useState("");
+  const [year, setYear] = useState("");
+  const handleProgrammeChange = (event) => {
+    setProgramme(event.target.value);
+  };
 
+  const handleSemesterChange = (event) => {
+    setSemester(event.target.value);
+  };
+
+  const handleSessionChange = (event) => {
+    setSession(event.target.value);
+  };
+
+  const handleYearChange = (event) => {
+    setYear(event.target.value);
+  };
   const handleClick = async () => {
     setIsLoading(true);
-
     try {
       await axios
-        .post("http://localhost:3000/sendmailtoallusers", { subject, body })
+        .post("http://localhost:3000/sendmailtoselectedusers", {
+          subject,
+          body,
+          programme,
+          semester,
+          session,
+          year,
+        })
         .then((res) => {
           toast.success("Emails sent successfully!");
-          console.log(res.data.message);
+          console.log("sjhgdjajds", res.data.message);
           resetForm();
         })
         .catch((err) => {
-          console.log("Error in sending mail to all users:", err.message);
+          console.log("Error in sending mail to selected users:", err.message);
           toast.error("Error sending emails. Please try again.");
         })
         .finally(() => {
@@ -83,6 +107,125 @@ const SendEmailsButton = () => {
         margin="normal"
         required
       />
+      {/* <Box display="flex" flexWrap="wrap" justifyContent="center" mt={2}>
+        <Box mr={2}>
+          <label>Programme:</label>
+          <select value={programme} onChange={handleProgrammeChange}>
+            <option value="">Select Programme</option>
+            <option value="BCA">BCA</option>
+            <option value="MCA">MCA</option>
+            <option value="PGDCA">PGDCA</option>
+            <option value="CIT">CIT</option>
+          </select>
+        </Box>
+        <Box mr={2}>
+          <label>Semester:</label>
+          <select value={semester} onChange={handleSemesterChange}>
+            <option value="">Select Semester</option>
+            {programme === "BCA" || programme === "MCA" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </>
+            ) : programme === "PGDCA" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </>
+            ) : programme === "CIT" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </>
+            ) : null}
+          </select>
+        </Box>
+        <Box mr={2}>
+          <label>Session:</label>
+          <input
+            type="text"
+            value={session}
+            onChange={handleSessionChange}
+            placeholder="Enter Session"
+          />
+        </Box>
+        <Box>
+          <label>Year:</label>
+          <input
+            type="text"
+            value={year}
+            onChange={handleYearChange}
+            placeholder="Enter Year"
+          />
+        </Box>
+      </Box> */}
+      <Box display="flex" flexWrap="wrap" justifyContent="center" mt={2}>
+        <Box mr={2}>
+          <label>Programme:</label>
+          <select value={programme} onChange={handleProgrammeChange}>
+            <option value="">Select Programme</option>
+            <option value="BCA">BCA</option>
+            <option value="MCA_NEW">MCA_NEW</option>
+            <option value="PGDCA_NEW">PGDCA_NEW</option>
+            <option value="CIT">CIT</option>
+          </select>
+        </Box>
+        <Box mr={2}>
+          <label>Semester:</label>
+          <select value={semester} onChange={handleSemesterChange}>
+            <option value="">Select Semester</option>
+            {programme === "BCA" || programme === "MCA_NEW" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </>
+            ) : programme === "PGDCA_NEW" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </>
+            ) : programme === "CIT" ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </>
+            ) : null}
+          </select>
+        </Box>
+        <Box mr={2}>
+          <label>Session:</label>
+          <select value={session} onChange={handleSessionChange}>
+            <option value="">Select Session</option>
+            <option value="January-June">January-June</option>
+            <option value="July-December">July-December</option>
+          </select>
+        </Box>
+        <Box>
+          <label>Year:</label>
+          <select value={year} onChange={handleYearChange}>
+            <option value="">Select Year</option>
+            {Array.from({ length: 2040 - 2015 + 1 }, (_, i) => 2015 + i).map(
+              (year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              )
+            )}
+          </select>
+        </Box>
+      </Box>
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           variant="contained"
@@ -91,7 +234,7 @@ const SendEmailsButton = () => {
           disabled={!isFormFilled || isLoading}
           startIcon={isLoading && <CircularProgress size={24} />}
         >
-          {isLoading ? "Sending Emails..." : "Send Emails to All Users"}
+          {isLoading ? "Sending Emails..." : "Send Emails to Selected Students"}
         </Button>
       </Box>
       <ToastContainer />

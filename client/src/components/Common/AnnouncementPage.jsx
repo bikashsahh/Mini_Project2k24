@@ -6,19 +6,18 @@ import {
   ThemeProvider,
   CssBaseline,
 } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-// import { tokens } from "../../../theme";
-import { tokens, ColorModeContext, useMode } from "../../theme";
+import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
+import { saveAs } from "file-saver";
+import { ColorModeContext, useMode } from "../../theme";
 import { useTheme } from "@mui/material";
 import HeaderNew from "../Admin/DashboardNew/HeaderNew";
-// import HeaderNew from "../../Admin/DashboardNew/HeaderNew";
 import DownloadIcon from "@mui/icons-material/Download";
 import axios from "axios";
-import Topbar from "../Admin/Sidebar/topbar";
+
 const AnnouncementPage = () => {
   const [themes, colorMode] = useMode();
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const colors = theme.palette.mode;
   const [announcements, setAnnouncements] = useState([]);
 
   const columns = [
@@ -32,16 +31,24 @@ const AnnouncementPage = () => {
     },
     {
       field: "file_path",
-      headerName: "File",
+      headerName: "Download",
       flex: 1,
-      renderCell: (params) =>
-        params.value ? (
-          <IconButton onClick={() => handleDownload(params.value)}>
-            <DownloadIcon />
-          </IconButton>
-        ) : (
-          <span>No file</span>
-        ),
+      type: "actions",
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={
+            params.row.file_path ? (
+              <IconButton onClick={() => downloadFile(params.row.file_path)}>
+                <DownloadIcon />
+              </IconButton>
+            ) : (
+              <span>File not available</span>
+            )
+          }
+          label="Download"
+          disabled={!params.row.file_path}
+        />,
+      ],
     },
     { field: "created_at", headerName: "Created At", flex: 1 },
     {
@@ -70,21 +77,10 @@ const AnnouncementPage = () => {
     fetchAnnouncements();
   }, []);
 
-  const handleDownload = async (fileUrl) => {
-    try {
-      const response = await axios.get(fileUrl, {
-        responseType: "blob",
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", fileUrl.split("/").pop());
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (error) {
-      console.error("Error downloading file:", error);
-    }
+  const downloadFile = (filePath) => {
+    saveAs(filePath)
+      .then(() => console.log("File downloaded successfully"))
+      .catch((error) => console.error("Error downloading file:", error));
   };
 
   const isNew = (createdAt) => {
@@ -100,13 +96,13 @@ const AnnouncementPage = () => {
       <ThemeProvider theme={themes}>
         <CssBaseline />
         <Box m="20px">
-          {/* <Topbar></Topbar> */}
-          <HeaderNew title="Announcements" subtitle="List of Acoouncements" />
+          <HeaderNew title="Announcements" subtitle="List of Announcements" />
           <Box m="40px 0 0 0" height="75vh">
             <DataGrid
               rows={announcements}
               columns={columns}
               components={{ Toolbar: GridToolbar }}
+              getRowId={(row) => row.created_at}
             />
           </Box>
         </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Stack,
@@ -16,40 +16,112 @@ const AdminAnnouncementPage = () => {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [fileUrl, setFileUrl] = useState("");
+  const fileInputRef = useRef(null);
+  const [fileName, setFileName] = useState("No image selected");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("file", file);
-      const response = await axios.post(
-        "http://localhost:3000/announcements",
-        formData,
-        {
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const resFile = await axios({
+          method: "post",
+          url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          data: formData,
           headers: {
+            pinata_api_key: `91f013fa4929ab908af2`,
+            pinata_secret_api_key: `918c20b6d1338f77fb5844b2d001fbccdb9a1188a85c5bb9bee4d0f28794e8de`,
             "Content-Type": "multipart/form-data",
           },
+        });
+        const ImgHash =
+          "https://gateway.pinata.cloud/ipfs/" + resFile.data.IpfsHash;
+        setFileUrl(ImgHash);
+
+        try {
+          const fileData = {
+            title: title,
+            description: description,
+            ImgHash: ImgHash,
+          };
+          const response = await axios.post(
+            `http://localhost:3000/announcements`,
+            fileData
+          );
+          console.log("Successfully Submitted");
+          toast.success("Announcement Created successfully!");
+          resetForm();
+        } catch (error) {
+          console.log("Error in announcement creation:", error);
+          toast.error("Error creating announcement. Please try again.");
         }
-      );
-      console.log("Server response:", response.data);
-      setTitle("");
-      setDescription("");
-      setFile(null);
-      toast.success("Announcement created successfully!"); // Show success notification
-    } catch (error) {
-      console.error("Error creating announcement:", error);
-      toast.error("Failed to create announcement. Please try again."); // Show error notification
-    } finally {
-      setIsLoading(false);
+      } catch (e) {
+        toast.error("Unable to upload file to Pinata");
+      }
+    } else {
+      toast.error("Please select a file to upload.");
     }
+
+    setIsLoading(false);
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const data = e.target.files[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(data);
+    reader.onloadend = () => {
+      setFile(e.target.files[0]);
+    };
+    setFileName(e.target.files[0].name);
+    e.preventDefault();
   };
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setFile(null);
+    setFileName("No files selected");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("title", title);
+  //     formData.append("description", description);
+  //     formData.append("file", file);
+  //     const response = await axios.post(
+  //       "http://localhost:3000/announcements",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     console.log("Server response:", response.data);
+  //     setTitle("");
+  //     setDescription("");
+  //     setFile(null);
+  //     toast.success("Announcement created successfully!"); // Show success notification
+  //   } catch (error) {
+  //     console.error("Error creating announcement:", error);
+  //     toast.error("Failed to create announcement. Please try again."); // Show error notification
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
 
   return (
     <Box
@@ -97,7 +169,14 @@ const AdminAnnouncementPage = () => {
               required
               fullWidth
             />
-            <input type="file" onChange={handleFileChange} required />
+            <input
+              type="file"
+              ref={fileInputRef}
+              id="file-upload"
+              name="data"
+              onChange={handleFileChange}
+              required
+            />
             <Button
               variant="contained"
               color="secondary"

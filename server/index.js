@@ -5,7 +5,8 @@ import multer from "multer";
 import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
-import sendEmailToAllUsers from "./mailer.js";
+// import sendEmailToAllUsers from "./mailer.js";
+import sendEmailToSelectedUsers from "./mailer.js";
 import ExcelFile from "./excelFile.js";
 import formidable from "formidable";
 // import pinataSDK from "@pinata/sdk";
@@ -113,41 +114,54 @@ app.delete("/messages/:id", async (req, res) => {
 
 // -----------------------------ANNOUNCEMENTS---------------------------------------
 // GET latest announcement
-app.get("/announcements/latest", async (req, res) => {
-  try {
-    const result = await db.query(
-      "SELECT * FROM announcements ORDER BY id DESC LIMIT 1"
-    );
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error("Error fetching latest announcement:", err);
-    res.status(500).json({ error: "Error fetching latest announcement" });
-  }
-});
+// app.get("/announcements/latest", async (req, res) => {
+//   try {
+//     const result = await db.query(
+//       "SELECT * FROM announcements ORDER BY id DESC LIMIT 1"
+//     );
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     console.error("Error fetching latest announcement:", err);
+//     res.status(500).json({ error: "Error fetching latest announcement" });
+//   }
+// });
 
 // GET all announcements
 app.get("/announcements", async (req, res) => {
   try {
-    const result = await db.query(
-      "SELECT * FROM announcements ORDER BY id DESC"
-    );
-    res.json(result.rows);
+    const query = `
+      SELECT
+        id,
+        title,
+        description,
+        file_path,
+        created_at
+      FROM
+        announcements
+    `;
+    const { rows } = await db.query(query);
+    res.json(rows);
   } catch (err) {
-    console.error("Error fetching announcements:", err);
-    res.status(500).json({ error: "Error fetching announcements" });
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 // POST route for creating announcements
-app.post("/announcements", upload.single("file"), async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const fileUrl = req.file ? req.file.path : null;
 
-    // Insert new announcement into the PostgreSQL database
+app.post("/announcements", async (req, res) => {
+  try {
+    const { title, description, ImgHash } = req.body;
+
+    // Check if required parameters are present
+    if (!title || !description || !ImgHash) {
+      return res.status(400).send("Missing parameters");
+    }
+
+    // Check if the student has already submitted an assignment for the selected course
     const queryText =
       "INSERT INTO announcements (title, description, file_path) VALUES ($1, $2, $3) RETURNING id";
-    const values = [title, description, fileUrl];
+    const values = [title, description, ImgHash];
     const result = await db.query(queryText, values);
 
     res.status(201).json({
@@ -160,23 +174,99 @@ app.post("/announcements", upload.single("file"), async (req, res) => {
   }
 });
 
-// GET endpoint for downloading files
-app.get("/announcements/download/:filePath", async (req, res) => {
-  const { filePath } = req.params;
+// DELETE announcement by ID
+// // Delete an announcement
+// app.delete("/announcements/:id", async (req, res) => {
+//   const announcementId = req.params.id;
+
+//   try {
+//     // Perform deletion operation in the database based on the announcementId
+//     const deleteQuery = "DELETE FROM announcements WHERE id = $1";
+//     const result = await db.query(deleteQuery, [announcementId]);
+
+//     if (result.rowCount === 1) {
+//       res.status(200).json({ message: "Announcement deleted successfully" });
+//     } else {
+//       res.status(404).json({ message: "Announcement not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error deleting announcement:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+app.delete("/announcements/:id", async (req, res) => {
+  const id = req.params.id;
+  console.log("id: ", id);
   try {
-    // Send the file for download
-    // /Users/bikashsah/Desktop/Mini_Project2k24/server/uploads
-    res.download(path.join(__dirname, "../server/uploads", filePath), (err) => {
-      if (err) {
-        console.error("Error downloading file:", err);
-        res.status(500).json({ error: "Error downloading file" });
-      }
-    });
+    // const client = await pool.connect();
+    const query = "DELETE FROM announcements WHERE id = $1";
+    const result = await db.query(query, [id]);
+    // client.release();
+    console.log(result.rowCount);
+    res.json({ message: "Announcement deleted successfully" });
   } catch (err) {
-    console.error("Error downloading file:", err);
-    res.status(500).json({ error: "Error downloading file" });
+    console.error("Error deleting announcement:", err);
+    res.status(500).json({ error: "Error deleting announcement" });
   }
 });
+// });
+
+// app.delete("/announcements/:id", async (req, res) => {
+//   const announcementId = req.params.id;
+//   try {
+//     // Perform deletion operation in the database based on the announcementId
+//     // Example: DELETE FROM announcements WHERE id = $1
+//     // Replace $1 with the actual parameter value using prepared statements to prevent SQL injection
+//     const deleteQuery = "DELETE FROM announcements WHERE id = $1";
+//     const result = await db.query(deleteQuery, [announcementId]);
+//     if (result.rowCount === 1) {
+//       res.status(200).json({ message: "Announcement deleted successfully" });
+//     } else {
+//       res.status(404).json({ message: "Announcement not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error deleting announcement:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
+// DELETE route to delete a message by ID
+// app.post("/announcements", upload.single("file"), async (req, res) => {
+//   try {
+//     const { title, description } = req.body;
+//     const fileUrl = req.file ? req.file.path : null;
+
+//     // Insert new announcement into the PostgreSQL database
+//     const queryText =
+//       "INSERT INTO announcements (title, description, file_path) VALUES ($1, $2, $3) RETURNING id";
+//     const values = [title, description, fileUrl];
+//     const result = await db.query(queryText, values);
+
+//     res.status(201).json({
+//       message: "Announcement created successfully",
+//       id: result.rows[0].id,
+//     });
+//   } catch (error) {
+//     console.error("Error creating announcement:", error);
+//     res.status(500).json({ error: "Internal server error" }); // Send an error response to the client
+//   }
+// });
+
+// // GET endpoint for downloading files
+// app.get("/announcements/download/:filePath", async (req, res) => {
+//   const { filePath } = req.params;
+//   try {
+//     // Send the file for download
+//     // /Users/bikashsah/Desktop/Mini_Project2k24/server/uploads
+//     res.download(path.join(__dirname, "../server/uploads", filePath), (err) => {
+//       if (err) {
+//         console.error("Error downloading file:", err);
+//         res.status(500).json({ error: "Error downloading file" });
+//       }
+//     });
+//   } catch (err) {
+//     console.error("Error downloading file:", err);
+//     res.status(500).json({ error: "Error downloading file" });
+//   }
+// });
 
 // -----------------------------------------------------------------------
 // Add the new route for "Check Status"
@@ -255,7 +345,9 @@ app.get("list", async (req, res) => {
 });
 // =============================
 // app.get('/sendmailtoallusers', sendEmailToAllUsers);
-app.post("/sendmailtoallusers", sendEmailToAllUsers);
+// app.post("/sendmailtoallusers", sendEmailToAllUsers);
+app.post("/sendmailtoselectedusers", sendEmailToSelectedUsers);
+// app.post("/sendmailtoallusers", sendEmailToAllUsers);
 
 // ----------------------------------
 app.post("/upload-excel", uploads.single("file"), ExcelFile);
