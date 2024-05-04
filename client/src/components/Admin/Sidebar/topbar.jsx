@@ -29,6 +29,8 @@ const Topbar = () => {
   const handleLogout = () => {
     // Perform logout functionality here
     console.log("Logout clicked");
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiration");
     handleClose();
     navigate("/Home");
     // <Home></Home>;

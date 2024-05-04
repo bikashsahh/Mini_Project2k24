@@ -5,6 +5,7 @@ import multer from "multer";
 import path from "path";
 import nodemailer from "nodemailer";
 import env from "dotenv";
+import jwt from "jsonwebtoken";
 // import sendEmailToAllUsers from "./mailer.js";
 import sendEmailToSelectedUsers from "./mailer.js";
 import ExcelFile from "./excelFile.js";
@@ -43,17 +44,27 @@ app.post("/login", async (req, res) => {
   try {
     // Query the database to find a user with the provided email and password
     const result = await db.query(
-      "SELECT * FROM students WHERE registrationno = $1 AND registrationno = $2",
+      "SELECT * FROM students WHERE registrationno = $1 AND password = $2",
       [registration, password] //password==registration no.
     );
     // If a user is found, send a success response
+    const token = jwt.sign(
+      {
+        data: result.rows[0],
+      },
+      "bikashsah",
+      { expiresIn: "1h" }
+    );
+
     if (result.rows.length > 0) {
       res.status(200).json({
+        token: token,
         success: true,
         message: "Login successful",
         isAdmin: result.rows[0].isadmin,
       });
       // console.log("success");
+
       return;
     } else {
       // If no user is found, send an error response
@@ -64,7 +75,59 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
-// ---------------------------Messages--------------------------//
+// ---------------------------------
+app.post("/forgot-password", async (req, res) => {
+  const { registration } = req.body;
+
+  console.log("Registration number server -> :", registration);
+
+  try {
+    // Execute the SQL query to check if the registration number exists
+    const query = `SELECT * FROM students WHERE registrationno = '${registration}'`;
+    const result = await db.query(query);
+
+    if (result.rows.length > 0) {
+      // Registration number found, allow password update
+      res.json({ success: true, userExists: true });
+    } else {
+      // Registration number not found
+      res.json({ success: true, userExists: false });
+    }
+  } catch (err) {
+    console.error("Error executing query:", err);
+    res.status(500).json({ success: false, error: "An error occurred." });
+  }
+});
+
+//------------------------
+app.post("/update-password", async (req, res) => {
+  const { registration, newPassword } = req.body;
+
+  console.log(
+    "Registration number server & new password -> :",
+    registration,
+    newPassword
+  );
+
+  try {
+    // Update the password in the database for the given registration number
+    const query = `UPDATE students SET password = '${newPassword}' WHERE registrationno = '${registration}'`;
+    const result = await db.query(query);
+
+    // console.log("result: ", result);
+    if (result.rowCount > 0) {
+      // Password updated successfully
+      res.json({ success: true, message: "Password updated successfully." });
+    }
+  } catch (err) {
+    console.error("Error executing query:", err);
+    res.status(500).json({ success: false, error: "An error occurred." });
+  }
+});
+
+//---------------------------------------------------------
+
+//---------------------------Messages--------------------------//
 // POST endpoint for adding messages
 app.post("/messages", async (req, res) => {
   const { message } = req.body;
@@ -441,11 +504,36 @@ app.post("/assignments", async (req, res) => {
 
 //-----------------------------------------
 // Route to fetch student and submission data
+// app.get("/studentslist", async (req, res) => {
+//   try {
+//     const query = `
+//     SELECT s.registrationno, s.name, s.programme, s.courses, s.mobile, s.email, s.session,s.year,s.registrationno AS id
+//     FROM students s
+//     `;
+//     const { rows } = await db.query(query);
+//     res.json(rows);
+//   } catch (err) {
+//     console.error("Error fetching data:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 app.get("/studentslist", async (req, res) => {
   try {
     const query = `
-    SELECT s.registrationno, s.name, s.programme, s.courses, s.mobile, s.email, s.session,s.year,s.registrationno AS id 
-    FROM students s 
+      SELECT 
+        s.registrationno, 
+        s.name, 
+        s.programme, 
+        s.courses, 
+        s.mobile, 
+        s.email, 
+        s.session,
+        s.year,
+        s.registrationno AS id 
+      FROM 
+        students s 
+      WHERE 
+        s.isadmin IS NULL OR s.isadmin = false -- Select students where isadmin is null or false
     `;
     const { rows } = await db.query(query);
     res.json(rows);
@@ -455,7 +543,30 @@ app.get("/studentslist", async (req, res) => {
   }
 });
 
-//-------------------------------------------
+// //-------------------------------------------
+// app.get("/assignmentlist", async (req, res) => {
+//   try {
+//     const query = `
+//       SELECT
+//         s.registrationno,
+//         s.name,
+//         s.programme,
+//         s.session,
+//         s.year,
+//         sub.course_name,
+//         sub.submitted_at,
+//         sub.file_path
+//       FROM
+//         students s
+//         LEFT JOIN submissions sub ON s.registrationno = sub.registrationno
+//     `;
+//     const { rows } = await db.query(query);
+//     res.json(rows);
+//   } catch (err) {
+//     console.error("Error fetching data:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 app.get("/assignmentlist", async (req, res) => {
   try {
     const query = `
@@ -471,6 +582,8 @@ app.get("/assignmentlist", async (req, res) => {
       FROM
         students s
         LEFT JOIN submissions sub ON s.registrationno = sub.registrationno
+      WHERE 
+        s.isadmin IS NULL OR s.isadmin = false -- Select students where isadmin is null or false
     `;
     const { rows } = await db.query(query);
     res.json(rows);
@@ -538,6 +651,27 @@ app.get("/studentsubmissionslist", async (req, res) => {
 });
 
 //-----------------attendance sheet-------------------------
+// app.get("/attendancesheet", async (req, res) => {
+//   try {
+//     const result = await db.query(
+//       `
+//         SELECT
+//           s.registrationno,
+//           s.name,
+//           s.programme,
+//           NULL AS signature,
+//           NULL AS remark
+//         FROM students s
+//         ORDER BY s.registrationno;
+//       `
+//     );
+
+//     res.json(result.rows);
+//   } catch (err) {
+//     console.error("Error fetching attendance sheet data:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 app.get("/attendancesheet", async (req, res) => {
   try {
     const result = await db.query(
@@ -549,6 +683,7 @@ app.get("/attendancesheet", async (req, res) => {
           NULL AS signature,
           NULL AS remark
         FROM students s
+        WHERE s.isadmin IS NULL OR s.isadmin = false         -- Select students where isadmin is null or false
         ORDER BY s.registrationno;
       `
     );
@@ -559,6 +694,7 @@ app.get("/attendancesheet", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 //----------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

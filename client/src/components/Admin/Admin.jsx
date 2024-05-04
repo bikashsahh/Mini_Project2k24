@@ -25,10 +25,33 @@ import AssignmentList from "../Students/Assignment/AssignmentList";
 import AttendanceSheet from "./Sidebar/Students/Attendance";
 import MessagesList from "./Messages/MessagesList";
 import AnnouncementDeletePage from "./Messages/AccouncementDeletePage";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Admin = () => {
+  const navigator = useNavigate();
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [page, setPage] = useState("Dashboard");
+  const [tokenValid, setTokenValid] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
+    if (token) {
+      setTokenValid(true);
+    } else {
+      console.log("Token not found");
+      navigator("/Home");
+    }
+  }, [navigator]);
+
+  console.log("Token valid:", tokenValid);
+
+  if (!tokenValid) {
+    console.log("Redirecting...");
+    return null; // or any loading state or component while checking token validity
+  }
 
   function handlePage(pg) {
     console.log("App got clicked:", pg);
