@@ -1,7 +1,0 @@
-"id","email","password","isadmin"
-1,"admin@gmail.com","123
-",False
-2,"macbookm12k23@gmail.com","google",False
-3,"bikash@gmail.com","1234",False
-4,"abhi@gmail.com","12345",False
-5,"test@gmail.com","test",True
