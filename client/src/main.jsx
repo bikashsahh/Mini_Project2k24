@@ -1,47 +1,32 @@
 import React from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./base.css";
-
-// import "./components/Admin/Admin.css";
+import "./ui/base.css";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  // BrowserRouter,
-} from "react-router-dom";
-import Home from "./components/HomePage_Utilities/Home.jsx";
-import Header from "./components/HomePage_Utilities/Header.jsx";
-import NotificationCenter from "./components/HomePage_Utilities/HomeCenter.jsx";
-// import { store } from "./redux/Store/store.jsx";
-// import { Provider } from "react-redux";
-import AnnouncementPage from "./components/Common/AnnouncementPage.jsx";
-import UserDetails from "./components/Students/UserDetails.jsx";
-import AboutPage from "./components/HomePage_Utilities/AboutPage.jsx";
-import ContactPage from "./components/HomePage_Utilities/ContactPage.jsx";
-import AdminMessageForm from "./components/Admin/Messages/AddMessage.jsx";
-import LoginPage from "./components/Common/LoginPage.jsx";
-import AdminAnnouncementPage from "./components/Admin/Messages/AdminAnnouncementPage.jsx";
-import Courses from "./components/Admin/Sidebar/Students/Courses.jsx";
-import Students from "./components/Admin/Sidebar/Students/Students.jsx";
-import SendEmailsButton from "./components/Admin/Sidebar/SendEmail/SendEmailsButton.jsx";
-import Dashboard from "./components/Admin/AdminHomePage/Dashboard.jsx";
-import ImportStudentData from "./components/Admin/Sidebar/Students/ImportStudentData.jsx";
-import AssignmentForm from "./components/Students/Assignment/AssignmentForm.jsx";
-import SidebarNew from "./components/Admin/Sidebar/SidebarNew.jsx";
-import Sidebar from "./components/Admin/Sidebar/Sidebar.jsx";
-import Topbar from "./components/Admin/Sidebar/topbar.jsx";
-import StudentsList from "./components/Students/StudentsList/index.jsx";
-import AssignmentList from "./components/Students/Assignment/AssignmentList.jsx";
-import Admin from "./components/Admin/Admin.jsx";
-import Users from "./components/Students/StudentDashboard/Users.jsx";
-import StudentProfileForm from "./components/Students/StudentProfile.jsx";
-import ProfilePage from "./components/Students/StudentDashboard/StudentProfileDash.jsx";
+import Home from "./pages/Home.jsx";
+import Header from "./components/Home/Header.jsx";
+import AnnouncementPage from "./common/AnnouncementPage.jsx";
+import UserDetails from "./components/Users/UserDetails.jsx";
+import AboutPage from "./components/Home/AboutPage.jsx";
+import ContactPage from "./components/Home/ContactPage.jsx";
+import AdminMessageForm from "./Messages/AddMessage.jsx";
+import LoginPage from "./common/LoginPage.jsx";
+import AdminAnnouncementPage from "./components/Admin/AdminAnnouncementPage.jsx";
+import SendEmailsButton from "./components/Admin/SendEmailsButton.jsx";
+import AssignmentForm from "./components/Users/AssignmentForm.jsx";
+import AdminSidebar from "./sidebar/AdminSidebar.jsx";
+import Topbar from "./ui/Topbar.jsx";
+import StudentsList from "./components/Admin/StudentsList.jsx";
+import AssignmentList from "./components/Admin/AssignmentList.jsx";
+import Admin from "./pages/Admin.jsx";
+import Users from "./pages/Users.jsx";
+import ProfilePage from "./components/Users/StudentProfileDash.jsx";
 import { Provider } from "./context/context.jsx";
-import SubmissionList from "./components/Students/StudentDashboard/SubmissionList.jsx";
-import AttendanceSheet from "./components/Admin/Sidebar/Students/Attendance.jsx";
-import MessagesList from "./components/Admin/Messages/MessagesList.jsx";
-import AnnouncementDeletePage from "./components/Admin/Messages/AccouncementDeletePage.jsx";
+import SubmissionList from "./components/Users/SubmissionList.jsx";
+import AttendanceSheet from "./components/Admin/Attendance.jsx";
+import MessagesList from "./Messages/MessagesList.jsx";
+import AnnouncementDeletePage from "./components/Admin/AccouncementDeletePage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -64,10 +49,6 @@ const router = createBrowserRouter([
     element: <Header></Header>,
   },
   {
-    path: "/NotificationCenter",
-    element: <NotificationCenter></NotificationCenter>,
-  },
-  {
     path: "/Home",
     element: <Home></Home>,
   },
@@ -85,22 +66,8 @@ const router = createBrowserRouter([
     element: <ContactPage></ContactPage>,
   },
   {
-    path: "/About",
+    path: "/AboutPage",
     element: <AboutPage></AboutPage>,
-  },
-
-  {
-    path: "/courses",
-    element: <Courses></Courses>,
-  },
-  {
-    path: "/students",
-    element: <Students></Students>,
-  },
-
-  {
-    path: "/Dashboard",
-    element: <Dashboard></Dashboard>,
   },
 
   {
@@ -112,10 +79,6 @@ const router = createBrowserRouter([
     element: <ProfilePage></ProfilePage>,
   },
 
-  {
-    path: "/side",
-    element: <Sidebar></Sidebar>,
-  },
   {
     path: "/email",
     element: <SendEmailsButton></SendEmailsButton>,
@@ -138,8 +101,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/SidebarNew",
-    element: <SidebarNew></SidebarNew>,
+    path: "/adminsidebar",
+    element: <AdminSidebar></AdminSidebar>,
   },
   {
     path: "/topbar",

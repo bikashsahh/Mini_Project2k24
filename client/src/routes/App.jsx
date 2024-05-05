@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../base.css";
-import Home from "../components/HomePage_Utilities/Home";
+import Home from "../pages/Home";
+import "../ui/base.css";
 
 const App = () => {
   // const [theme, colorMode] = useMode();
