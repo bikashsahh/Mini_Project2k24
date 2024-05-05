@@ -55,14 +55,8 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        {/* <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton> */}
         <IconButton onClick={handleClick}>
-          <LogoutOutlinedIcon fontSize="large" />
+          <LogoutOutlinedIcon fontSize="medium" />
         </IconButton>
         <Menu
           anchorEl={anchorEl}
