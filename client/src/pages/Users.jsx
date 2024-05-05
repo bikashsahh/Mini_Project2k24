@@ -43,12 +43,12 @@ const Users = () => {
         } else {
           handleLogoutOperations();
           alert("You are not authorized to access this page");
-          navigator("/Home");
+          navigator("/");
         }
       } catch (error) {
         handleLogoutOperations();
-        navigator("/Home");
-        alert("An error occurred. Please try again later.");
+        navigator("/");
+        alert("You are not authorized. Please try again later.");
         console.error("Error:", error);
       }
     }

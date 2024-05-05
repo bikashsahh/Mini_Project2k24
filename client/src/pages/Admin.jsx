@@ -1,6 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
-import DashboardNew from "../components/Admin/AdminDashboard.jsx";
 import { ColorModeContext, useMode } from "../ui/theme";
 import Topbar from "../ui/Topbar.jsx";
 import ImportStudentData from "../components/Admin/ImportStudentData.jsx";
@@ -48,12 +47,12 @@ const Admin = () => {
         } else {
           handleLogoutOperations();
           alert("You are not authorized to access this page");
-          navigator("/Home");
+          navigator("/");
         }
       } catch (error) {
         handleLogoutOperations();
-        navigator("/Home");
-        alert("Internal Server Error. Please try again later.");
+        navigator("/");
+        alert("You are not authorized. Please try again later.");
         // Log the error message
         console.error(
           "Error:",

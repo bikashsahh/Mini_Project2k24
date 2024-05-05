@@ -10,7 +10,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -23,7 +23,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       icon={icon}
     >
       <Typography>{title}</Typography>
-      <Link to={to} />
     </MenuItem>
   );
 };
@@ -38,10 +37,6 @@ const StudentSidebar = ({ handlePage }) => {
     setSelected(pg);
     handlePage(pg);
   }
-  // const dispatch = useDispatch();
-  // const tab = useSelector((state) => state.selectedTab.tab);
-  // // const setTab = useSelector((state) => state.selectedTab.setTab);
-  // console.log("settab at sidebar", tab);
   return (
     <Box
       sx={{
@@ -90,9 +85,6 @@ const StudentSidebar = ({ handlePage }) => {
                     style={{ cursor: "pointer", borderRadius: "50%" }}
                   />
                 </Box>
-                {/* <Typography variant="h2" color={colors.grey[100]}>
-                  Admin
-                </Typography> */}
                 <IconButton
                   onClick={() => setIsCollapsed(!isCollapsed)}
                   sx={{ marginLeft: "10px" }}
@@ -139,22 +131,11 @@ const StudentSidebar = ({ handlePage }) => {
             <Box onClick={() => handleClick("Profile")}>
               <Item
                 title="Profile"
-                // to="/"
                 icon={<PeopleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
             </Box>
-
-            {/* <Box onClick={() => handleClick("EnrolledCourses")}>
-              <Item
-                title="Enrolled Courses"
-                // to="/ImportStudentData"
-                icon={<ImportExportIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </Box> */}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -165,7 +146,6 @@ const StudentSidebar = ({ handlePage }) => {
             <Box onClick={() => handleClick("Assignments")}>
               <Item
                 title="Assignments"
-                // to="/"
                 icon={<AssignmentIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -174,7 +154,6 @@ const StudentSidebar = ({ handlePage }) => {
             <Box onClick={() => handleClick("PreviousAssignment")}>
               <Item
                 title="Submitted"
-                // to="/email"
                 icon={<AttachEmailIcon />}
                 selected={selected}
                 setSelected={setSelected}

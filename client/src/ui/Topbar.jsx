@@ -6,7 +6,7 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 // import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 // import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import handleLogoutOperations from "../util/utils";
@@ -30,8 +30,7 @@ const Topbar = () => {
     console.log("Logout clicked");
     handleLogoutOperations();
     handleClose();
-    navigate("/Home");
-    // <Home></Home>;
+    navigate("/");
   };
 
   return (
@@ -63,7 +62,7 @@ const Topbar = () => {
           <SettingsOutlinedIcon />
         </IconButton> */}
         <IconButton onClick={handleClick}>
-          <PersonOutlinedIcon />
+          <LogoutOutlinedIcon fontSize="large" />
         </IconButton>
         <Menu
           anchorEl={anchorEl}

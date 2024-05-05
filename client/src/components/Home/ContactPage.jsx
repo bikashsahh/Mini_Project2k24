@@ -171,6 +171,7 @@ const ContactPage = () => {
                   variant="outlined"
                   fullWidth
                   margin="normal"
+                  color="secondary"
                   value={formData.email}
                   onChange={handleInputChange}
                 />
