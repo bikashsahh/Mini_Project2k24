@@ -47,18 +47,15 @@ const SendEmailsButton = () => {
         })
         .then((res) => {
           toast.success("Emails sent successfully!");
-          console.log("sjhgdjajds", res.data.message);
           resetForm();
         })
         .catch((err) => {
-          console.log("Error in sending mail to selected users:", err.message);
           toast.error("Error sending emails. Please try again.");
         })
         .finally(() => {
           setIsLoading(false);
         });
     } catch (error) {
-      console.error("Error sending emails:", error);
       toast.error("Error sending emails. Please try again.");
       setIsLoading(false);
     }

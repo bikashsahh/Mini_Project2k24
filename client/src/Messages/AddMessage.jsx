@@ -48,7 +48,6 @@ const AdminMessageForm = () => {
       formRef.current.reset();
       toast.success("Message sent successfully!"); // Show success notification
     } catch (error) {
-      console.error("Error adding message:", error);
       toast.error("Failed to send message. Please try again."); // Show error notification
     } finally {
       setIsLoading(false);

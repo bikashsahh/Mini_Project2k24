@@ -65,15 +65,12 @@ const Admin = () => {
     verifyAdmin();
   }, [navigator]);
 
-  console.log("Token valid:", tokenValid);
 
   if (!tokenValid) {
-    console.log("Redirecting...");
     return null; // or any loading state or component while checking token validity
   }
 
   function handlePage(pg) {
-    console.log("App got clicked:", pg);
     setPage(pg);
   }
   return (

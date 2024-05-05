@@ -2,8 +2,6 @@ import React from "react";
 import { useUserContext } from "../../context/context";
 const Important_Message = () => {
   const { messages } = useUserContext();
-  console.log("Imp msg", messages);
-  // const messages = useSelector((state) => state.message.messages);
   return (
     <div className="important-messages">
       <div className="marquee">

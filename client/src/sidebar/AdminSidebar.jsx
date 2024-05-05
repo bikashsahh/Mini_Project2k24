@@ -40,14 +40,9 @@ const AdminSidebar = ({ handlePage }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   function handleClick(pg) {
-    console.log("Side Bar click", pg);
     setSelected(pg);
     handlePage(pg);
   }
-  // const dispatch = useDispatch();
-  // const tab = useSelector((state) => state.selectedTab.tab);
-  // // const setTab = useSelector((state) => state.selectedTab.setTab);
-  // console.log("settab at sidebar", tab);
   return (
     <Box
       sx={{

@@ -14,10 +14,10 @@ const Banner = () => {
   const carouselData = [
     { id: 1, imgURL: "/clg.avif" },
     { id: 2, imgURL: "/clg2.avif" },
-    { id: 3, imgURL: "/img1.webp" },
-    { id: 4, imgURL: "/img2.webp" },
-    { id: 5, imgURL: "/img1.webp" },
-    { id: 6, imgURL: "/img2.webp" },
+    // { id: 3, imgURL: "/img1.webp" },
+    // { id: 4, imgURL: "/img2.webp" },
+    // { id: 5, imgURL: "/img1.webp" },
+    // { id: 6, imgURL: "/img2.webp" },
   ];
 
   useEffect(() => {

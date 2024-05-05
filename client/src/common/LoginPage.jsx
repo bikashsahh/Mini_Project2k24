@@ -49,7 +49,6 @@ const LoginPage = () => {
 
       if (response.data.success) {
         window.localStorage.setItem("isLogedIn", true);
-        // console.log("response.token:: ", response.data.token);
         const token = response.data.token;
         localStorage.setItem("token", token);
 

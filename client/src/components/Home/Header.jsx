@@ -75,7 +75,6 @@ const Header = ({ handlePage, homeRef, programsRef, contactRef, aboutRef }) => {
   };
 
   function handleClick(pg, ref) {
-    console.log("header Bar click :->", pg);
     setActiveButton(pg);
     handlePage(pg, ref);
   }

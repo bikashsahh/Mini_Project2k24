@@ -72,7 +72,6 @@ const ContactPage = () => {
       setFormData({ name: "", email: "", message: "" });
       toast.success("Message sent successfully!");
     } catch (error) {
-      console.error(error);
       toast.error("Error sending message. Please try again later.");
     } finally {
       setIsLoading(false);

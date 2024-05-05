@@ -32,7 +32,6 @@ const AssignmentForm = () => {
         );
         setCourses(response.data);
       } catch (error) {
-        console.error("Error fetching courses:", error);
         toast.error("Error fetching courses. Please try again later.");
       }
     };
@@ -74,11 +73,9 @@ const AssignmentForm = () => {
             `http://localhost:3000/assignments?registrationno=${registrationno}`,
             fileData
           );
-          console.log("Successfully Submitted");
           toast.success("Assignment submitted successfully!");
           resetForm();
         } catch (error) {
-          console.log("Error in form submitting:", error);
           toast.error("Error submitting assignment. Please try again.");
         }
       } catch (e) {

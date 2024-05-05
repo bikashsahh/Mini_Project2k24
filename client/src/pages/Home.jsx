@@ -35,7 +35,6 @@ function Home() {
   };
 
   function handlePage(pg, ref) {
-    console.log(pg, " got clicked:");
     scrollToSection(ref, pg);
     setPage(pg);
   }

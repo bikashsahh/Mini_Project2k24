@@ -33,7 +33,6 @@ const StudentSidebar = ({ handlePage }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   function handleClick(pg) {
-    console.log("Side Bar click", pg);
     setSelected(pg);
     handlePage(pg);
   }

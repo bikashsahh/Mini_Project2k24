@@ -76,7 +76,6 @@ const AssignmentList = () => {
     axios
       .get("http://localhost:3000/assignmentlist")
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
         setPdfColumns([
           ...columns.filter((column) => column.field !== "file_path"),

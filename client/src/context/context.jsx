@@ -42,8 +42,6 @@ const Provider = ({ children }) => {
 
     try {
       const response = await axios.get(url);
-      // Handle the response data
-      console.log(response.data);
       setUserData(response.data);
       return response.data;
     } catch (error) {
@@ -57,7 +55,6 @@ const Provider = ({ children }) => {
       const response = await axios.get("http://localhost:3000/messages");
       if (response.status === 200) {
         addMessages(response.data);
-        console.log(messages);
       } else {
         throw new Error("Failed to fetch messages");
       }

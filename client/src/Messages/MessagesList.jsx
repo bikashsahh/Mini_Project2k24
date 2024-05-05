@@ -26,7 +26,6 @@ const MessagesList = () => {
         const response = await axios.get("http://localhost:3000/messages");
         setMessages(response.data);
       } catch (error) {
-        console.error("Error fetching messages:", error);
         toast.error("Error fetching messages");
       }
     };
@@ -39,7 +38,6 @@ const MessagesList = () => {
       setMessages(messages.filter((message) => message.id !== selectedMessage));
       toast.success("Message deleted successfully");
     } catch (error) {
-      console.error("Error deleting message:", error);
       toast.error("Error deleting message");
     } finally {
       setIsConfirmationOpen(false);

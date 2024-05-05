@@ -25,7 +25,7 @@ const ImportStudentData = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const [session, setsession] = useState("");
+  const [session, setSession] = useState("");
   const [year, setYear] = useState("");
 
   const handleFileChange = (event) => {
@@ -47,6 +47,7 @@ const ImportStudentData = () => {
       });
       setSnackbarMessage("File uploaded successfully");
       setSnackbarSeverity("success");
+      resetForm();
     } catch (err) {
       if (err.response && err.response.status === 409) {
         setSnackbarMessage("File already exists");
@@ -60,6 +61,12 @@ const ImportStudentData = () => {
       setIsUploading(false);
       setSnackbarOpen(true);
     }
+  };
+
+  const resetForm = () => {
+    setFile(null);
+    setSession("");
+    setYear("");
   };
 
   const handleSnackbarClose = () => {
@@ -81,6 +88,7 @@ const ImportStudentData = () => {
       </Typography>
       <Box mb={2} color="secondary">
         <Input type="file" onChange={handleFileChange} />
+        {/* {!file && <Typography variant="body1">No file chosen</Typography>} */}
       </Box>
       <Box mb={2} display="flex" alignItems="center">
         <FormControl sx={{ mr: 2 }}>
@@ -90,7 +98,7 @@ const ImportStudentData = () => {
           <Select
             labelId="session-label"
             value={session}
-            onChange={(e) => setsession(e.target.value)}
+            onChange={(e) => setSession(e.target.value)}
             label="session"
             sx={{ minWidth: 200 }}
           >

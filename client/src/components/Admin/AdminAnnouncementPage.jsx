@@ -52,7 +52,6 @@ const AdminAnnouncementPage = () => {
             `http://localhost:3000/announcements`,
             fileData
           );
-          console.log("Successfully Submitted");
           toast.success("Announcement Created successfully!");
           resetForm();
         } catch (error) {
@@ -89,40 +88,6 @@ const AdminAnnouncementPage = () => {
       fileInputRef.current.value = "";
     }
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("title", title);
-  //     formData.append("description", description);
-  //     formData.append("file", file);
-  //     const response = await axios.post(
-  //       "http://localhost:3000/announcements",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     console.log("Server response:", response.data);
-  //     setTitle("");
-  //     setDescription("");
-  //     setFile(null);
-  //     toast.success("Announcement created successfully!"); // Show success notification
-  //   } catch (error) {
-  //     console.error("Error creating announcement:", error);
-  //     toast.error("Failed to create announcement. Please try again."); // Show error notification
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  // };
-
   return (
     <Box
       sx={{

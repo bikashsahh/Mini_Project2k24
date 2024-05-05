@@ -11,9 +11,7 @@ const AnnouncementBanner = () => {
     // Fetch the latest announcement from the server
     const fetchAnnouncement = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/announcements/latest"
-        );
+        const response = await axios.get("http://localhost:3000/announcements");
         setAnnouncement(response.data);
       } catch (error) {
         console.error("Error fetching announcement:", error);

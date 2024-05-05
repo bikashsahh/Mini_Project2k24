@@ -1,22 +1,17 @@
 import xlsx from "xlsx";
-import db from "./database.js";
-import express from "express";
+import db from "../database.js";
 
-const app = express();
-
-const ExcelFile = async (req, res) => {
+export const ExcelFile = async (req, res) => {
   try {
-    // console.log(req.file, req.body);
     const { session, year } = req.body;
-
     const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const data = xlsx.utils.sheet_to_json(worksheet);
 
     const query = `
-      INSERT INTO students (registrationno, name, programme, courses, mobile, email,semester, session, year)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9)
+      INSERT INTO students (registrationno, name, programme, courses, mobile, email, semester, session, year,password)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10)
     `;
 
     for (const row of data) {
@@ -37,6 +32,7 @@ const ExcelFile = async (req, res) => {
         semesterValue,
         session,
         year,
+        row.registrationno,
       ]);
     }
 
@@ -46,4 +42,3 @@ const ExcelFile = async (req, res) => {
     res.status(500).send("Error uploading file");
   }
 };
-export default ExcelFile;

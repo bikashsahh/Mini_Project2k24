@@ -49,7 +49,6 @@ const Users = () => {
         handleLogoutOperations();
         navigator("/");
         alert("You are not authorized. Please try again later.");
-        console.error("Error:", error);
       }
     }
 
@@ -60,10 +59,7 @@ const Users = () => {
     setPage(pg);
   }
 
-  console.log("Token valid:", tokenValid);
-
   if (!tokenValid) {
-    console.log("Redirecting...");
     return null; // or any loading state or component while checking token validity
   }
 
