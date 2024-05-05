@@ -9,6 +9,8 @@ import AssignmentForm from "../Assignment/AssignmentForm";
 import { useLocation } from "react-router-dom";
 import SubmissionList from "./SubmissionList";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import handleLogoutOperations from "../../../util/utils.js";
 
 const Users = () => {
   const navigator = useNavigate();
@@ -20,14 +22,38 @@ const Users = () => {
   const [tokenValid, setTokenValid] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
-    if (token) {
-      setTokenValid(true);
-    } else {
-      console.log("Token not found");
-      navigator("/Home");
+    async function verifyStudent() {
+      try {
+        // Define the URL of the endpoint
+        const URL = "http://localhost:3000/verifystudent";
+
+        // Define the token (replace 'your-token' with the actual token)
+        const token = localStorage.getItem("token");
+
+        // Define the headers with the authorization token
+        const headers = {
+          Authorization: token,
+        };
+
+        // Make the request to the endpoint
+        const response = await axios.get(URL, { headers });
+
+        if (response.data.success === true) {
+          setTokenValid(true);
+        } else {
+          handleLogoutOperations();
+          alert("You are not authorized to access this page");
+          navigator("/Home");
+        }
+      } catch (error) {
+        handleLogoutOperations();
+        navigator("/Home");
+        alert("An error occurred. Please try again later.");
+        console.error("Error:", error);
+      }
     }
+
+    verifyStudent();
   }, [navigator]);
 
   function handlePage(pg) {

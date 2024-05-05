@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import handleLogoutOperations from "../../util/utils.js";
 
 const LoginPage = () => {
   const { setRegistrationNo, userData } = useUserContext();
@@ -60,9 +61,11 @@ const LoginPage = () => {
           });
         }
       } else {
+        handleLogoutOperations();
         setLoginError("Email or password is incorrect. Please try again.");
       }
     } catch (error) {
+      handleLogoutOperations();
       console.error("Error logging in:", error);
     }
 

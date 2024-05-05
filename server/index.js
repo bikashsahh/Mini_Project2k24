@@ -13,6 +13,7 @@ import formidable from "formidable";
 // import pinataSDK from "@pinata/sdk";
 import fs from "fs";
 import axios from "axios";
+import e from "express";
 env.config();
 
 const app = express();
@@ -75,6 +76,58 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
+app.get("/verifystudent", (req, res) => {
+  console.log("verifystudent");
+  try {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    jwt.verify(token, "bikashsah", (err, decoded) => {
+      if (err) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Unauthorized" });
+      }
+      console.log("decoded: ", decoded);
+      if (token && decoded.data.isadmin === false) {
+        res.status(200).json({ success: true, message: "Token verified" });
+      } else {
+        res.status(401).json({ success: false, message: "Unauthorized" });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.get("/verifyadmin", (req, res) => {
+  console.log("verifyadmin");
+  try {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    jwt.verify(token, "bikashsah", (err, decoded) => {
+      if (err) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Unauthorized" });
+      }
+      if (token && decoded.data.isadmin === true) {
+        res.status(200).json({ success: true, message: "Token verified" });
+      } else {
+        res.status(401).json({ success: false, message: "Unauthorized" });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
 // ---------------------------------
 app.post("/forgot-password", async (req, res) => {
   const { registration } = req.body;

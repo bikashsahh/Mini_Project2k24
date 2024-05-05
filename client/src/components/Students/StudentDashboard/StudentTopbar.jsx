@@ -11,6 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LoginPage from "../../Common/LoginPage";
 import Home from "../../HomePage_Utilities/Home";
 import { useNavigate } from "react-router-dom";
+import handleLogoutOperations from "../../../util/utils";
 const StudentTopbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -29,6 +30,7 @@ const StudentTopbar = () => {
   const handleLogout = () => {
     // Perform logout functionality here
     console.log("Logout clicked");
+    handleLogoutOperations();
     handleClose();
     navigate("/Home");
     // <Home></Home>;

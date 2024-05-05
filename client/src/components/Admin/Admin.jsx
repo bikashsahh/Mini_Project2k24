@@ -27,6 +27,8 @@ import MessagesList from "./Messages/MessagesList";
 import AnnouncementDeletePage from "./Messages/AccouncementDeletePage";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import handleLogoutOperations from "../../util/utils.js";
 
 const Admin = () => {
   const navigator = useNavigate();
@@ -36,14 +38,43 @@ const Admin = () => {
   const [tokenValid, setTokenValid] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
-    if (token) {
-      setTokenValid(true);
-    } else {
-      console.log("Token not found");
-      navigator("/Home");
+    async function verifyAdmin() {
+      try {
+        // Define the URL of the endpoint
+        const URL = "http://localhost:3000/verifyadmin";
+
+        // Define the token (replace 'your-token' with the actual token)
+        const token = localStorage.getItem("token");
+
+        // Define the headers with the authorization token
+        const headers = {
+          Authorization: token,
+        };
+
+        // Make the request to the endpoint
+        const response = await axios.get(URL, { headers });
+
+        if (response.data.success === true) {
+          setTokenValid(true);
+        } else {
+          handleLogoutOperations();
+          alert("You are not authorized to access this page");
+          navigator("/Home");
+        }
+      } catch (error) {
+        handleLogoutOperations();
+        navigator("/Home");
+        alert("Internal Server Error. Please try again later.");
+        // Log the error message
+        console.error(
+          "Error:",
+          error.response ? error.response.data : error.message
+        );
+      }
     }
+
+    // Call the function to verify admin
+    verifyAdmin();
   }, [navigator]);
 
   console.log("Token valid:", tokenValid);
