@@ -28,7 +28,7 @@ const AssignmentForm = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/courses?registrationno=${registrationno}`
+          `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/courses?registrationno=${registrationno}`
         );
         setCourses(response.data);
       } catch (error) {
