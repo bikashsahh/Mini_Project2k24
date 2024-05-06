@@ -23,7 +23,9 @@ const MessagesList = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/messages");
+        const response = await axios.get(
+          "https://mnnit-ignou-study-center-server.vercel.app/messages"
+        );
         setMessages(response.data);
       } catch (error) {
         toast.error("Error fetching messages");
