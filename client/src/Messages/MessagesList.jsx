@@ -24,7 +24,7 @@ const MessagesList = () => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "https://mnnit-ignou-study-center-server.vercel.app/messages"
+          "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/messages"
         );
         setMessages(response.data);
       } catch (error) {
