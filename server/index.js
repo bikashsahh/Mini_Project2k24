@@ -1,4 +1,4 @@
-import express from "express";
+import express, { query } from "express";
 import cors from "cors";
 import env from "dotenv";
 import messageRoutes from "./routes/messageRoutes.js";
@@ -10,6 +10,7 @@ import courseRoutes from "./routes/courseRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import emailRoutes from "./routes/emailRoutes.js";
 import excelRoutes from "./routes/excelRoutes.js";
+import db from "./database.js";
 
 const app = express();
 const port = 3000;

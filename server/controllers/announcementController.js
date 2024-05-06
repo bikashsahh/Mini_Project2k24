@@ -29,7 +29,7 @@ export const createAnnouncement = async (req, res) => {
     }
 
     const queryText =
-      "INSERT INTO announcements (title, description, file_path) VALUES ($1, $2, $3) RETURNING id";
+      "INSERT INTO announcements (title, description, file_path, created_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING id";
     const values = [title, description, ImgHash];
     const result = await db.query(queryText, values);
 

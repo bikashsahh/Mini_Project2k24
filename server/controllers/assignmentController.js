@@ -14,14 +14,17 @@ export const submitAssignment = async (req, res) => {
       [registrationno, selectedCourse]
     );
 
+    // submitted_at
+    const currentTime = new Date().toISOString();
+
     if (existingSubmission.rows.length > 0) {
       await db.query(
-        "UPDATE submissions SET file_path = $1 WHERE registrationno = $2 AND course_name = $3",
-        [ImgHash, registrationno, selectedCourse]
+        "UPDATE submissions SET file_path = $1, submitted_at = $2 WHERE registrationno = $3 AND course_name = $4",
+        [ImgHash, currentTime, registrationno, selectedCourse]
       );
     } else {
       await db.query(
-        "INSERT INTO submissions (registrationno, file_path, course_name) VALUES ($1, $2, $3)",
+        "INSERT INTO submissions (registrationno, file_path, course_name, submitted_at ) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)",
         [registrationno, ImgHash, selectedCourse]
       );
     }
