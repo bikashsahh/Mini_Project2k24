@@ -30,7 +30,9 @@ app.use("/", excelRoutes);
 app.use("/courses", courseRoutes);
 app.use("/assignments", assignmentRoutes);
 app.use("/", studentRoutes);
-
+app.get("/", (req, res) => {
+  res.send("server is running");
+});
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
