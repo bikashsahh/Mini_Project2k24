@@ -32,6 +32,9 @@ app.use("/assignments", assignmentRoutes);
 app.use("/", studentRoutes);
 
 app.get("/", async (req, res) => {
+  res.send("Server is running");
+});
+app.get("/messages", async (req, res) => {
   const result = await db.query("SELECT * FROM messages");
   res.send(result.rows);
 });
