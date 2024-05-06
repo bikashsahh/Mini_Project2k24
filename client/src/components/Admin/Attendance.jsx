@@ -42,7 +42,9 @@ const AttendanceSheet = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/attendancesheet")
+      .get(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/attendancesheet"
+      )
       .then((response) => {
         setData(response.data);
       })

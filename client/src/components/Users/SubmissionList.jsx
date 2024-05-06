@@ -57,7 +57,7 @@ const SubmissionList = () => {
     if (registrationno) {
       axios
         .get(
-          `http://localhost:3000/studentsubmissionslist?registrationno=${registrationno}`
+          `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/studentsubmissionslist?registrationno=${registrationno}`
         )
         .then((response) => {
           setData(response.data);

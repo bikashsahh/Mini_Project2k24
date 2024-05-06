@@ -42,10 +42,13 @@ const LoginPage = () => {
     setRegistrationNo(registration);
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        registration,
-        password,
-      });
+      const response = await axios.post(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/login",
+        {
+          registration,
+          password,
+        }
+      );
 
       if (response.data.success) {
         window.localStorage.setItem("isLogedIn", true);
@@ -86,7 +89,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/forgot-password",
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/forgot-password",
         {
           registration,
         }
@@ -118,7 +121,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/update-password",
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/update-password",
         {
           registration,
           newPassword,

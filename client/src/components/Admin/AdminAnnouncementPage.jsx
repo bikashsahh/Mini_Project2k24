@@ -49,7 +49,7 @@ const AdminAnnouncementPage = () => {
             ImgHash: ImgHash,
           };
           const response = await axios.post(
-            `http://localhost:3000/announcements`,
+            `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/announcements`,
             fileData
           );
           toast.success("Announcement Created successfully!");

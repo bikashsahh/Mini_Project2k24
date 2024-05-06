@@ -25,7 +25,8 @@ const Users = () => {
     async function verifyStudent() {
       try {
         // Define the URL of the endpoint
-        const URL = "http://localhost:3000/verifystudent";
+        const URL =
+          "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/verifystudent";
 
         // Define the token (replace 'your-token' with the actual token)
         const token = localStorage.getItem("token");

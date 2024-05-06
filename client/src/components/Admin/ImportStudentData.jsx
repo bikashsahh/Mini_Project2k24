@@ -40,11 +40,15 @@ const ImportStudentData = () => {
     formData.append("year", year);
 
     try {
-      await axios.post("http://localhost:3000/upload-excel", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/upload-excel",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setSnackbarMessage("File uploaded successfully");
       setSnackbarSeverity("success");
       resetForm();

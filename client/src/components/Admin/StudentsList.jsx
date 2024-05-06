@@ -37,7 +37,9 @@ const StudentsList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/studentslist")
+      .get(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/studentslist"
+      )
       .then((response) => {
         setData(response.data);
         setPdfColumns(columns);

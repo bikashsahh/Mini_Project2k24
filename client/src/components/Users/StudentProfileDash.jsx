@@ -12,7 +12,7 @@ function ProfilePage() {
       try {
         // Fetch student data from the server based on the registrationno
         const response = await axios.get(
-          `http://localhost:3000/studentsprofile?registrationno=${registrationno}`
+          `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/studentsprofile?registrationno=${registrationno}`
         );
         setStudentData(response.data);
         navigate("/UserDetails", { state: response.data });

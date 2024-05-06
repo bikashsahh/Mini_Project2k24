@@ -24,7 +24,7 @@ const StudentProfileForm = () => {
     if (registrationno && emailAddress) {
       try {
         const response = await axios.post(
-          "http://localhost:3000/check-status",
+          "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/check-status",
           {
             registrationno,
             emailAddress,

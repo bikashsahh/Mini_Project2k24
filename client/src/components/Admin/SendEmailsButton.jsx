@@ -37,7 +37,7 @@ const SendEmailsButton = () => {
     setIsLoading(true);
     try {
       await axios
-        .post("http://localhost:3000/sendmailtoselectedusers", {
+        .post("https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/sendmailtoselectedusers", {
           subject,
           body,
           programme,

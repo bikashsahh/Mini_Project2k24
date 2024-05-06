@@ -26,7 +26,9 @@ const AdminMessageForm = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/messages");
+      const response = await axios.get(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/messages"
+      );
       setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -40,9 +42,12 @@ const AdminMessageForm = () => {
     }
     setIsLoading(true);
     try {
-      await axios.post("http://localhost:3000/messages", {
-        message: newMessage,
-      });
+      await axios.post(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/messages",
+        {
+          message: newMessage,
+        }
+      );
       // dispatch(addMessage(newMessage));
       setNewMessage("");
       formRef.current.reset();

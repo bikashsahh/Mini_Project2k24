@@ -68,7 +68,9 @@ const AnnouncementPage = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/announcements");
+        const response = await axios.get(
+          "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/announcements"
+        );
         setAnnouncements(response.data);
       } catch (error) {
         console.error("Error fetching announcements:", error);

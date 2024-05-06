@@ -38,7 +38,7 @@ const Provider = ({ children }) => {
   }, []);
 
   async function fetchStudentProfile() {
-    const url = `http://localhost:3000/studentsprofile?registrationno=${registrationno}`;
+    const url = `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/studentsprofile?registrationno=${registrationno}`;
 
     try {
       const response = await axios.get(url);

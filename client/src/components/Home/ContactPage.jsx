@@ -68,7 +68,10 @@ const ContactPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post("http://localhost:3000/contact", formData);
+      await axios.post(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/contact",
+        formData
+      );
       setFormData({ name: "", email: "", message: "" });
       toast.success("Message sent successfully!");
     } catch (error) {

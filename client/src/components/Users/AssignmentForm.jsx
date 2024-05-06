@@ -70,7 +70,7 @@ const AssignmentForm = () => {
             ImgHash: ImgHash,
           };
           const response = await axios.post(
-            `http://localhost:3000/assignments?registrationno=${registrationno}`,
+            `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/assignments?registrationno=${registrationno}`,
             fileData
           );
           toast.success("Assignment submitted successfully!");

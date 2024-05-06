@@ -29,7 +29,8 @@ const Admin = () => {
     async function verifyAdmin() {
       try {
         // Define the URL of the endpoint
-        const URL = "http://localhost:3000/verifyadmin";
+        const URL =
+          "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/verifyadmin";
 
         // Define the token (replace 'your-token' with the actual token)
         const token = localStorage.getItem("token");
@@ -64,7 +65,6 @@ const Admin = () => {
     // Call the function to verify admin
     verifyAdmin();
   }, [navigator]);
-
 
   if (!tokenValid) {
     return null; // or any loading state or component while checking token validity

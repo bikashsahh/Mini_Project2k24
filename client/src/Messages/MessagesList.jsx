@@ -36,7 +36,9 @@ const MessagesList = () => {
 
   const handleDeleteMessage = async () => {
     try {
-      await axios.delete(`http://localhost:3000/messages/${selectedMessage}`);
+      await axios.delete(
+        `https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/messages/${selectedMessage}`
+      );
       setMessages(messages.filter((message) => message.id !== selectedMessage));
       toast.success("Message deleted successfully");
     } catch (error) {
