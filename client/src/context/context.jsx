@@ -52,7 +52,9 @@ const Provider = ({ children }) => {
   }
   async function fetchMessages() {
     try {
-      const response = await axios.get("http://localhost:3000/messages");
+      const response = await axios.get(
+        "https://mnnit-ignou-study-center-server-git-main-bikash-sahs-projects.vercel.app/messages"
+      );
       if (response.status === 200) {
         addMessages(response.data);
       } else {
