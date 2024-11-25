@@ -27,6 +27,7 @@
     "express": "^4.19.2",
     "file-saver": "^2.0.5",
     "firebase": "^10.9.0",
+    "framer-motion": "^11.11.17",
     "ionicons": "^7.3.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
