@@ -7,167 +7,165 @@ import {
   TextField,
   Button,
   Link,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+import { 
+  Facebook, 
+  Instagram, 
+  Twitter, 
+  Email, 
+  LocationOn, 
+  Phone 
+} from "@mui/icons-material";
 
 const Footer = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Box component="footer" sx={{ bgcolor: "", pt: 6, pb: 6 }}>
+    <Box 
+      component="footer" 
+      sx={{ 
+        background: "linear-gradient(135deg, #f5f7fa, #e4ebf1)", // Light gradient background
+        color: theme.palette.text.primary, // Use primary text color for better contrast
+        py: 6, 
+        textAlign: isMobile ? 'center' : 'left',
+        borderTop: "1px solid #d1d9e6" // Light border for separation
+      }}
+    >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom>
-              Section
+          {/* Quick Links */}
+          <Grid item xs={12} md={3}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.secondary }}>
+              Quick Links
             </Typography>
-            <Box component="nav">
-              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Home
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Features
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Pricing
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    FAQs
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    About
-                  </Link>
-                </Box>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: isMobile ? 'column' : 'column',
+              alignItems: isMobile ? 'center' : 'flex-start'
+            }}>
+              {['Admissions', 'Academics', 'Research', 'Campus Life', 'Alumni'].map((link) => (
+                <Link 
+                  key={link} 
+                  href="#" 
+                  color="inherit" 
+                  sx={{ 
+                    mb: 1, 
+                    textDecoration: 'none', 
+                    '&:hover': { textDecoration: 'underline', color: theme.palette.primary.main } 
+                  }}
+                >
+                  {link}
+                </Link>
+              ))}
+            </Box>
+          </Grid>
+
+          {/* Contact Info */}
+          <Grid item xs={12} md={3}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.secondary }}>
+              Contact Us
+            </Typography>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: 'column',
+              alignItems: isMobile ? 'center' : 'flex-start'
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <LocationOn sx={{ mr: 1, color: theme.palette.primary.main }} />
+                <Typography variant="body2">123 College Street, City, State</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Phone sx={{ mr: 1, color: theme.palette.primary.main }} />
+                <Typography variant="body2">(555) 123-4567</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Email sx={{ mr: 1, color: theme.palette.primary.main }} />
+                <Typography variant="body2">info@collegename.edu</Typography>
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom>
-              Section
+
+          {/* Social Media */}
+          <Grid item xs={12} md={3}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.secondary }}>
+              Connect With Us
             </Typography>
-            <Box component="nav">
-              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Home
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Features
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Pricing
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    FAQs
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    About
-                  </Link>
-                </Box>
-              </Box>
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: isMobile ? 'center' : 'flex-start', 
+              gap: 2 
+            }}>
+              {[
+                { icon: <Facebook />, link: '#facebook' },
+                { icon: <Instagram />, link: '#instagram' },
+                { icon: <Twitter />, link: '#twitter' }
+              ].map(({ icon, link }) => (
+                <Link 
+                  key={link} 
+                  href={link} 
+                  color="inherit" 
+                  sx={{ 
+                    transition: 'transform 0.2s',
+                    '&:hover': { transform: 'scale(1.2)', color: theme.palette.primary.main } 
+                  }}
+                >
+                  {icon}
+                </Link>
+              ))}
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom>
-              Section
+
+          {/* Newsletter */}
+          <Grid item xs={12} md={3}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.secondary }}>
+              Stay Updated
             </Typography>
-            <Box component="nav">
-              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Home
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Features
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    Pricing
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    FAQs
-                  </Link>
-                </Box>
-                <Box component="li" sx={{ mb: 1 }}>
-                  <Link href="#" color="text.secondary" variant="body2">
-                    About
-                  </Link>
-                </Box>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom>
-              Subscribe to our newsletter
+            <Typography variant="body2" sx={{ mb: 2 }}>
+              Subscribe to our newsletter for campus updates
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Monthly digest of what's new and exciting from us.
-            </Typography>
-            <Box component="form" noValidate autoComplete="off" sx={{ mt: 3 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    id="newsletter1"
-                    label="Email address"
-                    variant="outlined"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button variant="contained" color="primary" fullWidth>
-                    Subscribe
-                  </Button>
-                </Grid>
-              </Grid>
+            <Box component="form" noValidate autoComplete="off">
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Your Email"
+                sx={{ 
+                  mb: 2, 
+                  '& .MuiOutlinedInput-root': { 
+                    bgcolor: 'white', 
+                    borderRadius: 2 
+                  } 
+                }}
+              />
+              <Button 
+                variant="contained" 
+                color="primary" 
+                fullWidth
+                sx={{ borderRadius: 2 }}
+              >
+                Subscribe
+              </Button>
             </Box>
           </Grid>
         </Grid>
-        <Box
-          component="div"
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: 6,
-            borderTop: "1px solid #ccc",
-            pt: 2,
+
+        {/* Copyright */}
+        <Box 
+          sx={{ 
+            mt: 6, 
+            pt: 2, 
+            borderTop: '1px solid rgba(0,0,0,0.1)', 
+            display: 'flex', 
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: 'space-between', 
+            alignItems: 'center' 
           }}
         >
-          <Typography variant="body2" color="text.secondary">
-            © 2024 Company, Inc. All rights reserved.
+          <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+            © 2024 College Name. All Rights Reserved.
           </Typography>
-          <Box>
-            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
-              <Facebook />
-            </Link>
-            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
-              <Instagram />
-            </Link>
-            <Link href="#" color="text.secondary" sx={{ mx: 1 }}>
-              <Twitter />
-            </Link>
-          </Box>
         </Box>
       </Container>
     </Box>
